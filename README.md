@@ -17,7 +17,6 @@ Lightweight, fault-tolerant dashboard generator for Hawaii emergency status.
 
 Outputs are written to `site/`:
 - `site/index.html`
-- `site/index.txt`
 
 ## Offline mode
 

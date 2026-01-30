@@ -41,7 +41,7 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
         )
 
     generated = _format_ts(generated_at)
-    toc_html = "<nav class=\"toc\"><h2>Contents</h2><ul>" + "".join(toc_items) + "</ul></nav>"
+    toc_html = "<nav class=\"toc\"><ul>" + "".join(toc_items) + "</ul></nav>"
     html = f"""<!doctype html>
 <html lang="en">
 <head>
@@ -127,12 +127,15 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
       padding: 0.4rem 0.5rem;
       vertical-align: top;
     }}
+    th {{
+      text-align: left;
+    }}
   </style>
 </head>
 <body>
   <header>
     <h1>{island_name} Dashboard</h1>
-    <p class="meta">Generated: {generated}</p>
+    <p class="meta">{generated}</p>
   </header>
   {toc_html}
   {"".join(sections)}

@@ -1,4 +1,4 @@
-name: Generate emergency dashboard
+name: Generate dashboard
 
 on:
   schedule:

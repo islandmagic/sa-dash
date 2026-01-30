@@ -98,15 +98,19 @@ def scrape() -> dict:
         summary_parts = [description, instruction]
         summary = "\n\n".join([part for part in summary_parts if part])
         summary_html = html.escape(summary).replace("\n", "<br>")
-        hazard_items.append(
-            "<li>"
-            f"{html.escape(hazard['headline'])}"
-            + (f": {summary_html}" if summary else "")
-            + "</li>"
-        )
+        headline_html = html.escape(hazard["headline"])
+        if summary:
+            hazard_items.append(
+                "<details>"
+                f"<summary>{headline_html}</summary>"
+                f"<div>{summary_html}</div>"
+                "</details>"
+            )
+        else:
+            hazard_items.append(headline_html)
 
     hazard_html = (
-        "<ul>" + "".join(hazard_items) + "</ul>"
+        "".join(hazard_items)
         if hazard_items
         else "<p>No active hazards.</p>"
     )

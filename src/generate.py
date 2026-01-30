@@ -3,7 +3,6 @@ from pathlib import Path
 
 from src.config import ISLANDS
 from src.render.html import render_html
-from src.render.text import html_to_text
 from src.scrape.base import now_iso
 from src.scrape.cache import load_cache, save_cache
 from src.scrape.registry import get_scraper
@@ -64,9 +63,7 @@ def generate_island(
 
     output_dir.mkdir(parents=True, exist_ok=True)
     html = render_html(island["name"], results, generated_at)
-    text = html_to_text(html)
     (output_dir / "index.html").write_text(html, encoding="utf-8")
-    (output_dir / "index.txt").write_text(text, encoding="utf-8")
 
 
 def main() -> None:
@@ -91,10 +88,8 @@ def main() -> None:
         result = scrape_with_cache(args.scraper, cache_dir, args.offline)
         generated_at = now_iso()
         html = render_html(args.scraper.upper(), [result], generated_at)
-        text = html_to_text(html)
         output_dir.mkdir(parents=True, exist_ok=True)
         (output_dir / f"{args.scraper}.html").write_text(html, encoding="utf-8")
-        (output_dir / f"{args.scraper}.txt").write_text(text, encoding="utf-8")
     else:
         generate_island(args.island, output_dir, cache_dir, args.offline)
 

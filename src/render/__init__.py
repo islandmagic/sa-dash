@@ -1,1 +1,1 @@
-"""Renderers for HTML and text outputs."""
+"""Renderers for HTML outputs."""
