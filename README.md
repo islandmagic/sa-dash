@@ -1,6 +1,6 @@
-# Emergency Island Dashboard
+# Island Dashboard
 
-Lightweight, fault-tolerant dashboard generator for Hawaii emergency status.
+Lightweight dashboard generator to provide situational awerness information about Kauai.
 
 ## Quick start
 
