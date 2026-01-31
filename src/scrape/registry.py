@@ -8,6 +8,7 @@ from src.scrape.cnn_topstories import scrape as scrape_cnn_topstories
 from src.scrape.foxnews_us import scrape as scrape_foxnews_us
 from src.scrape.weather_kauai import scrape as scrape_weather_kauai
 from src.scrape.usgs_water_levels import scrape as scrape_usgs_water_levels
+from src.scrape.propagation import scrape as scrape_propagation
 
 
 SCRAPERS = {
@@ -21,6 +22,7 @@ SCRAPERS = {
     "kiuc": scrape_kiuc,
     "weather_kauai": scrape_weather_kauai,
     "usgs_water_levels": scrape_usgs_water_levels,
+    "propagation": scrape_propagation,
 }
 
 

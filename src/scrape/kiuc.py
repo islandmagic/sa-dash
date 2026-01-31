@@ -94,18 +94,12 @@ def scrape() -> dict:
     else:
         parts.append("<p>Status data unavailable.</p>")
 
-    parts.append(
-        "<p>"
-        f"Last update: {html.escape(last_update)}"
-        + "</p>"
-    )
-
     block_html = f"{info_html}" + "".join(parts)
 
     return {
         "id": "kiuc",
         "label": f"Power (<a href=\"{KIUC_URL}\">KIUC</a>)",
-        "retrieved_at": now_iso(),
+        "retrieved_at": last_update,
         "source_urls": [KIUC_URL, KIUC_SUMMARY_URL],
         "html": block_html,
         "error": None,

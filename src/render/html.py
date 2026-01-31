@@ -14,7 +14,7 @@ def _format_ts(ts: str | None) -> str:
             parsed = parsed.replace(tzinfo=HST)
         return parsed.astimezone(HST).strftime("%Y-%m-%d %H:%M HST")
     except ValueError:
-        return ts.replace("T", " ")
+        return ts
 
 
 def _load_cron_schedule() -> tuple[int, tuple[int, ...]] | None:
@@ -228,7 +228,7 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
     }}
     th,
     td {{
-      padding: 0.4rem 0.5rem;
+      padding: 0.2rem;
       vertical-align: top;
     }}
     th {{

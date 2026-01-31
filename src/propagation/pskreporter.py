@@ -11,7 +11,6 @@ import httpx
 
 from src.propagation.config import (
     DEFAULT_APP_CONTACT,
-    MAX_REQUESTS_PER_HOUR,
     MIN_SECONDS_BETWEEN_IDENTICAL_URL,
     WINDOW_MIN,
 )
@@ -112,14 +111,6 @@ def fetch_reports(
         cache["requests"] = requests
         _save_cache(cache_path, cache)
         return FetchResult(text=cached, from_cache=True, fetched=False)
-
-    if len(requests) >= MAX_REQUESTS_PER_HOUR:
-        cached_fallback = responses.get(url, {}).get("content")
-        cache["requests"] = requests
-        _save_cache(cache_path, cache)
-        if cached_fallback:
-            return FetchResult(text=cached_fallback, from_cache=True, fetched=False)
-        return FetchResult(text=None, from_cache=False, fetched=False, error="Rate limit reached.")
 
     try:
         with httpx.Client(follow_redirects=True, timeout=timeout, headers=DEFAULT_HEADERS) as client:

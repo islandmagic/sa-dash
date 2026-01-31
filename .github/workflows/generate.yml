@@ -28,6 +28,8 @@ jobs:
           python-version: "3.11"
       - name: Install dependencies
         run: pip install -r requirements.txt
+      - name: Generate propagation data
+        run: python3 -m src.propagation.generate
       - name: Generate pages
         run: python3 -m src.generate --island kauai
         env:
