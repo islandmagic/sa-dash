@@ -292,7 +292,7 @@ def scrape() -> dict:
             f"<td>{metric}</td>"
             f"<td style=\"text-align:right;\">{value_text}</td>"
             f"<td style=\"{indicator_style}\">{indicator}</td>"
-            f"<td style=\"text-align:right;\">{item['time']}</td>"
+            f"<td>{item['time']}</td>"
             "</tr>"
         )
 
