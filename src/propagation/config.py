@@ -31,7 +31,7 @@ MAINLAND_BAND_ORDER = ["80m", "40m", "30m", "20m", "17m", "15m", "12m", "10m"]
 
 ALL_BANDS = {**NVIS_BANDS, **MAINLAND_BANDS}
 
-NVIS_BAND_WEIGHTS = {"40m": 0.45, "80m": 0.40, "30m": 0.15}
+NVIS_BAND_WEIGHTS = { "80m": 0.40, "40m": 0.45, "30m": 0.15}
 MAINLAND_BAND_WEIGHTS = {
     "80m": 0.08,
     "40m": 0.12,
