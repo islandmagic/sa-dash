@@ -1,14 +1,106 @@
+import datetime as dt
 import re
+from pathlib import Path
+
+HST = dt.timezone(dt.timedelta(hours=-10))
 
 
 def _format_ts(ts: str | None) -> str:
     if not ts:
         return "unknown"
     try:
-        dt = __import__("datetime").datetime.fromisoformat(ts)
-        return dt.strftime("%Y-%m-%d %H:%M HST")
+        parsed = dt.datetime.fromisoformat(ts)
+        if parsed.tzinfo is None:
+            parsed = parsed.replace(tzinfo=HST)
+        return parsed.astimezone(HST).strftime("%Y-%m-%d %H:%M HST")
     except ValueError:
         return ts.replace("T", " ")
+
+
+def _load_cron_schedule() -> tuple[int, tuple[int, ...]] | None:
+    workflow_path = (
+        Path(__file__).resolve().parents[2] / ".github" / "workflows" / "generate.yml"
+    )
+    try:
+        contents = workflow_path.read_text(encoding="utf-8")
+    except OSError:
+        return None
+    match = re.search(r'^\s*-\s*cron:\s*"([^"]+)"', contents, flags=re.MULTILINE)
+    if not match:
+        return None
+    cron = match.group(1).strip()
+    parts = cron.split()
+    if len(parts) < 2:
+        return None
+    minute_str, hour_str = parts[0], parts[1]
+    if not minute_str.isdigit():
+        return None
+    minute = int(minute_str)
+    hours: list[int] = []
+    for token in hour_str.split(","):
+        token = token.strip()
+        if not token:
+            continue
+        if token == "*":
+            hours.extend(range(24))
+            continue
+        if "-" in token:
+            start_str, end_str = token.split("-", 1)
+            if not (start_str.isdigit() and end_str.isdigit()):
+                return None
+            start = int(start_str)
+            end = int(end_str)
+            if start > end:
+                return None
+            hours.extend(range(start, end + 1))
+            continue
+        if not token.isdigit():
+            return None
+        hours.append(int(token))
+    if not hours:
+        return None
+    return minute, tuple(sorted(set(hours)))
+
+
+def _next_update_ts(
+    generated_at: str | None, schedule: tuple[int, tuple[int, ...]] | None
+) -> str:
+    if not generated_at:
+        return "unknown"
+    if not schedule:
+        return "unknown"
+    try:
+        parsed = dt.datetime.fromisoformat(generated_at)
+    except ValueError:
+        return "unknown"
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=HST)
+    now_utc = parsed.astimezone(dt.timezone.utc)
+    minute, hours = schedule
+    base_date = now_utc.date()
+    for day_offset in (0, 1):
+        day = base_date + dt.timedelta(days=day_offset)
+        for hour in hours:
+            candidate = dt.datetime(
+                day.year,
+                day.month,
+                day.day,
+                hour,
+                minute,
+                tzinfo=dt.timezone.utc,
+            )
+            if candidate > now_utc:
+                return candidate.astimezone(HST).strftime("%H:%M HST")
+    next_day = base_date + dt.timedelta(days=1)
+    fallback = dt.datetime(
+        next_day.year,
+        next_day.month,
+        next_day.day,
+        hours[0],
+        minute,
+        tzinfo=dt.timezone.utc,
+    )
+    return fallback.astimezone(HST).strftime("%H:%M HST")
 
 
 def _label_to_id(label: str) -> str:
@@ -41,6 +133,8 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
         )
 
     generated = _format_ts(generated_at)
+    schedule = _load_cron_schedule()
+    next_update = _next_update_ts(generated_at, schedule)
     toc_html = "<nav class=\"toc\"><ul>" + "".join(toc_items) + "</ul></nav>"
     html = f"""<!doctype html>
 <html lang="en">
@@ -135,7 +229,7 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
 <body>
   <header>
     <h1>{island_name} Dashboard</h1>
-    <p class="meta">{generated}</p>
+    <p class="meta">{generated} (Next update: {next_update})</p>
   </header>
   {toc_html}
   {"".join(sections)}
