@@ -63,6 +63,10 @@ def scrape() -> dict:
     summary = fetch_json(KIUC_SUMMARY_URL)
     link_label = "KIUC Outage Center"
 
+    info_html = (
+        "<p><strong>Emergencies:</strong> <a href=\"tel:+18082464300\">808-246-4300</a>"
+    )
+
     rows = _extract_zip_rows(summary)
     last_update = _format_ts(summary.get("lastUpdate"))
     total_served = summary.get("totalServed")
@@ -96,7 +100,7 @@ def scrape() -> dict:
         + "</p>"
     )
 
-    block_html = "".join(parts)
+    block_html = f"{info_html}" + "".join(parts)
 
     return {
         "id": "kiuc",

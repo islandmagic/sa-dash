@@ -47,8 +47,9 @@ def scrape() -> dict:
     items = _extract_reported_outages(page_html, limit=5)
 
     info_html = (
-        "<p><strong>Water emergencies:</strong> Nights, weekends and holidays: "
-        "(808) 241-1711. Business hours: (808) 245-5400, option 1.</p>"
+        "<p><strong>Emergencies:</strong> Nights, weekends and holidays: "
+        "<a href=\"tel:+18082411711\">808-241-1711</a>. Business hours: "
+        "<a href=\"tel:+18082455400\">808-245-5400</a>, option 1.</p>"
     )
     if items:
         list_items = "".join(
