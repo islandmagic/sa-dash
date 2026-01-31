@@ -234,6 +234,19 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
     th {{
       text-align: left;
     }}
+    .bacteria-low {{
+      background: #e7f6ea;
+    }}
+    .bacteria-medium {{
+      background: #fff4cc;
+    }}
+    .bacteria-high {{
+      background: #fde2e2;
+    }}
+    .bacteria-cell {{
+      text-align: center;
+      font-weight: 600;
+    }}
     .footer {{
       border-top: 1px solid #eee;
       color: #555;

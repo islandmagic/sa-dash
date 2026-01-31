@@ -5,6 +5,7 @@ ISLANDS = {
         "name": "Kauai",
         "scrapers": [
             "weather_kauai",
+            "ocean_water_quality",
             "propagation",
             "kiuc",
             #"hawaiiantelcom",
