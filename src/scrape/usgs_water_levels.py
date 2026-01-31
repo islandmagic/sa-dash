@@ -31,11 +31,11 @@ PARAMETER_LABELS = {
     "00060": "Flow",
 }
 
-INDICATOR_STYLES = {
-    "Unknown": "background-color:#e6e6e6;",
-    "Normal": "background-color:#e6f4ea;",
-    "Elevated": "background-color:#fff4cc;",
-    "Critical": "background-color:#f8d7da;",
+INDICATOR_CLASSES = {
+    "Unknown": None,
+    "Normal": "status-green",
+    "Elevated": "status-yellow",
+    "Critical": "status-red",
 }
 
 
@@ -281,7 +281,7 @@ def scrape() -> dict:
         unit = item.get("unit") or ""
         value_text = f"{value} {unit}".strip() if value else "unknown"
         indicator = item.get("indicator", "Unknown")
-        indicator_style = INDICATOR_STYLES.get(indicator, "") + "text-align:center;"
+        indicator_class = INDICATOR_CLASSES.get(indicator, "")
         parameter_code = item.get("parameter_code")
         metric = PARAMETER_LABELS.get(parameter_code, parameter_code or "metric")
         samples = item.get("baseline_samples", 0)
@@ -291,7 +291,7 @@ def scrape() -> dict:
             f"<td>{item['name']}</td>"
             f"<td>{metric}</td>"
             f"<td style=\"text-align:right;\">{value_text}</td>"
-            f"<td style=\"{indicator_style}\">{indicator}</td>"
+            f"<td class=\"status-cell {indicator_class}\">{indicator}</td>"
             f"<td>{item['time']}</td>"
             "</tr>"
         )

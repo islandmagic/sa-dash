@@ -222,16 +222,16 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
     th {{
       text-align: left;
     }}
-    .bacteria-low {{
+    .status-green {{
       background: #e7f6ea;
     }}
-    .bacteria-medium {{
+    .status-yellow {{
       background: #fff4cc;
     }}
-    .bacteria-high {{
+    .status-red {{
       background: #fde2e2;
     }}
-    .bacteria-cell {{
+    .status-cell {{
       text-align: center;
     }}
     .footer {{

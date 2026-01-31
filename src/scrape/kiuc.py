@@ -59,6 +59,14 @@ def _extract_zip_rows(summary: dict) -> list[tuple[str, str, int, int, float]]:
     return []
 
 
+def _pct_class(pct_out: float) -> str:
+    if pct_out <= 1:
+        return "status-green"
+    if pct_out <= 30:
+        return "status-yellow"
+    return "status-red"
+
+
 def scrape() -> dict:
     summary = fetch_json(KIUC_SUMMARY_URL)
     link_label = "KIUC Outage Center"
@@ -78,8 +86,7 @@ def scrape() -> dict:
         table_rows = "".join(
             "<tr>"
             f"<td>{html.escape(name)}</td>"
-            f"<td>{affected}</td>"
-            f"<td>{pct_out:.0f}%</td>"
+            f"<td class=\"status-cell {_pct_class(pct_out)}\">{affected} ({pct_out:.0f}%)</td>"
             "</tr>"
             for zip_code, name, affected, served, pct_out in rows
         )
@@ -87,7 +94,7 @@ def scrape() -> dict:
             f"<h3>{total_out or 0} Outages</h3>"
             "<table>"
             "<thead><tr>"
-            "<th>Area</th><th>Outage</th><th></th>"
+            "<th>Area</th><th>Outage</th>"
             "</tr></thead>"
             f"<tbody>{table_rows}</tbody></table>"
         )

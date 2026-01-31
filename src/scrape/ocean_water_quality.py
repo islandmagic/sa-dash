@@ -11,14 +11,14 @@ LOW_MAX = 35
 MEDIUM_MAX = 130
 
 
-def _classify(result: float | int | None) -> tuple[str, int]:
+def _classify(result: float | int | None) -> tuple[str, int, str | None]:
     if result is None:
-        return "Unknown", 99
+        return "Unknown", 99, None
     if result <= LOW_MAX:
-        return "Low", 0
+        return "Low", 0, "status-green"
     if result <= MEDIUM_MAX:
-        return "Medium", 1
-    return "High", 2
+        return "Medium", 1, "status-yellow"
+    return "High", 2, "status-red"
 
 
 def _parse_datetime(value: str | None) -> datetime | None:
@@ -82,7 +82,7 @@ def scrape() -> dict:
         if not collected_dt:
             continue
         result = sample.get("result")
-        indicator, rank = _classify(result)
+        indicator, rank, status_class = _classify(result)
         site_key = str(site_name)
         existing = latest_by_site.get(site_key)
         if existing and existing["collected_dt"] >= collected_dt:
@@ -93,6 +93,7 @@ def scrape() -> dict:
             "date": _format_date(collected_at),
             "indicator": indicator,
             "rank": rank,
+            "status_class": status_class,
             "collected_dt": collected_dt,
         }
 
@@ -110,16 +111,16 @@ def scrape() -> dict:
         table_rows = "".join(
             "<tr>"
             f"<td>{_format_site_cell(row['site'], row['site_id'])}</td>"
-            f"<td>{html.escape(row['date'])}</td>"
-            f"<td class=\"bacteria-cell bacteria-{row['indicator'].lower()}\">"
+            f"<td class=\"status-cell {row['status_class'] or ''}\">"
             f"{html.escape(row['indicator'])}"
             "</td>"
+            f"<td>{html.escape(row['date'])}</td>"
             "</tr>"
             for row in rows
         )
         body = (
             "<table>"
-            "<thead><tr><th>Site</th><th>Date</th><th>Bacteria</th></tr></thead>"
+            "<thead><tr><th>Site</th><th>Bacteria</th><th>Date</th></tr></thead>"
             f"<tbody>{table_rows}</tbody>"
             "</table>"
         )
