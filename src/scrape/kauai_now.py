@@ -7,7 +7,7 @@ FEED_URL = "https://kauainownews.com/category/kauai-news/feed/"
 
 
 def scrape() -> dict:
-    items = scrape_rss(FEED_URL, limit=5)
+    items = scrape_rss(FEED_URL, limit=10)
     block_html = (
         render_rss_html(items)
     )
