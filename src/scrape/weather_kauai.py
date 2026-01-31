@@ -70,11 +70,18 @@ def scrape() -> dict:
     rows = []
     for day in day_periods[:3]:
         day_name = clean_text(day.get("name", "")) or "Day"
-        night_name = "Tonight" if day_name == "Today" else f"{day_name} Night"
-        night = next(
-            (p for p in periods if p.get("name") == night_name and not p.get("isDaytime")),
-            None,
-        )
+        if day_name in {"This Afternoon", "This Evening"}:
+            day_name = "Today"
+        night = None
+        try:
+            day_index = periods.index(day)
+        except ValueError:
+            day_index = -1
+        if day_index >= 0:
+            night = next(
+                (p for p in periods[day_index + 1 :] if not p.get("isDaytime")),
+                None,
+            )
         rows.append((day_name, day, night))
 
     table_rows = "".join(
