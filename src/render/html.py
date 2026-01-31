@@ -234,6 +234,12 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
     th {{
       text-align: left;
     }}
+    .footer {{
+      border-top: 1px solid #eee;
+      color: #555;
+      font-size: 0.9rem;
+      margin-top: 1rem;
+    }}
   </style>
 </head>
 <body>
@@ -246,6 +252,9 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
   </header>
   {toc_html}
   {"".join(sections)}
+  <footer class="footer">
+    <p>This page aggregates publicly available data from multiple sources. Information may be delayed, incomplete, or contain errors. Always refer to official sources for confirmation.</p>
+  </footer>
 </body>
 </html>
 """

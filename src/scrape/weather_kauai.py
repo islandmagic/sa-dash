@@ -6,7 +6,7 @@ from src.scrape.base import clean_text, fetch_json, now_iso
 
 POINTS_URL = "https://api.weather.gov/points/22.2,-159.42"
 ALERTS_URL = "https://api.weather.gov/alerts?active=true&point=22.21%2C-159.41&limit=500"
-
+MAP_URL = "https://forecast.weather.gov/MapClick.php?lat=22.2&lon=-159.42"
 
 def _extract_hazards_from_api(payload: dict) -> list[dict]:
     hazards = []
@@ -133,7 +133,7 @@ def scrape() -> dict:
 
     return {
         "id": "weather_kauai",
-        "label": f"Weather (<a href=\"{ALERTS_URL}\">NWS {html.escape(location_name)}</a>)",
+        "label": f"Weather (<a href=\"{MAP_URL}\">NWS {html.escape(location_name)}</a>)",
         "retrieved_at": now_iso(),
         "source_urls": [POINTS_URL, forecast_url, ALERTS_URL],
         "html": block_html,
