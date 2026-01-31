@@ -6,7 +6,7 @@ ISLANDS = {
         "scrapers": [
             "weather_kauai",
             "kiuc",
-            "hawaiiantelcom",
+            #"hawaiiantelcom",
             "kauai_water",
             "hidot_highways_news",
             "usgs_water_levels",

@@ -201,6 +201,16 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
       font-size: 0.9rem;
       margin-top: 0;
     }}
+    .info {{
+      color: #555;
+      font-size: 0.9rem;
+      margin-top: 0;
+    }}
+    .info code {{
+      background: #f5f5f5;
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+    }}
     ul {{
       padding-left: 1.1rem;
       margin-top: 0.5rem;
@@ -230,6 +240,9 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
   <header>
     <h1>{island_name} Dashboard</h1>
     <p class="meta">{generated} (Next update: {next_update})</p>
+    <p class="info">
+      Get this page via email by sending a message to <code>query@saildocs.com</code> with <code>send http://kauai.islandmagic.co</code> in the body.
+    </p>
   </header>
   {toc_html}
   {"".join(sections)}
