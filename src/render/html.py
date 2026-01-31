@@ -175,13 +175,10 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
       padding: 0.75rem;
       margin: 0 0 1rem 0;
       border-radius: 6px;
-      background: #fafafa;
-    }}
-    .toc h2 {{
-      margin-top: 0;
+      background: #f0f0f0;
     }}
     .toc ul {{
-      margin: 0.5rem 0 0 0;
+      margin: 0;
       padding-left: 1.1rem;
     }}
     .module {{
@@ -191,14 +188,9 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
       border-radius: 6px;
       background: #fff;
     }}
-    .module hr {{
-      border: 0;
-      border-top: 1px solid #eee;
-      margin: 0.75rem 0 0 0;
-    }}
     .meta {{
       color: #555;
-      font-size: 0.9rem;
+      font-size: 0.7rem;
       margin-top: 0;
     }}
     .info {{
@@ -222,13 +214,9 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
     a:hover {{
       text-decoration: underline;
     }}
-    table {{
-      border-collapse: collapse;
-      width: 100%;
-    }}
     th,
     td {{
-      padding: 0.2rem;
+      padding: 0.1rem 0.5rem;
       vertical-align: top;
     }}
     th {{
@@ -245,7 +233,6 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
     }}
     .bacteria-cell {{
       text-align: center;
-      font-weight: 600;
     }}
     .footer {{
       border-top: 1px solid #eee;
@@ -258,8 +245,7 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
 <body>
   <header>
     <h1>{island_name} Dashboard</h1>
-    <p class="meta"><a href="https://github.com/islandmagic/sa-dash/issues">Report issue</a></p>
-    <p class="meta">{generated} (Next update: {next_update})</p>
+    <p class="meta">{generated} (Next update: {next_update}) | <a href="https://github.com/islandmagic/sa-dash/issues">Report issue</a></p>
     <p class="info">
       Get this page via email by sending a message to <code>query@saildocs.com</code> with <code>send http://kauai.islandmagic.co</code> in the body.
     </p>

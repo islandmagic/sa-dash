@@ -132,7 +132,7 @@ def scrape() -> dict:
 
     return {
         "id": "ocean_water_quality",
-        "label": "Ocean Water Quality (<a href=\"{REPORT_BASE_URL}\">Surfrider Foundation</a>)",
+        "label": f"Ocean Water Quality (<a href=\"{REPORT_BASE_URL}\">Surfrider Foundation</a>)",
         "retrieved_at": now_iso(),
         "source_urls": [DATA_URL, REPORT_BASE_URL],
         "html": body,
