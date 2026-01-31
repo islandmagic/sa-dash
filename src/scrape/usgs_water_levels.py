@@ -304,7 +304,7 @@ def scrape() -> dict:
     )
     return {
         "id": "usgs_water_levels",
-        "label": f"Water Levels (<a href=\"{USGS_URL}\">USGS</a>)",
+        "label": f"Rivers &amp; Reservoirs (<a href=\"{USGS_URL}\">USGS</a>)",
         "retrieved_at": now_iso(),
         "source_urls": source_urls,
         "html": block_html,

@@ -18,7 +18,7 @@ def scrape() -> dict:
     )
     return {
         "id": "hidot_highways_news",
-        "label": f"Roads/Bridges (<a href=\"{SITE_URL}\">HDOT News</a>)",
+        "label": f"Roads &amp; Bridges (<a href=\"{SITE_URL}\">HDOT News</a>)",
         "retrieved_at": now_iso(),
         "source_urls": [SITE_URL, FEED_URL],
         "html": block_html,
