@@ -1,4 +1,5 @@
 import html
+from datetime import datetime, timedelta, timezone
 
 from bs4 import BeautifulSoup
 
@@ -35,8 +36,28 @@ def _extract_reported_outages(page_html: str, limit: int = 5) -> list[dict]:
         url = title_link.get("href") if title_link else WATER_URL
         excerpt = li.find("div", class_="wp-block-latest-posts__post-excerpt")
         summary = clean_text(excerpt.get_text()) if excerpt else None
+        published = li.find("time", class_="wp-block-latest-posts__post-date")
+        published_date = None
+        if published:
+            raw_datetime = published.get("datetime")
+            if raw_datetime:
+                try:
+                    parsed = datetime.fromisoformat(raw_datetime)
+                    hst = parsed.astimezone(timezone(timedelta(hours=-10)))
+                    published_date = hst.strftime("%Y-%m-%d %H:%M HST")
+                except ValueError:
+                    published_date = clean_text(published.get_text())
+            else:
+                published_date = clean_text(published.get_text())
         if title:
-            items.append({"title": title, "url": url, "summary": summary})
+            items.append(
+                {
+                    "title": title,
+                    "url": url,
+                    "summary": summary,
+                    "published_date": published_date,
+                }
+            )
         if len(items) >= limit:
             break
     return items
@@ -56,6 +77,11 @@ def scrape() -> dict:
             "<li>"
             f"<a href=\"{item['url']}\">{html.escape(item['title'])}</a>"
             + (f": {html.escape(item['summary'])}" if item.get("summary") else "")
+            + (
+                f"<br/><span class=\"meta\">{html.escape(item['published_date'])}</span>"
+                if item.get("published_date")
+                else ""
+            )
             + "</li>"
             for item in items
         )
