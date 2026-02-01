@@ -240,6 +240,9 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
       font-size: 0.9rem;
       margin-top: 1rem;
     }}
+    details {{
+      margin: 0.5rem 0 0 0.5rem;
+    }}
   </style>
 </head>
 <body>
