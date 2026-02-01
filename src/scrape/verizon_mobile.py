@@ -141,7 +141,7 @@ def _fetch_outage(town: dict) -> tuple[str, str, str | None]:
             response.raise_for_status()
             payload = response.json()
     except Exception:
-        return "Unknown", "status-yellow", None
+        return "Unknown", "", "Fetch failed."
 
     outages = payload.get("outages", [])
     outage_type = None

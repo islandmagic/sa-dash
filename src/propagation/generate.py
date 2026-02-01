@@ -4,6 +4,7 @@ import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
+from urllib.request import urlopen
 
 from src.propagation.config import GRID_QUERIES, WINDOW_MIN
 from src.propagation.parse import dedupe_records, parse_reports
@@ -110,6 +111,17 @@ def generate(output_path: Path, cache_path: Path, state_path: Path, now: datetim
     return payload
 
 
+def _print_ip_info() -> None:
+    try:
+        with urlopen("https://api.ipify.org?format=json", timeout=10) as response:
+            payload = json.loads(response.read().decode("utf-8"))
+            ip = payload.get("ip")
+            if ip:
+                print(f"Public IP: {ip}")
+    except Exception:
+        print("Public IP: unknown")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Generate propagation summary JSON.")
     parser.add_argument(
@@ -137,6 +149,7 @@ def main() -> None:
     if args.now:
         now = datetime.fromisoformat(args.now.replace("Z", "+00:00"))
     generate(Path(args.output), Path(args.cache_path), Path(args.state_path), now=now)
+    _print_ip_info()
 
 
 if __name__ == "__main__":
