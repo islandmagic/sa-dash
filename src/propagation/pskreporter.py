@@ -100,7 +100,7 @@ def fetch_reports(
     url: str,
     cache_path: Path,
     now: datetime,
-    timeout: float = 15.0,
+    timeout: float = 120.0,
 ) -> FetchResult:
     cache = _load_cache(cache_path)
     requests = _prune_requests(cache.get("requests", []), now)

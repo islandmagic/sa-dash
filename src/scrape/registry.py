@@ -10,6 +10,7 @@ from src.scrape.weather_kauai import scrape as scrape_weather_kauai
 from src.scrape.usgs_water_levels import scrape as scrape_usgs_water_levels
 from src.scrape.propagation import scrape as scrape_propagation
 from src.scrape.ocean_water_quality import scrape as scrape_ocean_water_quality
+from src.scrape.verizon_mobile import scrape as scrape_verizon_mobile
 
 
 SCRAPERS = {
@@ -25,6 +26,7 @@ SCRAPERS = {
     "usgs_water_levels": scrape_usgs_water_levels,
     "propagation": scrape_propagation,
     "ocean_water_quality": scrape_ocean_water_quality,
+    "verizon_mobile": scrape_verizon_mobile,
 }
 
 

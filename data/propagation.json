@@ -1,21 +1,12 @@
 {
-  "timestamp_utc": "2026-01-31T18:52:56Z",
+  "timestamp_utc": "2026-02-01T07:27:28Z",
   "window_minutes": 60,
   "nvis": {
     "status": "POOR",
     "vara_class": "UNLIKELY",
-    "score": 7,
+    "score": 5,
     "confidence": "LOW",
     "bands": {
-      "40m": {
-        "score": 0,
-        "paths": 0,
-        "tx": 0,
-        "rx": 0,
-        "median_snr_db": null,
-        "js8_paths": 0,
-        "ft8_paths": 0
-      },
       "80m": {
         "score": 0,
         "paths": 0,
@@ -25,14 +16,23 @@
         "js8_paths": 0,
         "ft8_paths": 0
       },
-      "30m": {
-        "score": 48,
+      "40m": {
+        "score": 12,
         "paths": 1,
-        "tx": 1.0,
-        "rx": 1.0,
-        "median_snr_db": -8.0,
+        "tx": 0.4,
+        "rx": 0.4,
+        "median_snr_db": -31.0,
         "js8_paths": 0,
-        "ft8_paths": 1
+        "ft8_paths": 0
+      },
+      "30m": {
+        "score": 0,
+        "paths": 0,
+        "tx": 0,
+        "rx": 0,
+        "median_snr_db": null,
+        "js8_paths": 0,
+        "ft8_paths": 0
       }
     },
     "explain": "Little inter-island activity. Low report volume."
@@ -40,26 +40,26 @@
   "mainland": {
     "status": "INTERMITTENT",
     "vara_class": "UNLIKELY",
-    "score": 52,
-    "confidence": "LOW",
+    "score": 36,
+    "confidence": "MEDIUM",
     "bands": {
       "80m": {
-        "score": 0,
-        "paths": 0,
-        "tx": 0,
-        "rx": 0,
-        "median_snr_db": null,
+        "score": 72,
+        "paths": 10,
+        "tx": 9.0,
+        "rx": 2.0,
+        "median_snr_db": -16.5,
         "js8_paths": 0,
-        "ft8_paths": 0
+        "ft8_paths": 9
       },
       "40m": {
-        "score": 0,
-        "paths": 0,
-        "tx": 0,
-        "rx": 0,
-        "median_snr_db": null,
+        "score": 80,
+        "paths": 41,
+        "tx": 8.4,
+        "rx": 34.4,
+        "median_snr_db": -14.0,
         "js8_paths": 0,
-        "ft8_paths": 0
+        "ft8_paths": 40
       },
       "30m": {
         "score": 0,
@@ -71,59 +71,59 @@
         "ft8_paths": 0
       },
       "20m": {
-        "score": 83,
-        "paths": 17,
-        "tx": 17.0,
-        "rx": 1.0,
-        "median_snr_db": -5.0,
+        "score": 73,
+        "paths": 5,
+        "tx": 2.0,
+        "rx": 5.0,
+        "median_snr_db": -16.0,
         "js8_paths": 0,
-        "ft8_paths": 17
+        "ft8_paths": 5
       },
       "17m": {
-        "score": 64,
-        "paths": 6,
-        "tx": 6.0,
-        "rx": 1.0,
-        "median_snr_db": -17.5,
+        "score": 0,
+        "paths": 0,
+        "tx": 0,
+        "rx": 0,
+        "median_snr_db": null,
         "js8_paths": 0,
-        "ft8_paths": 6
+        "ft8_paths": 0
       },
       "15m": {
-        "score": 70,
-        "paths": 13,
-        "tx": 11.4,
-        "rx": 1.8,
-        "median_snr_db": -17.0,
+        "score": 0,
+        "paths": 0,
+        "tx": 0,
+        "rx": 0,
+        "median_snr_db": null,
         "js8_paths": 0,
-        "ft8_paths": 11
+        "ft8_paths": 0
       },
       "12m": {
-        "score": 70,
-        "paths": 6,
-        "tx": 6.0,
-        "rx": 1.0,
-        "median_snr_db": -14.0,
+        "score": 0,
+        "paths": 0,
+        "tx": 0,
+        "rx": 0,
+        "median_snr_db": null,
         "js8_paths": 0,
-        "ft8_paths": 6
+        "ft8_paths": 0
       },
       "10m": {
-        "score": 68,
-        "paths": 18,
-        "tx": 18.0,
-        "rx": 1.0,
-        "median_snr_db": -15.0,
+        "score": 0,
+        "paths": 0,
+        "tx": 0,
+        "rx": 0,
+        "median_snr_db": null,
         "js8_paths": 0,
-        "ft8_paths": 18
+        "ft8_paths": 0
       }
     },
-    "explain": "Intermittent HI\u2194CONUS activity; openings may be brief. Low report volume."
+    "explain": "Intermittent HI\u2194CONUS activity; openings may be brief."
   },
   "sources": {
     "pskreporter": {
       "ok": true,
-      "last_fetch_utc": "2026-01-31T18:52:56.649275Z",
+      "last_fetch_utc": "2026-02-01T07:27:28.207098Z",
       "requests_last_hour": 2
     },
-    "notes": "BL: The read operation timed out"
+    "notes": ""
   }
 }

@@ -8,6 +8,7 @@ ISLANDS = {
             "ocean_water_quality",
             "propagation",
             "kiuc",
+            "verizon_mobile",
             #"hawaiiantelcom",
             "kauai_water",
             "hidot_highways_news",
