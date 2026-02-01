@@ -115,7 +115,10 @@ def fetch_reports(
     try:
         with httpx.Client(follow_redirects=True, timeout=timeout, headers=DEFAULT_HEADERS) as client:
             response = client.get(url)
-            response.raise_for_status()
+            if response.status_code != 200:
+                print(f"PSKReporter HTTP {response.status_code} for {url}")
+                print(response.text)
+                response.raise_for_status()
             text = response.text
     except Exception as exc:  # noqa: BLE001 - keep generator resilient
         cached_fallback = responses.get(url, {}).get("content")
