@@ -5,6 +5,7 @@ ISLANDS = {
         "name": "Kauai",
         "scrapers": [
             "weather_kauai",
+            "precipitation",
             "propagation",
             "kiuc",
             #"verizon_mobile",
