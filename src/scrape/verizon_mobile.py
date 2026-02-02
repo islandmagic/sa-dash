@@ -1,5 +1,6 @@
 import base64
 import html
+import time
 
 import httpx
 
@@ -52,7 +53,11 @@ from src.scrape.base import now_iso
 
 VERIZON_CHECK_URL = "https://www.verizon.com/support/check-network-status/"
 VERIZON_URL = "https://api.verizon.com/cnsservice/cns/checkOutages"
-VERIZON_TOKEN = "eMaWNY8xdnMmWF3X1SuGq7kaQPlU"
+TOKEN_URL = "https://api.verizon.com/cnsservice/cns/generate_token"
+CLIENT_ID = "TaOzebxgGneCmMhrKQli32gHzD2HXzGa"
+CLIENT_SECRET = "kwAqCm8ACwUxwqse"
+API_KEY = CLIENT_ID
+TOKEN_TTL_SKEW = 60
 JOURNEY_ID = 44575938
 
 COUNTY = "Kauai"
@@ -101,6 +106,11 @@ TOWNS = [
     },
 ]
 
+_TOKEN_CACHE: dict[str, str | float | None] = {
+    "token": None,
+    "expires_at": 0.0,
+}
+
 
 def _b64(value: str) -> str:
     return base64.b64encode(value.encode("utf-8")).decode("ascii")
@@ -130,17 +140,90 @@ def _payload_for_town(town: dict) -> dict:
     }
 
 
-def _fetch_outage(town: dict) -> tuple[str, str, str | None]:
+def _fetch_token() -> tuple[str | None, float]:
     headers = {
-        "Authorization": f"Bearer {VERIZON_TOKEN}",
-        "Content-Type": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Accept": "application/json, text/plain, */*",
+        "Origin": "https://gismaps.verizon.com",
+        "Referer": "https://gismaps.verizon.com/",
+        "apiKey": API_KEY,
+        "grant_type": "client_credentials",
+    }
+    data = {
+        "client_id": CLIENT_ID,
+        "client_secret": CLIENT_SECRET,
     }
     try:
         with httpx.Client(timeout=20.0) as client:
-            response = client.post(VERIZON_URL, json=_payload_for_town(town), headers=headers)
+            response = client.post(TOKEN_URL, data=data, headers=headers)
             response.raise_for_status()
             payload = response.json()
-    except Exception:
+    except Exception as exc:
+        print(f"Verizon token fetch failed: {exc}")
+        return None, 0.0
+
+    token = payload.get("access_token")
+    expires_in = payload.get("expires_in")
+    try:
+        ttl = max(0, int(expires_in) - TOKEN_TTL_SKEW)
+    except (TypeError, ValueError):
+        ttl = 0
+    if not token:
+        print("Verizon token missing from response.")
+    return token, time.time() + ttl
+
+
+def _get_token(force_refresh: bool = False) -> str | None:
+    if not force_refresh:
+        token = _TOKEN_CACHE.get("token")
+        expires_at = _TOKEN_CACHE.get("expires_at") or 0.0
+        if token and expires_at > time.time():
+            return token
+
+    token, expires_at = _fetch_token()
+    if token:
+        _TOKEN_CACHE["token"] = token
+        _TOKEN_CACHE["expires_at"] = expires_at
+    return token
+
+
+def _request_outage(town: dict, token: str) -> httpx.Response:
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "Content-Type": "application/json",
+    }
+    with httpx.Client(timeout=20.0) as client:
+        return client.post(VERIZON_URL, json=_payload_for_town(town), headers=headers)
+
+
+def _fetch_outage(town: dict) -> tuple[str, str, str | None]:
+    token = _get_token()
+    if not token:
+        print("Verizon outage check failed: token fetch failed.")
+        return "Unknown", "", "Token fetch failed."
+
+    response = None
+    try:
+        response = _request_outage(town, token)
+        if response.status_code in {401, 403}:
+            token = _get_token(force_refresh=True)
+            if not token:
+                print("Verizon outage check failed: token refresh failed.")
+                return "Unknown", "", "Token refresh failed."
+            response = _request_outage(town, token)
+        response.raise_for_status()
+        payload = response.json()
+    except Exception as exc:
+        if response is not None:
+            print(
+                "Verizon outage check failed for "
+                f"{town.get('town', 'unknown')} (HTTP {response.status_code})."
+            )
+            print(response.text[:500])
+        else:
+            print(
+                f"Verizon outage check failed for {town.get('town', 'unknown')}: {exc}"
+            )
         return "Unknown", "", "Fetch failed."
 
     outages = payload.get("outages", [])
@@ -192,7 +275,7 @@ def scrape() -> dict:
         "id": "verizon_mobile",
         "label": f"Verizon Mobile (<a href=\"{VERIZON_CHECK_URL}\">Verizon</a>)",
         "retrieved_at": now_iso(),
-        "source_urls": [VERIZON_URL],
+        "source_urls": [VERIZON_URL, TOKEN_URL],
         "html": body,
         "error": None,
         "stale": False,

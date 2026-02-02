@@ -6,10 +6,10 @@ ISLANDS = {
         "scrapers": [
             "weather_kauai",
             "precipitation",
-            "propagation",
             "kiuc",
-            #"verizon_mobile",
+            "verizon_mobile",
             #"hawaiiantelcom",
+            "propagation",
             "kauai_water",
             "hidot_highways_news",
             "usgs_water_levels",
