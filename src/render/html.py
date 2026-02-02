@@ -124,8 +124,12 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
             f"<li><a href=\"#{section_id}\">{provider['label']}</a></li>"
         )
 
+        module_classes = ["module"]
+        if provider.get("layout") == "full" or provider.get("full_width"):
+            module_classes.append("module--full")
+        class_attr = " ".join(module_classes)
         sections.append(
-            f"<section class=\"module\" id=\"{section_id}\">"
+            f"<section class=\"{class_attr}\" id=\"{section_id}\">"
             f"<h2>{provider['label']}</h2>"
             f"<p class=\"meta\">{last_retrieved}</p>"
             f"{error_note}{body}"
@@ -145,6 +149,9 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
   <style>
     :root {{
       color-scheme: light only;
+    }}
+    * {{
+      box-sizing: border-box;
     }}
     body {{
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -181,12 +188,23 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
       margin: 0;
       padding-left: 1.1rem;
     }}
+    .modules {{
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+      align-items: stretch;
+    }}
     .module {{
       border: 1px solid #e2e2e2;
       padding: 0.75rem;
-      margin: 0 0 1rem 0;
+      margin: 0;
       border-radius: 6px;
       background: #fff;
+      display: flex;
+      flex-direction: column;
+    }}
+    .module--full {{
+      grid-column: 1 / -1;
     }}
     .meta {{
       color: #555;
@@ -243,6 +261,11 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
     details {{
       margin: 0.5rem 0 0 0.5rem;
     }}
+    @media (max-width: 720px) {{
+      .modules {{
+        grid-template-columns: 1fr;
+      }}
+    }}
   </style>
 </head>
 <body>
@@ -254,7 +277,7 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
     </p>
   </header>
   {toc_html}
-  {"".join(sections)}
+  <div class="modules">{"".join(sections)}</div>
   <footer class="footer">
     <p>This page aggregates publicly available data from multiple sources. Information may be delayed, incomplete, or contain errors. Always refer to official sources for confirmation.</p>
   </footer>

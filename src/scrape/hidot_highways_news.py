@@ -51,4 +51,5 @@ def scrape() -> dict:
         "html": block_html,
         "error": None,
         "stale": False,
+        "layout": "full",
     }
