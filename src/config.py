@@ -8,6 +8,7 @@ ISLANDS = {
             "precipitation",
             "kiuc",
             "verizon_mobile",
+            "att_mobile",
             #"hawaiiantelcom",
             "propagation",
             "kauai_water",

@@ -12,6 +12,7 @@ from src.scrape.propagation import scrape as scrape_propagation
 from src.scrape.ocean_water_quality import scrape as scrape_ocean_water_quality
 from src.scrape.verizon_mobile import scrape as scrape_verizon_mobile
 from src.scrape.precipitation import scrape as scrape_precipitation
+from src.scrape.att_mobile import scrape as scrape_att_mobile
 
 
 SCRAPERS = {
@@ -28,6 +29,7 @@ SCRAPERS = {
     "propagation": scrape_propagation,
     "ocean_water_quality": scrape_ocean_water_quality,
     "verizon_mobile": scrape_verizon_mobile,
+    "att_mobile": scrape_att_mobile,
     "precipitation": scrape_precipitation,
 }
 
