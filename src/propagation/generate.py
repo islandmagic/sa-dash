@@ -76,7 +76,6 @@ def generate(output_path: Path, cache_path: Path, state_path: Path, now: datetim
         "window_minutes": WINDOW_MIN,
         "nvis": {
             "status": nvis_summary.status,
-            "vara_class": nvis_summary.vara_class,
             "score": nvis_summary.score,
             "confidence": nvis_summary.confidence,
             "bands": nvis_summary.bands,
@@ -84,7 +83,6 @@ def generate(output_path: Path, cache_path: Path, state_path: Path, now: datetim
         },
         "mainland": {
             "status": mainland_summary.status,
-            "vara_class": mainland_summary.vara_class,
             "score": mainland_summary.score,
             "confidence": mainland_summary.confidence,
             "bands": mainland_summary.bands,

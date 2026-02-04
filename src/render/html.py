@@ -211,10 +211,19 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
       font-size: 0.7rem;
       margin-top: 0;
     }}
+    .status {{
+      color: #000;
+      font-size: 0.8rem;
+      margin-top: 0;
+    }}
+
     .info {{
       color: #555;
-      font-size: 0.9rem;
+      font-size: 0.8rem;
       margin-top: 0;
+    }}
+    .info::before {{
+      content: "ⓘ ";
     }}
     .info code {{
       background: #f5f5f5;

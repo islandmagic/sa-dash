@@ -5,7 +5,8 @@ from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
-from urllib.parse import urlencode
+import re
+from urllib.parse import urlencode, urljoin
 
 import httpx
 
@@ -30,6 +31,26 @@ class FetchResult:
     error: str | None = None
 
 
+def _extract_cf_challenge_url(base_url: str, html: str) -> str | None:
+    if not html:
+        return None
+    match = re.search(r'cUPMDTk:"([^"]+)"', html)
+    if not match:
+        match = re.search(r'fa:"([^"]+)"', html)
+    if not match:
+        match = re.search(r'replaceState\([^,]+,[^,]+,"([^"]+)"\)', html)
+    if not match:
+        return None
+    raw_path = match.group(1).replace("\\/", "/")
+    return urljoin(base_url, raw_path)
+
+
+def _redact_cf_url(url: str) -> str:
+    if "__cf_chl_" not in url:
+        return url
+    return re.sub(r"(__cf_chl_[^=]+=)[^&]+", r"\1REDACTED", url)
+
+
 def _load_cache(path: Path) -> dict[str, Any]:
     if not path.exists():
         return {"requests": [], "responses": {}, "last_fetch_utc": None}
@@ -41,7 +62,9 @@ def _load_cache(path: Path) -> dict[str, Any]:
 
 def _save_cache(path: Path, payload: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(payload, indent=2, ensure_ascii=True), encoding="utf-8")
+    json_payload = json.dumps(payload, indent=2, ensure_ascii=True)
+    path.write_text(json_payload, encoding="utf-8")
+    print(json_payload)
 
 
 def build_query_url(
@@ -116,9 +139,26 @@ def fetch_reports(
         with httpx.Client(follow_redirects=True, timeout=timeout, headers=DEFAULT_HEADERS) as client:
             response = client.get(url)
             if response.status_code != 200:
-                print(f"PSKReporter HTTP {response.status_code} for {url}")
-                print(response.text)
-                response.raise_for_status()
+                if response.status_code == 403:
+                    challenge_url = _extract_cf_challenge_url(url, response.text)
+                    if challenge_url:
+                        print("PSKReporter Cloudflare challenge detected (403).")
+                        print(f"Retrying with challenge URL: {_redact_cf_url(challenge_url)}")
+                        retry = client.get(challenge_url)
+                        if retry.status_code == 200:
+                            response = retry
+                        else:
+                            print(
+                                "PSKReporter challenge retry failed "
+                                f"(HTTP {retry.status_code})."
+                            )
+                            print(retry.text[:500])
+                    else:
+                        print("PSKReporter Cloudflare challenge detected, no retry URL found.")
+                if response.status_code != 200:
+                    print(f"PSKReporter HTTP {response.status_code} for {url}")
+                    print(response.text[:500])
+                    response.raise_for_status()
             text = response.text
     except Exception as exc:  # noqa: BLE001 - keep generator resilient
         cached_fallback = responses.get(url, {}).get("content")

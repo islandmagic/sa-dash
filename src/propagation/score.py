@@ -38,12 +38,10 @@ from src.propagation.parse import ReceptionRecord
 @dataclass
 class IndicatorSummary:
     status: str
-    vara_class: str
     score: int
     confidence: str
     bands: dict[str, dict]
     explain: str
-    vara_score: int
     records_total: int
 
 
@@ -207,17 +205,6 @@ def _apply_hysteresis(score: float, prev: str | None, thresholds: dict[str, int]
     return raw
 
 
-def _map_vara_class(score: float, thresholds: dict[str, int], labels: list[str]) -> str:
-    high_label = labels[0]
-    mid_label = labels[1]
-    low_label = labels[2]
-    if score >= thresholds[high_label]:
-        return high_label
-    if score >= thresholds[mid_label]:
-        return mid_label
-    return low_label
-
-
 def _apply_vara_overrides(
     vara_score: float,
     s_median_by_band: dict[str, float | None],
@@ -252,7 +239,7 @@ def _confidence_level(records_total: int, anchors_reporting: int, fresh_minutes:
 
 
 def _explain(status: str, js8_paths_total: int, is_nvis: bool) -> str:
-    js8_suffix = " (JS8 present)." if js8_paths_total >= 1 else " (FT8 only)."
+    js8_suffix = " (JS8)." if js8_paths_total >= 1 else " (FT8)."
     if is_nvis:
         if status == "GOOD":
             return f"Strong inter-island paths on 40m/80m{js8_suffix}"
@@ -285,6 +272,7 @@ def _indicator_summary(
     band_outputs: dict[str, dict] = {}
     weighted_score = 0.0
     weighted_vara = 0.0
+    active_weight = 0.0
     js8_paths_total = 0
     records_total = 0
     s_median_by_band: dict[str, float | None] = {}
@@ -322,6 +310,7 @@ def _indicator_summary(
         vara_band = _vara_score(band_score, js8_paths, ft8_paths, s_median, is_nvis)
         weighted_score += weight * band_score
         weighted_vara += weight * vara_band
+        active_weight += weight
         js8_paths_total += js8_paths
 
         s_median_by_band[band] = s_median
@@ -339,6 +328,10 @@ def _indicator_summary(
             "ft8_paths": ft8_paths,
         }
 
+    if active_weight > 0:
+        weighted_score /= active_weight
+        weighted_vara /= active_weight
+
     vara_score = _apply_vara_overrides(
         weighted_vara,
         s_median_by_band,
@@ -350,34 +343,21 @@ def _indicator_summary(
 
     labels = ["GOOD", "MARGINAL", "POOR"] if is_nvis else ["OPEN", "INTERMITTENT", "CLOSED"]
     status = _apply_hysteresis(weighted_score, prev_status, thresholds, labels)
-    vara_class = _map_vara_class(vara_score, vara_thresholds, ["LIKELY", "POSSIBLE", "UNLIKELY"])
-
-    js8_present = any(paths >= 1 for paths in js8_by_band.values())
-    ft8_only = js8_present is False and sum(ft8_by_band.values()) > 0
-    if ft8_only:
-        snr_ok = SNR_OK_NVIS if is_nvis else SNR_OK_MAINLAND
-        median_values = [v for v in s_median_by_band.values() if v is not None]
-        if median_values and max(median_values) < snr_ok and vara_class == "LIKELY":
-            vara_class = "POSSIBLE"
-
     confidence = _confidence_level(records_total, anchors_reporting, fresh_minutes)
     explain = _explain(status, js8_paths_total, is_nvis)
     if confidence == "LOW":
         if records_total == 0:
             status = "UNKNOWN"
-            vara_class = "UNKNOWN"
             explain = "Limited recent reports."
         else:
             explain = f"{explain} Low report volume."
 
     return IndicatorSummary(
         status=status,
-        vara_class=vara_class,
         score=int(round(weighted_score)),
         confidence=confidence,
         bands=band_outputs,
         explain=explain,
-        vara_score=int(round(vara_score)),
         records_total=records_total,
     )
 

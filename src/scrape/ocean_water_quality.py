@@ -107,6 +107,11 @@ def scrape() -> dict:
         )
     )
 
+    info_html = (
+        "<p class=\"info\">Bacteria levels: Low 0-35 MPN, "
+        "Medium 36-130 MPN, High 131+ MPN.</p>"
+    )
+
     if rows:
         table_rows = "".join(
             "<tr>"
@@ -119,6 +124,7 @@ def scrape() -> dict:
             for row in rows
         )
         body = (
+            f"{info_html}"
             "<table>"
             "<thead><tr><th>Site</th><th>Bacteria</th><th>Date</th></tr></thead>"
             f"<tbody>{table_rows}</tbody>"
@@ -127,7 +133,7 @@ def scrape() -> dict:
         error = None
         stale = False
     else:
-        body = "<p>No matching water quality records.</p>"
+        body = f"{info_html}<p>No matching water quality records.</p>"
         error = None
         stale = False
 

@@ -56,22 +56,34 @@ def scrape() -> dict:
             "stale": True,
         }
 
-    nvis = payload.get("nvis", {}).get("bands", {})
-    mainland = payload.get("mainland", {}).get("bands", {})
+    nvis_payload = payload.get("nvis", {}) or {}
+    mainland_payload = payload.get("mainland", {}) or {}
+    nvis = nvis_payload.get("bands", {})
+    mainland = mainland_payload.get("bands", {})
     updated_at = _format_timestamp(payload.get("timestamp_utc")) or now_iso()
 
     interisland_rows = _band_rows(nvis)
     mainland_rows = _band_rows(mainland)
+    nvis_meta = (
+        f"Status: {html.escape(str(nvis_payload.get('status', 'UNKNOWN')))} | "
+        f"Confidence: {html.escape(str(nvis_payload.get('confidence', 'UNKNOWN')))}"
+    )
+    mainland_meta = (
+        f"Status: {html.escape(str(mainland_payload.get('status', 'UNKNOWN')))} | "
+        f"Confidence: {html.escape(str(mainland_payload.get('confidence', 'UNKNOWN')))}"
+    )
     body = (
         "<p class=\"info\">Methodology: Aggregated PSKReporter spots over a last 60-minute window, "
         "grouped by band and region. Median SNR is from reported spots; total paths "
         "counts unique sender/receiver pairs.</p>"
         "<h3>Interisland</h3>"
+        f"<p class=\"status\">{nvis_meta}</p>"
         "<table>"
         "<thead><tr><th>Band</th><th>Median SNR</th><th>Paths</th></tr></thead>"
         f"<tbody>{interisland_rows}</tbody>"
         "</table>"
         "<h3>Hawaii &larr;&rarr; Mainland</h3>"
+        f"<p class=\"status\">{mainland_meta}</p>"
         "<table>"
         "<thead><tr><th>Band</th><th>Median SNR</th><th>Paths</th></tr></thead>"
         f"<tbody>{mainland_rows}</tbody>"
@@ -86,4 +98,5 @@ def scrape() -> dict:
         "html": body,
         "error": None,
         "stale": False,
+        "layout": "full",
     }

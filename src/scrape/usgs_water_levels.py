@@ -296,7 +296,12 @@ def scrape() -> dict:
             "</tr>"
         )
 
+    info_html = (
+        "<p class=\"info\">Condition labels are determined by comparing the latest value to a 30-day baseline derived from the past three years: "
+        "Normal (&lt;75th percentile), Elevated (75th–95th percentile), and Critical (≥95th percentile).</p>"
+    )
     block_html = (
+        f"{info_html}"
         "<table>"
         "<thead><tr><th>Location</th><th>Metric</th><th>Value</th><th>Condition</th><th>Time</th></tr></thead>"
         f"<tbody>{''.join(html_rows)}</tbody>"

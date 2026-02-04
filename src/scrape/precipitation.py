@@ -159,8 +159,8 @@ def _build_precip_table(today: date) -> str:
                     {
                         "station_name": station_name,
                         "station_number": station_number,
-                        "yesterday": _extract_gauge_for_date(json_payload, yesterday),
                         "today": _extract_gauge_for_date(json_payload, today),
+                        "yesterday": _extract_gauge_for_date(json_payload, yesterday),
                         "last_72h": _extract_72h_total(json_payload, today),
                         "month_current": month_current,
                         "month_prev": month_prev,
@@ -190,17 +190,20 @@ def _build_precip_table(today: date) -> str:
         f"<td>{html.escape(row['station_name'])}</td>"
         f"<td><a href=\"{DEX_PRECIP_URL}/{html.escape(row['station_number'])}\">"
         f"{html.escape(row['station_number'])}</a></td>"
-        f"<td style=\"text-align:right;\">{html.escape(row['yesterday'])}</td>"
         f"<td style=\"text-align:right;\">{html.escape(row['today'])}</td>"
+        f"<td style=\"text-align:right;\">{html.escape(row['yesterday'])}</td>"
         f"<td style=\"text-align:right;\">{html.escape(row['last_72h'])}</td>"
         f"<td style=\"text-align:right;\">{html.escape(row['month_current'])}</td>"
         f"<td style=\"text-align:right;\">{html.escape(row['month_prev'])}</td>"
         "</tr>"
         for row in sorted_rows
     )
+    prev_month = today.replace(day=1) - timedelta(days=1)
+    prev_label = prev_month.strftime("%B")
     return (
         "<table>"
-        "<thead><tr><th>Location</th><th>Station ID</th><th>Yesterday (in)</th><th>Today (in)</th><th>Last 72h (in)</th><th>This Month (in)</th><th>Last Month (in)</th></tr></thead>"
+        "<thead><tr><th>Location</th><th>Station ID</th><th>Today [in]</th><th>Yesterday [in]</th><th>Last 72h [in]</th><th>This Month [in]</th>"
+        f"<th>{html.escape(prev_label)} [in]</th></tr></thead>"
         f"<tbody>{table_rows}</tbody>"
         "</table>"
     )
