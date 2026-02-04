@@ -17,9 +17,15 @@ from src.propagation.config import (
 )
 
 PSKREPORTER_BASE = "https://retrieve.pskreporter.info/query"
+PSKREPORTER_WARMUP_URL = "https://pskreporter.info/"
 DEFAULT_HEADERS = {
-    "User-Agent": "sa-dash/1.0 (+https://github.com/)",
-    "Accept": "application/xml",
+    "User-Agent": (
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+        "AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
+    ),
+    "Accept": "application/xml, text/html;q=0.9, */*;q=0.8",
+    "Accept-Language": "en-US,en;q=0.9",
+    "Referer": "https://pskreporter.info/",
 }
 
 
@@ -137,6 +143,9 @@ def fetch_reports(
 
     try:
         with httpx.Client(follow_redirects=True, timeout=timeout, headers=DEFAULT_HEADERS) as client:
+            warmup = client.get(PSKREPORTER_WARMUP_URL)
+            if warmup.status_code >= 400:
+                print(f"PSKReporter warmup failed (HTTP {warmup.status_code}).")
             response = client.get(url)
             if response.status_code != 200:
                 if response.status_code == 403:
