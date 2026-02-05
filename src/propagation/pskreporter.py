@@ -70,7 +70,6 @@ def _save_cache(path: Path, payload: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     json_payload = json.dumps(payload, indent=2, ensure_ascii=True)
     path.write_text(json_payload, encoding="utf-8")
-    print(json_payload)
 
 
 def build_query_url(
@@ -143,9 +142,6 @@ def fetch_reports(
 
     try:
         with httpx.Client(follow_redirects=True, timeout=timeout, headers=DEFAULT_HEADERS) as client:
-            warmup = client.get(PSKREPORTER_WARMUP_URL)
-            if warmup.status_code >= 400:
-                print(f"PSKReporter warmup failed (HTTP {warmup.status_code}).")
             response = client.get(url)
             if response.status_code != 200:
                 if response.status_code == 403:

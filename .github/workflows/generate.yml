@@ -4,8 +4,6 @@ on:
   schedule:
     - cron: "30 * * * *"
   workflow_dispatch:
-  push:
-    branches: ["master"]
 
 permissions:
   contents: read
@@ -28,13 +26,6 @@ jobs:
           python-version: "3.11"
       - name: Install dependencies
         run: pip install -r requirements.txt
-      - name: Generate propagation data
-        run: python3 -m src.propagation.generate
-      - name: Debug propagation output
-        run: |
-          ls -l data
-          echo "---- propagation.json ----"
-          cat data/propagation.json
       - name: Generate pages
         run: python3 -m src.generate --island kauai
         env:

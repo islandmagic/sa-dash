@@ -23,6 +23,18 @@ Outputs are written to `site/`:
 If the network is unavailable, you can render from cached data:
 - `python3 -m src.generate --island kauai --offline`
 
+## Local propagation cron
+
+If PSKReporter is blocked in CI, you can generate `data/propagation.json` locally
+on a machine with access and push it to the repo.
+
+1. Make the script executable:
+   - `chmod +x scripts/propagation_cron.sh`
+2. Add a cron entry (runs at minute 25 each hour):
+   - `25 * * * * cd /Users/xxx/sa-dash && ./scripts/propagation_cron.sh >> /Users/xxx/sa-dash/propagation_cron.log 2>&1`
+
+This requires git credentials configured on that machine so `git push` succeeds.
+
 ## Secrets
 
 USGS uses an API key. Set it as an environment variable locally or in GitHub Actions:

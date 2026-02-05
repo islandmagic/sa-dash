@@ -11,7 +11,7 @@ ISLANDS = {
             "verizon_mobile",
             "att_mobile",
             #"hawaiiantelcom",
-            #"propagation",
+            "propagation",
             "hidot_highways_news",
             "usgs_water_levels",
             "ocean_water_quality",
