@@ -31,7 +31,7 @@ on a machine with access and push it to the repo.
 1. Make the script executable:
    - `chmod +x scripts/propagation_cron.sh`
 2. Add a cron entry (runs at minute 25 each hour):
-   - `25 * * * * cd /Users/xxx/sa-dash && ./scripts/propagation_cron.sh >> /Users/xxx/sa-dash/propagation_cron.log 2>&1`
+   - `25 * * * * cd /Users/xxx/sa-dash && REPO_DIR=/Users/xxx/sa-dash VENV_PATH=/Users/xxx/sa-dash/.venv ./scripts/propagation_cron.sh >> /Users/xxx/sa-dash/propagation_cron.log 2>&1`
 
 This requires git credentials configured on that machine so `git push` succeeds.
 

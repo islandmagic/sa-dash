@@ -1,7 +1,14 @@
 #!/bin/sh
 set -euo pipefail
 
-cd "$(pwd)"
+REPO_DIR="${REPO_DIR:-$(pwd)}"
+VENV_PATH="${VENV_PATH:-$REPO_DIR/.venv}"
+
+cd "$REPO_DIR"
+
+if [ -f "$VENV_PATH/bin/activate" ]; then
+  . "$VENV_PATH/bin/activate"
+fi
 
 python3 -m src.propagation.generate
 

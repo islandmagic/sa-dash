@@ -5,3 +5,4 @@ data/cache/
 site/
 .env
 .DS_Store
+*.log
