@@ -1,5 +1,5 @@
 {
-  "timestamp_utc": "2026-02-06T19:25:01Z",
+  "timestamp_utc": "2026-02-06T20:25:01Z",
   "window_minutes": 60,
   "nvis": {
     "status": "UNKNOWN",
@@ -38,7 +38,7 @@
   },
   "mainland": {
     "status": "OPEN",
-    "score": 65,
+    "score": 62,
     "confidence": "MEDIUM",
     "bands": {
       "80m": {
@@ -60,67 +60,67 @@
         "ft8_paths": 0
       },
       "30m": {
-        "score": 0,
-        "paths": 0,
-        "tx": 0,
-        "rx": 0,
-        "median_snr_db": null,
+        "score": 25,
+        "paths": 1,
+        "tx": 0.4,
+        "rx": 0.4,
+        "median_snr_db": -16.0,
         "js8_paths": 0,
         "ft8_paths": 0
       },
       "20m": {
         "score": 81,
-        "paths": 32,
-        "tx": 19.2,
-        "rx": 4.2,
+        "paths": 31,
+        "tx": 20.0,
+        "rx": 3.0,
         "median_snr_db": -13.0,
-        "js8_paths": 1,
+        "js8_paths": 0,
         "ft8_paths": 31
       },
       "17m": {
-        "score": 33,
+        "score": 39,
         "paths": 1,
         "tx": 1.0,
         "rx": 1.0,
-        "median_snr_db": -20.0,
+        "median_snr_db": -16.0,
         "js8_paths": 0,
         "ft8_paths": 1
       },
       "15m": {
-        "score": 52,
-        "paths": 2,
-        "tx": 2.0,
-        "rx": 1.0,
-        "median_snr_db": -14.0,
+        "score": 51,
+        "paths": 5,
+        "tx": 1.8,
+        "rx": 2.6,
+        "median_snr_db": -21.0,
         "js8_paths": 0,
-        "ft8_paths": 2
+        "ft8_paths": 1
       },
       "12m": {
         "score": 70,
-        "paths": 13,
-        "tx": 12.4,
+        "paths": 8,
+        "tx": 7.4,
         "rx": 1.0,
         "median_snr_db": -14.0,
         "js8_paths": 0,
-        "ft8_paths": 12
+        "ft8_paths": 7
       },
       "10m": {
-        "score": 85,
-        "paths": 15,
-        "tx": 12.8,
-        "rx": 2.4,
-        "median_snr_db": -9.0,
+        "score": 93,
+        "paths": 49,
+        "tx": 22.4,
+        "rx": 23.0,
+        "median_snr_db": -5.0,
         "js8_paths": 0,
-        "ft8_paths": 13
+        "ft8_paths": 47
       }
     },
-    "explain": "HI<->CONUS paths observed on 20m+ (JS8)."
+    "explain": "HI<->CONUS paths observed on 20m+ (FT8)."
   },
   "sources": {
     "pskreporter": {
       "ok": true,
-      "last_fetch_utc": "2026-02-06T19:25:01.444142Z",
-      "requests_last_hour": 4
+      "last_fetch_utc": "2026-02-06T20:25:01.819566Z",
+      "requests_last_hour": 2
     },
     "notes": ""
   }
