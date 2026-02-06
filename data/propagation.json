@@ -1,5 +1,5 @@
 {
-  "timestamp_utc": "2026-02-06T00:25:02Z",
+  "timestamp_utc": "2026-02-06T01:25:01Z",
   "window_minutes": 60,
   "nvis": {
     "status": "POOR",
@@ -16,20 +16,20 @@
         "ft8_paths": 0
       },
       "40m": {
-        "score": 12,
-        "paths": 1,
-        "tx": 0.4,
-        "rx": 0.4,
-        "median_snr_db": -25.0,
-        "js8_paths": 0,
-        "ft8_paths": 0
-      },
-      "30m": {
         "score": 0,
         "paths": 0,
         "tx": 0,
         "rx": 0,
         "median_snr_db": null,
+        "js8_paths": 0,
+        "ft8_paths": 0
+      },
+      "30m": {
+        "score": 12,
+        "paths": 1,
+        "tx": 0.4,
+        "rx": 0.4,
+        "median_snr_db": -28.0,
         "js8_paths": 0,
         "ft8_paths": 0
       }
@@ -38,7 +38,7 @@
   },
   "mainland": {
     "status": "OPEN",
-    "score": 71,
+    "score": 73,
     "confidence": "MEDIUM",
     "bands": {
       "80m": {
@@ -60,58 +60,58 @@
         "ft8_paths": 0
       },
       "30m": {
-        "score": 31,
-        "paths": 1,
-        "tx": 0.4,
-        "rx": 0.4,
-        "median_snr_db": -12.0,
+        "score": 46,
+        "paths": 2,
+        "tx": 1.4,
+        "rx": 1.0,
+        "median_snr_db": -14.5,
         "js8_paths": 0,
-        "ft8_paths": 0
+        "ft8_paths": 1
       },
       "20m": {
-        "score": 77,
-        "paths": 45,
-        "tx": 18.0,
-        "rx": 28.0,
-        "median_snr_db": -16.0,
+        "score": 82,
+        "paths": 21,
+        "tx": 20.4,
+        "rx": 1.4,
+        "median_snr_db": -7.0,
         "js8_paths": 0,
-        "ft8_paths": 45
+        "ft8_paths": 20
       },
       "17m": {
-        "score": 71,
-        "paths": 8,
-        "tx": 7.4,
-        "rx": 2.0,
-        "median_snr_db": -17.0,
+        "score": 91,
+        "paths": 34,
+        "tx": 8.0,
+        "rx": 25.0,
+        "median_snr_db": -6.0,
         "js8_paths": 0,
-        "ft8_paths": 7
+        "ft8_paths": 34
       },
       "15m": {
-        "score": 87,
-        "paths": 31,
-        "tx": 21.4,
-        "rx": 8.0,
-        "median_snr_db": -9.0,
+        "score": 45,
+        "paths": 2,
+        "tx": 2.0,
+        "rx": 1.0,
+        "median_snr_db": -19.0,
         "js8_paths": 0,
-        "ft8_paths": 29
+        "ft8_paths": 2
       },
       "12m": {
-        "score": 67,
-        "paths": 8,
-        "tx": 8.0,
-        "rx": 1.0,
-        "median_snr_db": -15.5,
+        "score": 75,
+        "paths": 10,
+        "tx": 7.4,
+        "rx": 2.0,
+        "median_snr_db": -14.5,
         "js8_paths": 0,
-        "ft8_paths": 8
+        "ft8_paths": 9
       },
       "10m": {
-        "score": 80,
-        "paths": 87,
-        "tx": 25.0,
-        "rx": 31.0,
-        "median_snr_db": -14.0,
+        "score": 87,
+        "paths": 55,
+        "tx": 18.4,
+        "rx": 32.0,
+        "median_snr_db": -9.0,
         "js8_paths": 0,
-        "ft8_paths": 87
+        "ft8_paths": 54
       }
     },
     "explain": "HI<->CONUS paths observed on 20m+ (FT8)."
@@ -119,8 +119,8 @@
   "sources": {
     "pskreporter": {
       "ok": true,
-      "last_fetch_utc": "2026-02-06T00:25:02.033872Z",
-      "requests_last_hour": 2
+      "last_fetch_utc": "2026-02-06T01:25:01.378545Z",
+      "requests_last_hour": 4
     },
     "notes": ""
   }
