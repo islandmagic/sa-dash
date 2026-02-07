@@ -40,7 +40,8 @@ def scrape() -> dict:
         lihue_items.append(item)
     items = lihue_items[:5]
     info_html = (
-        "<p><strong>Emergencies:</strong> <a href=\"tel:+18082413000\">808-241-3000</a>"
+        "<p><strong>Road and closure conditions:</strong> <a href=\"tel:+18082411725\">808-241-1725</a></p>"
+        "<p><strong>Report a problem:</strong> <a href=\"tel:+18082413000\">808-241-3000</a></p>"
     )
     block_html = f"{info_html}" + render_rss_html(items)
     return {
