@@ -15,9 +15,9 @@ USGS_LOCATION_URL = (
 USGS_DAILY_URL = "https://api.waterdata.usgs.gov/ogcapi/v0/collections/daily/items"
 
 USGS_LOCATIONS = [
-    "16103000",
+    "16103000",  # Hanalei River 
     "16104200",  # Hanalei River at Hwy 56 Bridge
-    "16097500",  # Stream
+    "16097500",  # Kilauea Stream
     "16094150",  # Kaloko reservoir
     "16060000",  # Wailua River
 ]
@@ -36,6 +36,18 @@ INDICATOR_CLASSES = {
     "Normal": "status-green",
     "Elevated": "status-yellow",
     "Critical": "status-red",
+}
+
+FLOOD_THRESHOLDS_FT = {
+    "16104200": {"minor": 7.3},
+    "16060000": {"minor": 15.0, "major": 22.9},
+    "16097500": {"minor": 7.0, "major": 10.2},
+    "16103000": {"minor": 5.0, "major": 15.8},
+}
+
+FLOOD_CLASSES = {
+    "Minor": "status-yellow",
+    "Major": "status-red",
 }
 
 
@@ -79,6 +91,21 @@ def _percentile(values: list[float], pct: float) -> float:
     upper = min(lower + 1, len(sorted_vals) - 1)
     weight = position - lower
     return sorted_vals[lower] + (sorted_vals[upper] - sorted_vals[lower]) * weight
+
+
+def _flood_status(location_id: str, value: float | None) -> str | None:
+    if value is None:
+        return None
+    thresholds = FLOOD_THRESHOLDS_FT.get(location_id)
+    if not thresholds:
+        return None
+    major = thresholds.get("major")
+    minor = thresholds.get("minor")
+    if major is not None and value >= major:
+        return "Major"
+    if minor is not None and value >= minor:
+        return "Minor"
+    return None
 
 
 def _fetch_daily_values(
@@ -177,6 +204,7 @@ def scrape() -> dict:
             baseline_samples = 0
             indicator = "Unknown"
             parameter_code = latest.get("parameter_code")
+            latest_value = None
 
             if latest_time:
                 baseline_values = []
@@ -211,6 +239,19 @@ def scrape() -> dict:
                             indicator = "Elevated"
                         else:
                             indicator = "Normal"
+            if latest_value is None:
+                try:
+                    latest_value = (
+                        float(latest.get("value"))
+                        if latest.get("value") is not None
+                        else None
+                    )
+                except ValueError:
+                    latest_value = None
+
+            flood_status = None
+            if parameter_code == "00065":
+                flood_status = _flood_status(location, latest_value)
 
             items.append(
                 {
@@ -223,6 +264,7 @@ def scrape() -> dict:
                     "parameter_code": parameter_code,
                     "indicator": indicator,
                     "baseline_samples": baseline_samples,
+                    "flood_status": flood_status,
                 }
             )
 
@@ -286,24 +328,29 @@ def scrape() -> dict:
         metric = PARAMETER_LABELS.get(parameter_code, parameter_code or "metric")
         samples = item.get("baseline_samples", 0)
         samples_text = str(samples) if samples else "0"
+        flood_status = item.get("flood_status")
+        flood_class = FLOOD_CLASSES.get(flood_status, "")
+        flood_text = flood_status or "—"
         html_rows.append(
             "<tr>"
             f"<td>{item['name']}</td>"
             f"<td>{metric}</td>"
             f"<td style=\"text-align:right;\">{value_text}</td>"
             f"<td class=\"status-cell {indicator_class}\">{indicator}</td>"
+            f"<td class=\"status-cell {flood_class}\">{flood_text}</td>"
             f"<td>{item['time']}</td>"
             "</tr>"
         )
 
     info_html = (
         "<p class=\"info\">Condition labels are determined by comparing the latest value to a 30-day baseline derived from the past three years: "
-        "Normal (&lt;75th percentile), Elevated (75th–95th percentile), and Critical (≥95th percentile).</p>"
+        "Normal (&lt;75th percentile), Elevated (75th–95th percentile), and Critical (≥95th percentile). "
+        "Flood indicators are based on USGS site-specific thresholds.</p>"
     )
     block_html = (
         f"{info_html}"
         "<table>"
-        "<thead><tr><th>Location</th><th>Metric</th><th>Value</th><th>Condition</th><th>Time</th></tr></thead>"
+        "<thead><tr><th>Location</th><th>Metric</th><th>Value</th><th>Condition</th><th>Flood</th><th>Time</th></tr></thead>"
         f"<tbody>{''.join(html_rows)}</tbody>"
         "</table>"
     )

@@ -13,7 +13,6 @@ from src.scrape.ocean_water_quality import scrape as scrape_ocean_water_quality
 from src.scrape.verizon_mobile import scrape as scrape_verizon_mobile
 from src.scrape.precipitation import scrape as scrape_precipitation
 from src.scrape.att_mobile import scrape as scrape_att_mobile
-from src.scrape.flightradar24_live import scrape as scrape_flightradar24_live
 from src.scrape.adsbexchange_live import scrape as scrape_adsbexchange_live
 
 
@@ -33,7 +32,6 @@ SCRAPERS = {
     "verizon_mobile": scrape_verizon_mobile,
     "att_mobile": scrape_att_mobile,
     "precipitation": scrape_precipitation,
-    "flightradar24_live": scrape_flightradar24_live,
     "adsbexchange_live": scrape_adsbexchange_live,
 }
 
