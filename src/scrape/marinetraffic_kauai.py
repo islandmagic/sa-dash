@@ -333,8 +333,12 @@ def scrape() -> dict:
         for row in rows
     )
 
+    info_html = (
+        "<p class=\"info\">Commercial vessels nearby Kauai ports.</p>"
+    )
     body = (
-        "<table>"
+        info_html
+        + "<table>"
         "<thead><tr><th>Vessel</th><th>Type</th><th>Category</th><th>Distance [mi]</th>"
         "<th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead>"
         f"<tbody>{table_rows}</tbody>"

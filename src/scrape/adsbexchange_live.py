@@ -799,8 +799,12 @@ def scrape() -> dict:
         for item in filtered
     )
 
+    info_html = (
+        "<p class=\"info\">Filtered to aircraft within the Kauai area and below 10,000 ft.</p>"
+    )
     body = (
-        "<table>"
+        info_html
+        + "<table>"
         "<thead><tr><th>Callsign</th><th>Reg</th><th>Type</th><th>Aircraft</th>"
         "<th>Owner</th><th>Category</th><th>Vicinity</th><th>Altitude [ft]</th><th>Speed [kt]</th><th>Heading</th></tr></thead>"
         f"<tbody>{rows}</tbody>"

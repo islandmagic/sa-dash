@@ -114,8 +114,6 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
     toc_items = []
     for provider in providers:
         error_note = ""
-        if provider.get("error"):
-            error_note = f"<p><strong>Note:</strong> {provider['error']}</p>"
         last_retrieved = _format_ts(provider.get("retrieved_at"))
 
         body = provider.get("html") or "<p>No updates available.</p>"
