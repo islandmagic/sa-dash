@@ -1,11 +1,11 @@
 {
   "id": "marinetraffic_kauai",
   "label": "Marine Traffic (<a href=\"https://www.marinetraffic.com\">MarineTraffic</a>)",
-  "retrieved_at": "2026-02-08T10:06:52-10:00",
+  "retrieved_at": "2026-02-08T10:29:03-10:00",
   "source_urls": [
     "https://www.marinetraffic.com"
   ],
-  "html": "<p class=\"info\">Commercial vessels within 2 nm of Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Category</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>HIGH EXPLORER</td><td>Tanker</td><td>Tanker</td><td>16.8</td><td>88.0</td><td>NNE</td><td>NAWILIWILI,USA</td><td></td><td></td></tr><tr><td>KAHU</td><td>Special category</td><td>Tug</td><td></td><td>0.0</td><td>ENE</td><td>NIJ-NAWILIWILI</td><td>At port</td><td>Nawiliwili</td></tr><tr><td>TIGER5</td><td>Special category</td><td>Tug</td><td></td><td>0.0</td><td>E</td><td></td><td>At port</td><td>Nawiliwili</td></tr></tbody></table>",
+  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Category</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>HIGH EXPLORER</td><td>Tanker</td><td>Tanker</td><td>15.5</td><td>86.0</td><td>NNE</td><td>NAWILIWILI,USA</td><td></td><td></td></tr><tr><td>KAHU</td><td>Special category</td><td>Tug</td><td>0.2</td><td>2.0</td><td>NE</td><td>NIJ-NAWILIWILI</td><td>Departing</td><td>Nawiliwili</td></tr><tr><td>TIGER5</td><td>Special category</td><td>Tug</td><td></td><td>1.0</td><td>SSW</td><td></td><td>At port</td><td>Nawiliwili</td></tr></tbody></table>",
   "error": null,
   "stale": false,
   "layout": "full"
