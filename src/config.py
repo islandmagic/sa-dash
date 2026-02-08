@@ -15,6 +15,7 @@ ISLANDS = {
             "usgs_water_levels",
             "ocean_water_quality",
             "adsbexchange_live",
+            "marinetraffic_kauai",
             "kauai_now",
         ],
     }
