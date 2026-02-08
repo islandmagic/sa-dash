@@ -277,15 +277,7 @@ def scrape() -> dict:
         message = f"MarineTraffic fetch failed: {exc}"
         if response is not None:
             message = f"{message} (HTTP {response.status_code})."
-        return {
-            "id": "marinetraffic_kauai",
-            "label": "AIS Vessels (MarineTraffic)",
-            "retrieved_at": now_iso(),
-            "source_urls": [MARINETRAFFIC_BASE],
-            "html": f"<p>{html.escape(message)}</p>",
-            "error": message,
-            "stale": True,
-        }
+        raise RuntimeError(message) from exc
 
     rows = []
     for row in vessels.values():
