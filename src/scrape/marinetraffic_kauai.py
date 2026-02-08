@@ -140,6 +140,12 @@ def _parse_float(value: Any) -> float | None:
 def _fetch_tile(client: httpx.Client, z: int, x: int, y: int) -> list[dict[str, Any]]:
     url = MARINETRAFFIC_TILE_URL.format(z=z, x=x, y=y)
     response = client.get(url)
+    if response.status_code == 403:
+        cf_ray = response.headers.get("cf-ray", "")
+        server = response.headers.get("server", "")
+        snippet = response.text[:200].replace("\n", " ")
+        _debug(f"403 from tile {x},{y} (cf-ray={cf_ray}, server={server})")
+        _debug(f"403 body snippet: {snippet}")
     response.raise_for_status()
     payload = response.json()
     return payload.get("data", {}).get("rows", [])

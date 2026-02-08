@@ -2,7 +2,7 @@ name: Generate dashboard
 
 on:
   schedule:
-    - cron: "30 * * * *"
+    - cron: "33 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -17,6 +17,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      MARINETRAFFIC_DEBUG: "1"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
