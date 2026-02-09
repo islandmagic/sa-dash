@@ -71,13 +71,15 @@ SHIPTYPE_LABELS = {
     "20": "Service vessel",
 }
 
+
 KEYWORD_CATEGORIES = [
     ("Coast Guard", ("COAST GUARD", "USCG")),
     ("Barge", ("BARGE",)),
     ("Tug", ("TUG",)),
 ]
 
-TUG_NAMES = ("TIGER5", "KAHU")
+TUG_NAMES = ("TIGER5", "KAHU", "MAMO")
+PILOT_NAMES = ("PB KUKII POINT",)
 
 
 def _debug_enabled() -> bool:
@@ -161,6 +163,10 @@ def _category_for_vessel(row: dict[str, Any]) -> str:
         if any(keyword in name or keyword in destination for keyword in keywords):
             return label
     return CATEGORY_BY_SHIPTYPE.get(shiptype, "Other")
+
+
+def _country_from_flag(flag: str) -> str:
+    return flag.strip().upper()
 
 
 def _port_status(lat: float, lon: float, speed: float | None, course: float | None) -> tuple[str | None, str | None]:
@@ -302,11 +308,22 @@ def scrape() -> dict:
             distance_miles = _distance_to_port_miles(lat, lon, destination)
         ship_type_code = str(row.get("SHIPTYPE") or row.get("GT_SHIPTYPE") or "").strip()
         ship_type = SHIPTYPE_LABELS.get(ship_type_code, ship_type_code)
+        if vessel_name.upper() in PILOT_NAMES:
+            ship_type = "Pilot"
+        if ship_type_code == "3":
+            inferred = _category_for_vessel(row)
+            if inferred in {"Coast Guard", "Barge", "Tug"}:
+                ship_type = inferred
+            else:
+                ship_type = "Special category"
+        if "TERUZUKI" in vessel_name.upper():
+            ship_type = "Destroyer (JMSDF)"
+        country = _country_from_flag(str(row.get("FLAG") or ""))
         rows.append(
             {
                 "name": vessel_name or "Unknown",
                 "type": ship_type,
-                "category": category,
+                "country": country,
                 "distance": distance_miles,
                 "speed": speed,
                 "course": _course_to_cardinal(course),
@@ -322,7 +339,7 @@ def scrape() -> dict:
         "<tr>"
         f"<td>{html.escape(row['name'])}</td>"
         f"<td>{html.escape(row['type'])}</td>"
-        f"<td>{html.escape(row['category'])}</td>"
+        f"<td>{html.escape(row['country'])}</td>"
         f"<td>{'' if row['distance'] is None else '{:.1f}'.format(row['distance'])}</td>"
         f"<td>{'' if row['speed'] is None else row['speed']}</td>"
         f"<td>{html.escape(row['course'])}</td>"
@@ -339,7 +356,7 @@ def scrape() -> dict:
     body = (
         info_html
         + "<table>"
-        "<thead><tr><th>Vessel</th><th>Type</th><th>Category</th><th>Distance [mi]</th>"
+        "<thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th>"
         "<th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead>"
         f"<tbody>{table_rows}</tbody>"
         "</table>"
