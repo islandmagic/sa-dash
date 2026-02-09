@@ -1,11 +1,11 @@
 {
   "id": "marinetraffic_kauai",
   "label": "Marine Traffic (<a href=\"https://www.marinetraffic.com\">MarineTraffic</a>)",
-  "retrieved_at": "2026-02-08T16:29:03-10:00",
+  "retrieved_at": "2026-02-08T17:29:04-10:00",
   "source_urls": [
     "https://www.marinetraffic.com"
   ],
-  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Category</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>HIGH EXPLORER</td><td>Tanker</td><td>Tanker</td><td>15.9</td><td>91.0</td><td>ESE</td><td>NAWILIWILI,USA</td><td></td><td></td></tr><tr><td>KAHU</td><td>Special category</td><td>Tug</td><td>16.4</td><td>49.0</td><td>SE</td><td>HNL-HONOLULU</td><td></td><td></td></tr><tr><td>TERUZUKI</td><td>Special category</td><td>Other</td><td>102.7</td><td>193.0</td><td>SW</td><td></td><td></td><td></td></tr><tr><td>TIGER5</td><td>Special category</td><td>Tug</td><td></td><td>0.0</td><td>S</td><td></td><td>At port</td><td>Nawiliwili</td></tr></tbody></table>",
+  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Category</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>HIGH EXPLORER</td><td>Tanker</td><td>Tanker</td><td>23.3</td><td>13.0</td><td>SSE</td><td>NAWILIWILI,USA</td><td></td><td></td></tr><tr><td>KAHU</td><td>Special category</td><td>Tug</td><td>16.4</td><td>49.0</td><td>SE</td><td>HNL-HONOLULU</td><td></td><td></td></tr><tr><td>TERUZUKI</td><td>Special category</td><td>Other</td><td>18.4</td><td>108.0</td><td>N</td><td></td><td></td><td></td></tr><tr><td>TIGER5</td><td>Special category</td><td>Tug</td><td></td><td>0.0</td><td>S</td><td></td><td>At port</td><td>Nawiliwili</td></tr></tbody></table>",
   "error": null,
   "stale": false,
   "layout": "full"
