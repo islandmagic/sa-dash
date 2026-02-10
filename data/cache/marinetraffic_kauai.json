@@ -1,11 +1,11 @@
 {
   "id": "marinetraffic_kauai",
   "label": "Marine Traffic (<a href=\"https://www.marinetraffic.com\">MarineTraffic</a>)",
-  "retrieved_at": "2026-02-09T22:29:06-10:00",
+  "retrieved_at": "2026-02-09T23:29:04-10:00",
   "source_urls": [
     "https://www.marinetraffic.com"
   ],
-  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>HIGH EXPLORER</td><td>Tanker</td><td>LU</td><td>21.8</td><td>65.0</td><td>NNE</td><td>NAWILIWILI,USA</td><td></td><td></td></tr><tr><td>TERUZUKI</td><td>Destroyer (JMSDF)</td><td>JP</td><td>17.2</td><td>60.0</td><td>NW</td><td></td><td></td><td></td></tr><tr><td>TIGER5</td><td>Tug</td><td>US</td><td></td><td>1.0</td><td>NW</td><td></td><td>At port</td><td>Nawiliwili</td></tr></tbody></table>",
+  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>HIGH EXPLORER</td><td>Tanker</td><td>LU</td><td>19.2</td><td>1.0</td><td>S</td><td>NAWILIWILI,USA</td><td></td><td></td></tr><tr><td>TERUZUKI</td><td>Destroyer (JMSDF)</td><td>JP</td><td>15.3</td><td>66.0</td><td>SE</td><td></td><td></td><td></td></tr><tr><td>TIGER5</td><td>Tug</td><td>US</td><td></td><td>1.0</td><td>NW</td><td></td><td>At port</td><td>Nawiliwili</td></tr></tbody></table>",
   "error": null,
   "stale": false,
   "layout": "full"
