@@ -1,11 +1,11 @@
 {
   "id": "marinetraffic_kauai",
   "label": "Marine Traffic (<a href=\"https://www.marinetraffic.com\">MarineTraffic</a>)",
-  "retrieved_at": "2026-02-10T14:29:04-10:00",
+  "retrieved_at": "2026-02-10T15:29:02-10:00",
   "source_urls": [
     "https://www.marinetraffic.com"
   ],
-  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>HIGH EXPLORER</td><td>Tanker</td><td>LU</td><td>7.9</td><td>45.0</td><td>SSW</td><td>NAWILIWILI,USA</td><td></td><td></td></tr><tr><td>MOUNT DRUM</td><td>Tug</td><td>US</td><td>0.3</td><td>3.0</td><td>WNW</td><td>US^0U5Z&gt;00A4</td><td>Departing</td><td>Nawiliwili</td></tr><tr><td>TERUZUKI</td><td>Destroyer (JMSDF)</td><td>JP</td><td>24.2</td><td>123.0</td><td>N</td><td></td><td></td><td></td></tr><tr><td>TORPEDO RETREIVER</td><td>Special category</td><td>US</td><td>5.0</td><td>115.0</td><td>ESE</td><td>PMRF KAUAI HI RANGE</td><td></td><td></td></tr></tbody></table>",
+  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>HIGH EXPLORER</td><td>Tanker</td><td>LU</td><td>4.7</td><td>45.0</td><td>W</td><td>NAWILIWILI,USA</td><td>En route</td><td></td></tr><tr><td>LADY KAILANI</td><td>Unknown</td><td>US</td><td></td><td>0.0</td><td></td><td></td><td>At port</td><td>Port Allen</td></tr><tr><td>MOUNT DRUM</td><td>Tug</td><td>US</td><td></td><td>0.0</td><td>WSW</td><td>US^0U5Z&gt;00A4</td><td>At port</td><td>Nawiliwili</td></tr><tr><td>PB KUKII POINT</td><td>Special category</td><td>US</td><td>0.6</td><td>85.0</td><td>ESE</td><td></td><td>Departing</td><td>Nawiliwili</td></tr><tr><td>TERUZUKI</td><td>Destroyer (JMSDF)</td><td>JP</td><td>24.2</td><td>123.0</td><td>N</td><td></td><td></td><td></td></tr></tbody></table>",
   "error": null,
   "stale": false,
   "layout": "full"
