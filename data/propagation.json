@@ -1,5 +1,5 @@
 {
-  "timestamp_utc": "2026-02-11T14:28:02Z",
+  "timestamp_utc": "2026-02-11T15:28:01Z",
   "window_minutes": 60,
   "nvis": {
     "status": "UNKNOWN",
@@ -38,8 +38,8 @@
   },
   "mainland": {
     "status": "INTERMITTENT",
-    "score": 49,
-    "confidence": "LOW",
+    "score": 58,
+    "confidence": "MEDIUM",
     "bands": {
       "80m": {
         "score": 54,
@@ -51,22 +51,22 @@
         "ft8_paths": 3
       },
       "40m": {
-        "score": 46,
-        "paths": 2,
-        "tx": 1.4,
-        "rx": 1.4,
-        "median_snr_db": -16.0,
+        "score": 73,
+        "paths": 11,
+        "tx": 11.0,
+        "rx": 1.0,
+        "median_snr_db": -12.0,
         "js8_paths": 0,
-        "ft8_paths": 1
+        "ft8_paths": 11
       },
       "30m": {
-        "score": 0,
-        "paths": 0,
-        "tx": 0,
-        "rx": 0,
-        "median_snr_db": null,
+        "score": 45,
+        "paths": 1,
+        "tx": 1.0,
+        "rx": 1.0,
+        "median_snr_db": -12.0,
         "js8_paths": 0,
-        "ft8_paths": 0
+        "ft8_paths": 1
       },
       "20m": {
         "score": 0,
@@ -114,13 +114,13 @@
         "ft8_paths": 0
       }
     },
-    "explain": "Intermittent HI\u2194CONUS activity; openings may be brief. Low report volume."
+    "explain": "Intermittent HI\u2194CONUS activity; openings may be brief."
   },
   "sources": {
     "pskreporter": {
       "ok": true,
-      "last_fetch_utc": "2026-02-11T14:28:02.104398Z",
-      "requests_last_hour": 2
+      "last_fetch_utc": "2026-02-11T15:28:01.966971Z",
+      "requests_last_hour": 4
     },
     "notes": ""
   }
