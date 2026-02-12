@@ -1,5 +1,5 @@
 {
-  "timestamp_utc": "2026-02-12T10:28:01Z",
+  "timestamp_utc": "2026-02-12T11:28:01Z",
   "window_minutes": 60,
   "nvis": {
     "status": "UNKNOWN",
@@ -38,26 +38,26 @@
   },
   "mainland": {
     "status": "OPEN",
-    "score": 82,
+    "score": 69,
     "confidence": "MEDIUM",
     "bands": {
       "80m": {
-        "score": 0,
-        "paths": 0,
-        "tx": 0,
-        "rx": 0,
-        "median_snr_db": null,
+        "score": 54,
+        "paths": 2,
+        "tx": 2.0,
+        "rx": 1.0,
+        "median_snr_db": -13.0,
         "js8_paths": 0,
-        "ft8_paths": 0
+        "ft8_paths": 2
       },
       "40m": {
-        "score": 82,
-        "paths": 43,
-        "tx": 9.4,
-        "rx": 31.0,
-        "median_snr_db": -12.0,
-        "js8_paths": 0,
-        "ft8_paths": 42
+        "score": 80,
+        "paths": 18,
+        "tx": 12.4,
+        "rx": 3.6,
+        "median_snr_db": -14.0,
+        "js8_paths": 2,
+        "ft8_paths": 14
       },
       "30m": {
         "score": 0,
@@ -114,13 +114,13 @@
         "ft8_paths": 0
       }
     },
-    "explain": "HI<->CONUS paths observed on 20m+ (FT8)."
+    "explain": "HI<->CONUS paths observed on 20m+ (JS8)."
   },
   "sources": {
     "pskreporter": {
       "ok": true,
-      "last_fetch_utc": "2026-02-12T10:28:01.112735Z",
-      "requests_last_hour": 4
+      "last_fetch_utc": "2026-02-12T11:28:01.632371Z",
+      "requests_last_hour": 2
     },
     "notes": ""
   }
