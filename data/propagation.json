@@ -1,5 +1,5 @@
 {
-  "timestamp_utc": "2026-02-13T14:28:00Z",
+  "timestamp_utc": "2026-02-13T15:28:01Z",
   "window_minutes": 60,
   "nvis": {
     "status": "UNKNOWN",
@@ -37,27 +37,27 @@
     "explain": "Limited recent reports."
   },
   "mainland": {
-    "status": "OPEN",
-    "score": 69,
+    "status": "INTERMITTENT",
+    "score": 44,
     "confidence": "LOW",
     "bands": {
       "80m": {
-        "score": 69,
-        "paths": 6,
-        "tx": 6.0,
+        "score": 62,
+        "paths": 1,
+        "tx": 1.0,
         "rx": 1.0,
-        "median_snr_db": -14.5,
+        "median_snr_db": 9.0,
         "js8_paths": 0,
-        "ft8_paths": 6
+        "ft8_paths": 1
       },
       "40m": {
-        "score": 0,
-        "paths": 0,
-        "tx": 0,
-        "rx": 0,
-        "median_snr_db": null,
+        "score": 32,
+        "paths": 1,
+        "tx": 1.0,
+        "rx": 1.0,
+        "median_snr_db": -21.0,
         "js8_paths": 0,
-        "ft8_paths": 0
+        "ft8_paths": 1
       },
       "30m": {
         "score": 0,
@@ -114,13 +114,13 @@
         "ft8_paths": 0
       }
     },
-    "explain": "HI<->CONUS paths observed on 20m+ (FT8). Low report volume."
+    "explain": "Intermittent HI\u2194CONUS activity; openings may be brief. Low report volume."
   },
   "sources": {
     "pskreporter": {
       "ok": true,
-      "last_fetch_utc": "2026-02-13T14:28:00.843864Z",
-      "requests_last_hour": 4
+      "last_fetch_utc": "2026-02-13T15:28:01.376445Z",
+      "requests_last_hour": 2
     },
     "notes": ""
   }
