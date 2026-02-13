@@ -1,11 +1,11 @@
 {
   "id": "marinetraffic_kauai",
   "label": "Marine Traffic (<a href=\"https://www.marinetraffic.com\">MarineTraffic</a>)",
-  "retrieved_at": "2026-02-13T04:29:03-10:00",
+  "retrieved_at": "2026-02-13T05:29:01-10:00",
   "source_urls": [
     "https://www.marinetraffic.com"
   ],
-  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>MOUNT DRUM</td><td>Tug</td><td>US</td><td>23.5</td><td>91.0</td><td>NW</td><td>NAWILIWILI</td><td>En route</td><td></td></tr><tr><td>BROOKE CHAPMAN</td><td>Special category</td><td>US</td><td>11.2</td><td>59.0</td><td>W</td><td>HILO</td><td></td><td></td></tr><tr><td>MAMO</td><td>Tug</td><td>US</td><td></td><td>1.0</td><td>NW</td><td>US^0ZAS</td><td>At port</td><td>Nawiliwili</td></tr><tr><td>PRIDE OF AMERICA</td><td>Passenger</td><td>US</td><td></td><td>0.0</td><td>W</td><td>NAWILIWILI</td><td>At port</td><td>Nawiliwili</td></tr><tr><td>TIGER5</td><td>Tug</td><td>US</td><td>5.6</td><td>103.0</td><td>SW</td><td></td><td></td><td></td></tr><tr><td>TORPEDO RETREIVER</td><td>Special category</td><td>US</td><td>4.9</td><td>88.0</td><td>ESE</td><td>PMRF KAUAI HI RANGE</td><td></td><td></td></tr></tbody></table>",
+  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>MOUNT DRUM</td><td>Tug</td><td>US</td><td>14.1</td><td>86.0</td><td>NNW</td><td>NAWILIWILI</td><td>En route</td><td></td></tr><tr><td>BROOKE CHAPMAN</td><td>Special category</td><td>US</td><td>8.1</td><td>55.0</td><td>WNW</td><td>HILO</td><td></td><td></td></tr><tr><td>PRIDE OF AMERICA</td><td>Passenger</td><td>US</td><td></td><td>0.0</td><td>ENE</td><td>NAWILIWILI</td><td>At port</td><td>Nawiliwili</td></tr><tr><td>TIGER5</td><td>Tug</td><td>US</td><td>8.1</td><td>100.0</td><td>W</td><td></td><td></td><td></td></tr><tr><td>TORPEDO RETREIVER</td><td>Special category</td><td>US</td><td>4.9</td><td>88.0</td><td>ESE</td><td>PMRF KAUAI HI RANGE</td><td></td><td></td></tr></tbody></table>",
   "error": null,
   "stale": false,
   "layout": "full"
