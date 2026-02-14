@@ -1,11 +1,11 @@
 {
   "id": "marinetraffic_kauai",
   "label": "Marine Traffic (<a href=\"https://www.marinetraffic.com\">MarineTraffic</a>)",
-  "retrieved_at": "2026-02-14T08:29:01-10:00",
+  "retrieved_at": "2026-02-14T09:29:03-10:00",
   "source_urls": [
     "https://www.marinetraffic.com"
   ],
-  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>BROOKE CHAPMAN</td><td>Tug</td><td>US</td><td>3.1</td><td>40.0</td><td>E</td><td>HILO</td><td></td><td></td></tr><tr><td>CARNIVAL RADIANCE</td><td>Passenger</td><td>PA</td><td>5.8</td><td>123.0</td><td>SE</td><td>USKAH&gt;USNIJ</td><td></td><td></td></tr><tr><td>KAPENA RAYMOND ALAPA</td><td>Special category</td><td>US</td><td></td><td>0.0</td><td>N</td><td>HONOLULU</td><td>At port</td><td>Nawiliwili</td></tr></tbody></table>",
+  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>BROOKE CHAPMAN</td><td>Tug</td><td>US</td><td>8.5</td><td>45.0</td><td>N</td><td>HILO</td><td></td><td></td></tr><tr><td>CARNIVAL RADIANCE</td><td>Passenger</td><td>PA</td><td>21.0</td><td>150.0</td><td>SE</td><td>USNIJ&gt;USHIL</td><td></td><td></td></tr><tr><td>KAPENA RAYMOND ALAPA</td><td>Special category</td><td>US</td><td>1.7</td><td>60.0</td><td>ESE</td><td>HONOLULU</td><td>Departing</td><td>Nawiliwili</td></tr><tr><td>MAMO</td><td>Tug</td><td>US</td><td>0.3</td><td>5.0</td><td>NNW</td><td>US^0ZAS</td><td></td><td>Nawiliwili</td></tr><tr><td>NAPALI STAR</td><td>Other</td><td>US</td><td>2.7</td><td>3.0</td><td>N</td><td>CLASS B</td><td></td><td></td></tr><tr><td>TIGER5</td><td>Tug</td><td>US</td><td></td><td>0.0</td><td>NNW</td><td></td><td>At port</td><td>Nawiliwili</td></tr></tbody></table>",
   "error": null,
   "stale": false,
   "layout": "full"
