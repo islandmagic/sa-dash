@@ -1,11 +1,11 @@
 {
   "id": "marinetraffic_kauai",
   "label": "Marine Traffic (<a href=\"https://www.marinetraffic.com\">MarineTraffic</a>)",
-  "retrieved_at": "2026-02-13T18:29:04-10:00",
+  "retrieved_at": "2026-02-13T19:29:04-10:00",
   "source_urls": [
     "https://www.marinetraffic.com"
   ],
-  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>BROOKE CHAPMAN</td><td>Tug</td><td>US</td><td>10.1</td><td>63.0</td><td>ENE</td><td>HILO</td><td></td><td></td></tr><tr><td>MOUNT DRUM</td><td>Tug</td><td>US</td><td>0.3</td><td>6.0</td><td>E</td><td>NAWILIWILI</td><td></td><td>Nawiliwili</td></tr><tr><td>PRIDE OF AMERICA</td><td>Passenger</td><td>US</td><td>7.6</td><td>93.0</td><td>SE</td><td>HONOLULU</td><td></td><td></td></tr><tr><td>TORPEDO RETREIVER</td><td>Special category</td><td>US</td><td>4.9</td><td>88.0</td><td>ESE</td><td>PMRF KAUAI HI RANGE</td><td></td><td></td></tr></tbody></table>",
+  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>BROOKE CHAPMAN</td><td>Tug</td><td>US</td><td>4.6</td><td>73.0</td><td>NE</td><td>HILO</td><td></td><td></td></tr><tr><td>MOUNT DRUM</td><td>Tug</td><td>US</td><td>0.4</td><td>37.0</td><td>NE</td><td>US^0U5Z</td><td>Departing</td><td>Nawiliwili</td></tr><tr><td>PRIDE OF AMERICA</td><td>Passenger</td><td>US</td><td>18.0</td><td>93.0</td><td>SE</td><td>HONOLULU</td><td></td><td></td></tr><tr><td>TIGER5</td><td>Tug</td><td>US</td><td></td><td>0.0</td><td>NNW</td><td></td><td>At port</td><td>Nawiliwili</td></tr></tbody></table>",
   "error": null,
   "stale": false,
   "layout": "full"
