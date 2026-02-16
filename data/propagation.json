@@ -1,9 +1,9 @@
 {
-  "timestamp_utc": "2026-02-16T09:28:00Z",
+  "timestamp_utc": "2026-02-16T10:28:01Z",
   "window_minutes": 60,
   "nvis": {
-    "status": "GOOD",
-    "score": 80,
+    "status": "UNKNOWN",
+    "score": 0,
     "confidence": "LOW",
     "bands": {
       "80m": {
@@ -16,13 +16,13 @@
         "ft8_paths": 0
       },
       "40m": {
-        "score": 80,
-        "paths": 4,
-        "tx": 2.0,
-        "rx": 3.0,
-        "median_snr_db": -2.5,
+        "score": 0,
+        "paths": 0,
+        "tx": 0,
+        "rx": 0,
+        "median_snr_db": null,
         "js8_paths": 0,
-        "ft8_paths": 4
+        "ft8_paths": 0
       },
       "30m": {
         "score": 0,
@@ -34,11 +34,11 @@
         "ft8_paths": 0
       }
     },
-    "explain": "Strong inter-island paths on 40m/80m (FT8). Low report volume."
+    "explain": "Limited recent reports."
   },
   "mainland": {
     "status": "OPEN",
-    "score": 91,
+    "score": 74,
     "confidence": "MEDIUM",
     "bands": {
       "80m": {
@@ -51,13 +51,13 @@
         "ft8_paths": 0
       },
       "40m": {
-        "score": 91,
-        "paths": 103,
-        "tx": 14.6,
-        "rx": 42.0,
-        "median_snr_db": -6.5,
-        "js8_paths": 0,
-        "ft8_paths": 97
+        "score": 74,
+        "paths": 14,
+        "tx": 15.8,
+        "rx": 1.8,
+        "median_snr_db": -14.5,
+        "js8_paths": 3,
+        "ft8_paths": 10
       },
       "30m": {
         "score": 0,
@@ -114,13 +114,13 @@
         "ft8_paths": 0
       }
     },
-    "explain": "HI<->CONUS paths observed on 20m+ (FT8)."
+    "explain": "HI<->CONUS paths observed on 20m+ (JS8)."
   },
   "sources": {
     "pskreporter": {
       "ok": true,
-      "last_fetch_utc": "2026-02-16T09:28:00.641321Z",
-      "requests_last_hour": 4
+      "last_fetch_utc": "2026-02-16T10:28:01.376951Z",
+      "requests_last_hour": 2
     },
     "notes": ""
   }
