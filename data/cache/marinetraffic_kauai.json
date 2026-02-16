@@ -1,11 +1,11 @@
 {
   "id": "marinetraffic_kauai",
   "label": "Marine Traffic (<a href=\"https://www.marinetraffic.com\">MarineTraffic</a>)",
-  "retrieved_at": "2026-02-16T07:29:03-10:00",
+  "retrieved_at": "2026-02-16T08:29:02-10:00",
   "source_urls": [
     "https://www.marinetraffic.com"
   ],
-  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>LADY KAILANI</td><td>Sight seeing tour boat</td><td>US</td><td>4.0</td><td>156.0</td><td>ESE</td><td></td><td></td><td></td></tr><tr><td>MAMO</td><td>Tug</td><td>US</td><td>0.3</td><td>2.0</td><td>WSW</td><td>US^0ZAS</td><td>Departing</td><td>Nawiliwili</td></tr><tr><td>PINNIPED</td><td>Other</td><td>US</td><td>1.3</td><td>76.0</td><td>NW</td><td>CLASS B</td><td></td><td>Nawiliwili</td></tr></tbody></table>",
+  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>MAMO</td><td>Tug</td><td>US</td><td>0.3</td><td>2.0</td><td>WSW</td><td>US^0ZAS</td><td>Departing</td><td>Nawiliwili</td></tr><tr><td>PINNIPED</td><td>Other</td><td>US</td><td>1.3</td><td>76.0</td><td>NW</td><td>CLASS B</td><td></td><td>Nawiliwili</td></tr></tbody></table>",
   "error": null,
   "stale": false,
   "layout": "full"
