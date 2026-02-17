@@ -1,11 +1,11 @@
 {
   "id": "marinetraffic_kauai",
   "label": "Marine Traffic (<a href=\"https://www.marinetraffic.com\">MarineTraffic</a>)",
-  "retrieved_at": "2026-02-17T03:29:04-10:00",
+  "retrieved_at": "2026-02-17T04:29:03-10:00",
   "source_urls": [
     "https://www.marinetraffic.com"
   ],
-  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>KAPENA JACK YOUNG</td><td>Special category</td><td>US</td><td>67.5</td><td>93.0</td><td>NW</td><td>NAWAWILI,HI</td><td></td><td></td></tr><tr><td>OSCAR ELTON SETTE</td><td>Special category</td><td>US</td><td>18.2</td><td>43.0</td><td>ESE</td><td>PEARL HARBOR, HI</td><td></td><td></td></tr></tbody></table>",
+  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>KAPENA JACK YOUNG</td><td>Special category</td><td>US</td><td>14.0</td><td>64.0</td><td>NW</td><td>NAWAWILI,HI</td><td></td><td></td></tr><tr><td>OSCAR ELTON SETTE</td><td>Special category</td><td>US</td><td>16.6</td><td>22.0</td><td>ENE</td><td>PEARL HARBOR, HI</td><td></td><td></td></tr></tbody></table>",
   "error": null,
   "stale": false,
   "layout": "full"
