@@ -1,11 +1,11 @@
 {
   "id": "marinetraffic_kauai",
   "label": "Marine Traffic (<a href=\"https://www.marinetraffic.com\">MarineTraffic</a>)",
-  "retrieved_at": "2026-02-18T20:29:04-10:00",
+  "retrieved_at": "2026-02-18T21:29:05-10:00",
   "source_urls": [
     "https://www.marinetraffic.com"
   ],
-  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>LADY KAILANI</td><td>Sight seeing tour boat</td><td>US</td><td>4.5</td><td>187.0</td><td>WNW</td><td></td><td></td><td></td></tr><tr><td>NAPALI STAR</td><td>Other</td><td>US</td><td>1.7</td><td>32.0</td><td>SSE</td><td>CLASS B</td><td>Departing</td><td>Port Allen</td></tr><tr><td>TIGER5</td><td>Tug</td><td>US</td><td></td><td>1.0</td><td>S</td><td></td><td>At port</td><td>Nawiliwili</td></tr><tr><td>TORPEDO RETREIVER</td><td>Special category</td><td>US</td><td>4.6</td><td>118.0</td><td>ESE</td><td>PMRF KAUAI HI RANGE</td><td></td><td></td></tr><tr><td>TORPEDO RETREIVER</td><td>Special category</td><td>US</td><td>4.9</td><td>128.0</td><td>ESE</td><td>PMRF BS RANGE</td><td></td><td></td></tr></tbody></table>",
+  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>NAPALI STAR</td><td>Other</td><td>US</td><td>1.7</td><td>32.0</td><td>SSE</td><td>CLASS B</td><td>Departing</td><td>Port Allen</td></tr><tr><td>TIGER5</td><td>Tug</td><td>US</td><td></td><td>1.0</td><td>S</td><td></td><td>At port</td><td>Nawiliwili</td></tr><tr><td>TORPEDO RETREIVER</td><td>Special category</td><td>US</td><td>4.6</td><td>118.0</td><td>ESE</td><td>PMRF KAUAI HI RANGE</td><td></td><td></td></tr><tr><td>TORPEDO RETREIVER</td><td>Special category</td><td>US</td><td>4.9</td><td>128.0</td><td>ESE</td><td>PMRF BS RANGE</td><td></td><td></td></tr></tbody></table>",
   "error": null,
   "stale": false,
   "layout": "full"
