@@ -1,11 +1,11 @@
 {
   "id": "marinetraffic_kauai",
   "label": "Marine Traffic (<a href=\"https://www.marinetraffic.com\">MarineTraffic</a>)",
-  "retrieved_at": "2026-02-19T22:29:05-10:00",
+  "retrieved_at": "2026-02-19T23:29:03-10:00",
   "source_urls": [
     "https://www.marinetraffic.com"
   ],
-  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>PRIDE OF AMERICA</td><td>Passenger</td><td>US</td><td></td><td>0.0</td><td>WSW</td><td>USNIJ</td><td>At port</td><td>Nawiliwili</td></tr></tbody></table>",
+  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>PRIDE OF AMERICA</td><td>Passenger</td><td>US</td><td></td><td>0.0</td><td>SSW</td><td>USNIJ</td><td>At port</td><td>Nawiliwili</td></tr></tbody></table>",
   "error": null,
   "stale": false,
   "layout": "full"
