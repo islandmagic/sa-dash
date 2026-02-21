@@ -1,9 +1,9 @@
 {
-  "timestamp_utc": "2026-02-21T11:28:01Z",
+  "timestamp_utc": "2026-02-21T12:28:01Z",
   "window_minutes": 60,
   "nvis": {
-    "status": "MARGINAL",
-    "score": 58,
+    "status": "UNKNOWN",
+    "score": 0,
     "confidence": "LOW",
     "bands": {
       "80m": {
@@ -16,13 +16,13 @@
         "ft8_paths": 0
       },
       "40m": {
-        "score": 58,
-        "paths": 1,
-        "tx": 1.0,
-        "rx": 1.0,
-        "median_snr_db": -1.0,
+        "score": 0,
+        "paths": 0,
+        "tx": 0,
+        "rx": 0,
+        "median_snr_db": null,
         "js8_paths": 0,
-        "ft8_paths": 1
+        "ft8_paths": 0
       },
       "30m": {
         "score": 0,
@@ -34,39 +34,39 @@
         "ft8_paths": 0
       }
     },
-    "explain": "Some inter-island activity; expect variability. Low report volume."
+    "explain": "Limited recent reports."
   },
   "mainland": {
     "status": "OPEN",
-    "score": 70,
+    "score": 58,
     "confidence": "MEDIUM",
     "bands": {
       "80m": {
-        "score": 49,
-        "paths": 2,
-        "tx": 2.0,
+        "score": 59,
+        "paths": 4,
+        "tx": 3.4,
         "rx": 1.0,
         "median_snr_db": -16.0,
         "js8_paths": 0,
-        "ft8_paths": 2
+        "ft8_paths": 3
       },
       "40m": {
-        "score": 84,
-        "paths": 49,
-        "tx": 13.6,
-        "rx": 32.2,
-        "median_snr_db": -11.0,
-        "js8_paths": 1,
-        "ft8_paths": 45
+        "score": 77,
+        "paths": 25,
+        "tx": 19.2,
+        "rx": 3.2,
+        "median_snr_db": -15.5,
+        "js8_paths": 3,
+        "ft8_paths": 21
       },
       "30m": {
-        "score": 0,
-        "paths": 0,
-        "tx": 0,
-        "rx": 0,
-        "median_snr_db": null,
+        "score": 35,
+        "paths": 2,
+        "tx": 1.4,
+        "rx": 1.4,
+        "median_snr_db": -24.5,
         "js8_paths": 0,
-        "ft8_paths": 0
+        "ft8_paths": 1
       },
       "20m": {
         "score": 0,
@@ -119,8 +119,8 @@
   "sources": {
     "pskreporter": {
       "ok": true,
-      "last_fetch_utc": "2026-02-21T11:28:01.423321Z",
-      "requests_last_hour": 2
+      "last_fetch_utc": "2026-02-21T12:28:01.195402Z",
+      "requests_last_hour": 4
     },
     "notes": ""
   }
