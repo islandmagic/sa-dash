@@ -1,11 +1,11 @@
 {
   "id": "marinetraffic_kauai",
   "label": "Marine Traffic (<a href=\"https://www.marinetraffic.com\">MarineTraffic</a>)",
-  "retrieved_at": "2026-02-21T02:29:05-10:00",
+  "retrieved_at": "2026-02-21T03:29:04-10:00",
   "source_urls": [
     "https://www.marinetraffic.com"
   ],
-  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>KAPENA JACK YOUNG</td><td>Special category</td><td>US</td><td>9.5</td><td>81.0</td><td>ESE</td><td>HONOLULU,HI</td><td></td><td></td></tr><tr><td>REEL TIME</td><td>Other</td><td>US</td><td>1.5</td><td>55.0</td><td>NW</td><td>CLASS B</td><td></td><td>Port Allen</td></tr><tr><td>TIGER5</td><td>Tug</td><td>US</td><td>0.3</td><td>2.0</td><td>NNW</td><td></td><td></td><td>Nawiliwili</td></tr><tr><td>TORPEDO RETREIVER</td><td>Special category</td><td>US</td><td>2.8</td><td>118.0</td><td>ESE</td><td>PMRF BS RANGE</td><td></td><td></td></tr></tbody></table>",
+  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>KAPENA GEORGE PANUI</td><td>Special category</td><td>US</td><td>61.6</td><td>76.0</td><td>WNW</td><td>NAWILIWILI, HI</td><td>En route</td><td></td></tr><tr><td>KAPENA JACK YOUNG</td><td>Special category</td><td>US</td><td>9.5</td><td>81.0</td><td>ESE</td><td>HONOLULU,HI</td><td></td><td></td></tr><tr><td>REEL TIME</td><td>Other</td><td>US</td><td>1.5</td><td>55.0</td><td>NW</td><td>CLASS B</td><td></td><td>Port Allen</td></tr><tr><td>TIGER5</td><td>Tug</td><td>US</td><td>0.3</td><td>2.0</td><td>NNW</td><td></td><td></td><td>Nawiliwili</td></tr></tbody></table>",
   "error": null,
   "stale": false,
   "layout": "full"
