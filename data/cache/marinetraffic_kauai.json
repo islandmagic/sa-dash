@@ -1,11 +1,11 @@
 {
   "id": "marinetraffic_kauai",
   "label": "Marine Traffic (<a href=\"https://www.marinetraffic.com\">MarineTraffic</a>)",
-  "retrieved_at": "2026-02-21T06:29:02-10:00",
+  "retrieved_at": "2026-02-21T07:29:05-10:00",
   "source_urls": [
     "https://www.marinetraffic.com"
   ],
-  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>KAPENA GEORGE PANUI</td><td>Special category</td><td>US</td><td>0.3</td><td>4.0</td><td>SSE</td><td>NAWILIWILI, HI</td><td>Departing</td><td>Nawiliwili</td></tr><tr><td>MAMO</td><td>Tug</td><td>US</td><td>0.3</td><td>3.0</td><td>W</td><td>US^0ZAS</td><td>Departing</td><td>Nawiliwili</td></tr><tr><td>MITSUI OCEAN FUJI</td><td>Passenger</td><td>BS</td><td>5.5</td><td>110.0</td><td>WNW</td><td>US NIJ</td><td></td><td></td></tr><tr><td>TORPEDO RETREIVER</td><td>Special category</td><td>US</td><td>2.8</td><td>118.0</td><td>ESE</td><td>PMRF BS RANGE</td><td></td><td></td></tr></tbody></table>",
+  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>MITSUI OCEAN FUJI</td><td>Passenger</td><td>BS</td><td></td><td>0.0</td><td>N</td><td>US NIJ</td><td>At port</td><td>Nawiliwili</td></tr><tr><td>TORPEDO RETREIVER</td><td>Special category</td><td>US</td><td>2.8</td><td>118.0</td><td>ESE</td><td>PMRF BS RANGE</td><td></td><td></td></tr></tbody></table>",
   "error": null,
   "stale": false,
   "layout": "full"
