@@ -78,8 +78,13 @@ KEYWORD_CATEGORIES = [
     ("Tug", ("TUG",)),
 ]
 
-TUG_NAMES = ("TIGER5", "KAHU", "MAMO")
+TUG_NAMES = ("TIGER5", "KAHU", "MAMO", "MOUNT DRUM", "BROOKE CHAPMAN")
 PILOT_NAMES = ("PB KUKII POINT",)
+
+VESSEL_TYPE_OVERRIDES = {
+    "BROOKE CHAPMAN": "Tug",
+    "LADY KAILANI": "Sight seeing tour boat",
+}
 
 
 def _debug_enabled() -> bool:
@@ -308,16 +313,19 @@ def scrape() -> dict:
             distance_miles = _distance_to_port_miles(lat, lon, destination)
         ship_type_code = str(row.get("SHIPTYPE") or row.get("GT_SHIPTYPE") or "").strip()
         ship_type = SHIPTYPE_LABELS.get(ship_type_code, ship_type_code)
-        if vessel_name.upper() in PILOT_NAMES:
+        name_upper = vessel_name.upper()
+        if name_upper in VESSEL_TYPE_OVERRIDES:
+            ship_type = VESSEL_TYPE_OVERRIDES[name_upper]
+        elif name_upper in PILOT_NAMES:
             ship_type = "Pilot"
-        if ship_type_code == "3":
+        elif "TERUZUKI" in name_upper:
+            ship_type = "Destroyer (JMSDF)"
+        elif ship_type_code == "3":
             inferred = _category_for_vessel(row)
             if inferred in {"Coast Guard", "Barge", "Tug"}:
                 ship_type = inferred
             else:
                 ship_type = "Special category"
-        if "TERUZUKI" in vessel_name.upper():
-            ship_type = "Destroyer (JMSDF)"
         country = _country_from_flag(str(row.get("FLAG") or ""))
         rows.append(
             {

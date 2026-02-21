@@ -16,6 +16,7 @@ ISLANDS = {
             "ocean_water_quality",
             "adsbexchange_live",
             "marinetraffic_kauai",
+            "kauai_county_press",
             "kauai_now",
         ],
     }

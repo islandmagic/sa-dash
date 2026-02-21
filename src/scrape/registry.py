@@ -15,6 +15,7 @@ from src.scrape.precipitation import scrape as scrape_precipitation
 from src.scrape.att_mobile import scrape as scrape_att_mobile
 from src.scrape.adsbexchange_live import scrape as scrape_adsbexchange_live
 from src.scrape.marinetraffic_kauai import scrape as scrape_marinetraffic_kauai
+from src.scrape.kauai_county_press import scrape as scrape_kauai_county_press
 
 
 SCRAPERS = {
@@ -35,6 +36,7 @@ SCRAPERS = {
     "precipitation": scrape_precipitation,
     "adsbexchange_live": scrape_adsbexchange_live,
     "marinetraffic_kauai": scrape_marinetraffic_kauai,
+    "kauai_county_press": scrape_kauai_county_press,
 }
 
 
