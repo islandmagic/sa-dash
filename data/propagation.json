@@ -1,5 +1,5 @@
 {
-  "timestamp_utc": "2026-02-22T08:28:01Z",
+  "timestamp_utc": "2026-02-22T09:28:01Z",
   "window_minutes": 60,
   "nvis": {
     "status": "UNKNOWN",
@@ -37,45 +37,45 @@
     "explain": "Limited recent reports."
   },
   "mainland": {
-    "status": "INTERMITTENT",
-    "score": 42,
+    "status": "OPEN",
+    "score": 71,
     "confidence": "MEDIUM",
     "bands": {
       "80m": {
-        "score": 37,
+        "score": 49,
         "paths": 2,
-        "tx": 1.4,
+        "tx": 2.0,
         "rx": 1.0,
-        "median_snr_db": -20.5,
+        "median_snr_db": -16.5,
         "js8_paths": 0,
-        "ft8_paths": 1
+        "ft8_paths": 2
       },
       "40m": {
-        "score": 80,
-        "paths": 47,
-        "tx": 15.4,
-        "rx": 6.2,
-        "median_snr_db": -14.0,
+        "score": 85,
+        "paths": 66,
+        "tx": 10.4,
+        "rx": 40.0,
+        "median_snr_db": -10.0,
         "js8_paths": 0,
-        "ft8_paths": 44
+        "ft8_paths": 64
       },
       "30m": {
-        "score": 13,
-        "paths": 1,
-        "tx": 0.4,
-        "rx": 0.4,
-        "median_snr_db": -28.0,
+        "score": 0,
+        "paths": 0,
+        "tx": 0,
+        "rx": 0,
+        "median_snr_db": null,
         "js8_paths": 0,
         "ft8_paths": 0
       },
       "20m": {
-        "score": 38,
-        "paths": 1,
-        "tx": 1.0,
-        "rx": 1.0,
-        "median_snr_db": -17.0,
+        "score": 0,
+        "paths": 0,
+        "tx": 0,
+        "rx": 0,
+        "median_snr_db": null,
         "js8_paths": 0,
-        "ft8_paths": 1
+        "ft8_paths": 0
       },
       "17m": {
         "score": 0,
@@ -114,13 +114,13 @@
         "ft8_paths": 0
       }
     },
-    "explain": "Intermittent HI\u2194CONUS activity; openings may be brief."
+    "explain": "HI<->CONUS paths observed on 20m+ (FT8)."
   },
   "sources": {
     "pskreporter": {
       "ok": true,
-      "last_fetch_utc": "2026-02-22T08:28:01.027954Z",
-      "requests_last_hour": 4
+      "last_fetch_utc": "2026-02-22T09:28:01.559866Z",
+      "requests_last_hour": 2
     },
     "notes": ""
   }
