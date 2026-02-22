@@ -1,5 +1,5 @@
 {
-  "timestamp_utc": "2026-02-22T10:28:01Z",
+  "timestamp_utc": "2026-02-22T11:28:01Z",
   "window_minutes": 60,
   "nvis": {
     "status": "UNKNOWN",
@@ -38,26 +38,26 @@
   },
   "mainland": {
     "status": "OPEN",
-    "score": 75,
-    "confidence": "MEDIUM",
+    "score": 68,
+    "confidence": "LOW",
     "bands": {
       "80m": {
-        "score": 67,
-        "paths": 5,
-        "tx": 4.4,
+        "score": 52,
+        "paths": 2,
+        "tx": 2.0,
         "rx": 1.0,
-        "median_snr_db": -14.0,
+        "median_snr_db": -16.0,
         "js8_paths": 0,
-        "ft8_paths": 4
+        "ft8_paths": 2
       },
       "40m": {
-        "score": 81,
-        "paths": 11,
-        "tx": 7.0,
-        "rx": 3.0,
+        "score": 78,
+        "paths": 6,
+        "tx": 4.8,
+        "rx": 2.4,
         "median_snr_db": -13.0,
         "js8_paths": 0,
-        "ft8_paths": 11
+        "ft8_paths": 4
       },
       "30m": {
         "score": 0,
@@ -114,12 +114,12 @@
         "ft8_paths": 0
       }
     },
-    "explain": "HI<->CONUS paths observed on 20m+ (FT8)."
+    "explain": "HI<->CONUS paths observed on 20m+ (FT8). Low report volume."
   },
   "sources": {
     "pskreporter": {
       "ok": true,
-      "last_fetch_utc": "2026-02-22T10:28:01.536014Z",
+      "last_fetch_utc": "2026-02-22T11:28:01.059721Z",
       "requests_last_hour": 4
     },
     "notes": ""
