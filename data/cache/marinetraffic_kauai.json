@@ -1,11 +1,11 @@
 {
   "id": "marinetraffic_kauai",
   "label": "Marine Traffic (<a href=\"https://www.marinetraffic.com\">MarineTraffic</a>)",
-  "retrieved_at": "2026-02-22T03:29:04-10:00",
+  "retrieved_at": "2026-02-22T04:29:04-10:00",
   "source_urls": [
     "https://www.marinetraffic.com"
   ],
-  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>JOSEPH SAUSE</td><td>Special category</td><td>US</td><td>15.3</td><td>79.0</td><td>WNW</td><td>NAWILIWILI</td><td>En route</td><td></td></tr><tr><td>KAHU</td><td>Tug</td><td>US</td><td>56.7</td><td>98.0</td><td>WNW</td><td>NIJ-NAWILIWILI</td><td>En route</td><td></td></tr><tr><td>LADY KAILANI</td><td>Sight seeing tour boat</td><td>US</td><td>4.9</td><td>167.0</td><td>SE</td><td></td><td></td><td></td></tr><tr><td>NAVIGATOR CERES</td><td>Tanker</td><td>LR</td><td>26.0</td><td>6.0</td><td>NW</td><td>US NIJ</td><td></td><td></td></tr><tr><td>TIGER5</td><td>Tug</td><td>US</td><td></td><td>1.0</td><td>SSE</td><td></td><td>At port</td><td>Nawiliwili</td></tr></tbody></table>",
+  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>JOSEPH SAUSE</td><td>Special category</td><td>US</td><td>5.9</td><td>85.0</td><td>WNW</td><td>NAWILIWILI</td><td>En route</td><td></td></tr><tr><td>KAHU</td><td>Tug</td><td>US</td><td>56.7</td><td>98.0</td><td>WNW</td><td>NIJ-NAWILIWILI</td><td>En route</td><td></td></tr><tr><td>NAVIGATOR CERES</td><td>Tanker</td><td>LR</td><td>25.4</td><td>6.0</td><td>SW</td><td>US NIJ</td><td></td><td></td></tr><tr><td>TIGER5</td><td>Tug</td><td>US</td><td></td><td>1.0</td><td>S</td><td></td><td>At port</td><td>Nawiliwili</td></tr></tbody></table>",
   "error": null,
   "stale": false,
   "layout": "full"
