@@ -1,11 +1,11 @@
 {
   "id": "marinetraffic_kauai",
   "label": "Marine Traffic (<a href=\"https://www.marinetraffic.com\">MarineTraffic</a>)",
-  "retrieved_at": "2026-02-22T14:29:04-10:00",
+  "retrieved_at": "2026-02-22T15:29:03-10:00",
   "source_urls": [
     "https://www.marinetraffic.com"
   ],
-  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>KAHU</td><td>Tug</td><td>US</td><td>1.7</td><td>55.0</td><td>E</td><td>HNL-HONOLULU</td><td>Departing</td><td>Nawiliwili</td></tr><tr><td>KALAMAZOO</td><td>Cargo</td><td>SG</td><td>65.8</td><td>101.0</td><td>W</td><td>USHNL=&gt;KRPUS</td><td></td><td></td></tr><tr><td>MAMO</td><td>Tug</td><td>US</td><td>0.4</td><td>3.0</td><td>W</td><td>US^0ZAS</td><td>Departing</td><td>Nawiliwili</td></tr><tr><td>NAVIGATOR CERES</td><td>Tanker</td><td>LR</td><td></td><td>0.0</td><td>NE</td><td>US NIJ</td><td>At port</td><td>Nawiliwili</td></tr><tr><td>PB KUKII POINT</td><td>Pilot</td><td>US</td><td></td><td>1.0</td><td></td><td></td><td>At port</td><td>Nawiliwili</td></tr></tbody></table>",
+  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>JOSEPH SAUSE</td><td>Special category</td><td>US</td><td></td><td>0.0</td><td>W</td><td>PORT ALLEN</td><td>At port</td><td>Nawiliwili</td></tr><tr><td>KAHU</td><td>Tug</td><td>US</td><td>9.3</td><td>81.0</td><td>ESE</td><td>HNL-HONOLULU</td><td></td><td></td></tr><tr><td>KALAMAZOO</td><td>Cargo</td><td>SG</td><td>65.8</td><td>101.0</td><td>W</td><td>USHNL=&gt;KRPUS</td><td></td><td></td></tr><tr><td>NAVIGATOR CERES</td><td>Tanker</td><td>LR</td><td></td><td>0.0</td><td>NE</td><td>US NIJ</td><td>At port</td><td>Nawiliwili</td></tr><tr><td>PB KUKII POINT</td><td>Pilot</td><td>US</td><td></td><td>1.0</td><td></td><td></td><td>At port</td><td>Nawiliwili</td></tr></tbody></table>",
   "error": null,
   "stale": false,
   "layout": "full"
