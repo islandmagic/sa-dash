@@ -1,11 +1,11 @@
 {
   "id": "marinetraffic_kauai",
   "label": "Marine Traffic (<a href=\"https://www.marinetraffic.com\">MarineTraffic</a>)",
-  "retrieved_at": "2026-02-22T23:29:07-10:00",
+  "retrieved_at": "2026-02-23T00:29:07-10:00",
   "source_urls": [
     "https://www.marinetraffic.com"
   ],
-  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>95SC1203</td><td>Special category</td><td>US</td><td>68.9</td><td>113.0</td><td>NW</td><td></td><td></td><td></td></tr><tr><td>JOSEPH SAUSE</td><td>Special category</td><td>US</td><td>13.1</td><td>45.0</td><td>ESE</td><td>PORT ALLEN</td><td></td><td></td></tr><tr><td>TIGER5</td><td>Tug</td><td>US</td><td></td><td>1.0</td><td>W</td><td></td><td>At port</td><td>Nawiliwili</td></tr></tbody></table>",
+  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>95SC1203</td><td>Special category</td><td>US</td><td>19.7</td><td>121.0</td><td>NW</td><td></td><td></td><td></td></tr><tr><td>JOSEPH SAUSE</td><td>Special category</td><td>US</td><td>13.1</td><td>45.0</td><td>ESE</td><td>PORT ALLEN</td><td></td><td></td></tr><tr><td>TIGER5</td><td>Tug</td><td>US</td><td></td><td>1.0</td><td>W</td><td></td><td>At port</td><td>Nawiliwili</td></tr></tbody></table>",
   "error": null,
   "stale": false,
   "layout": "full"
