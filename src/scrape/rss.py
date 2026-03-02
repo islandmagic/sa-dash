@@ -56,14 +56,22 @@ def scrape_rss(url: str, limit: int = 5) -> list[dict]:
 def render_rss_html(items: list[dict]) -> str:
     if not items:
         return "<p>No RSS items found.</p>"
-    list_items = "".join(
-        "<li>"
-        f"<a href=\"{html.escape(item['url'])}\">{html.escape(item['title'])}</a>"
-        + (f": {html.escape(item['summary'])}" if item.get("summary") else "")
-        + (f"<br/><span class=\"meta\">{html.escape(item['published'])}</span>" if item.get("published") else "")
-        + "</li>"
-        for item in items
-    )
-    return f"<ul>{list_items}</ul>"
+    blocks = []
+    for item in items:
+        title = html.escape(item.get("title", "Untitled"))
+        url = html.escape(item.get("url", ""))
+        published = html.escape(item.get("published", "")) if item.get("published") else ""
+        summary = html.escape(item.get("summary", "")) if item.get("summary") else "No details available."
+
+        headline_html = f'<a href="{url}">{title}</a>' if url else title
+        meta_html = f'<br/><span class="meta">{published}</span>' if published else ""
+
+        blocks.append(
+            "<details>"
+            f"<summary>{headline_html}{meta_html}</summary>"
+            f"<div>{summary}</div>"
+            "</details>"
+        )
+    return "".join(blocks)
 
 

@@ -73,22 +73,29 @@ def scrape() -> dict:
         "<a href=\"tel:+18082455400\">808-245-5400</a>, option 1.</p>"
     )
     if items:
-        list_items = "".join(
-            "<li>"
-            f"<a href=\"{item['url']}\">{html.escape(item['title'])}</a>"
-            + (f": {html.escape(item['summary'])}" if item.get("summary") else "")
-            + (
-                f"<br/><span class=\"meta\">{html.escape(item['published_date'])}</span>"
+        details_blocks = []
+        for item in items:
+            title = html.escape(item["title"])
+            url = html.escape(item.get("url", ""))
+            summary = (
+                html.escape(item["summary"])
+                if item.get("summary")
+                else "No details available."
+            )
+            published = (
+                html.escape(item["published_date"])
                 if item.get("published_date")
                 else ""
             )
-            + "</li>"
-            for item in items
-        )
-        block_html = (
-            f"{info_html}"
-            f"<ul>{list_items}</ul>"
-        )
+            headline_html = f'<a href="{url}">{title}</a>' if url else title
+            meta_html = f'<br/><span class="meta">{published}</span>' if published else ""
+            details_blocks.append(
+                "<details>"
+                f"<summary>{headline_html}{meta_html}</summary>"
+                f"<div>{summary}</div>"
+                "</details>"
+            )
+        block_html = f"{info_html}{''.join(details_blocks)}"
     else:
         block_html = (
             "<p>No reported outages found.</p>"
