@@ -133,7 +133,7 @@ def scrape() -> dict:
     body_html = "".join(blocks) if blocks else "<p>No press releases found.</p>"
     return {
         "id": "kauai_county_press",
-        "label": f"Press Releases (<a href=\"{LISTING_URL}\">Kauai County</a>)",
+        "label": f"County Press Releases (<a href=\"{LISTING_URL}\">Kauai County</a>)",
         "retrieved_at": now_iso(),
         "source_urls": [LISTING_URL],
         "html": body_html,
