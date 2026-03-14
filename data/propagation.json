@@ -1,5 +1,5 @@
 {
-  "timestamp_utc": "2026-03-14T01:28:02Z",
+  "timestamp_utc": "2026-03-14T02:28:00Z",
   "window_minutes": 60,
   "nvis": {
     "status": "POOR",
@@ -39,7 +39,7 @@
   "mainland": {
     "status": "OPEN",
     "score": 72,
-    "confidence": "MEDIUM",
+    "confidence": "LOW",
     "bands": {
       "80m": {
         "score": 0,
@@ -114,7 +114,7 @@
         "ft8_paths": 13
       }
     },
-    "explain": "HI<->CONUS paths observed on 20m+ (FT8)."
+    "explain": "HI<->CONUS paths observed on 20m+ (FT8). Low report volume."
   },
   "sources": {
     "pskreporter": {
@@ -122,6 +122,6 @@
       "last_fetch_utc": "2026-03-14T01:28:02.185635Z",
       "requests_last_hour": 2
     },
-    "notes": ""
+    "notes": "BL: [Errno 8] nodename nor servname provided, or not known; BK: [Errno 8] nodename nor servname provided, or not known"
   }
 }
