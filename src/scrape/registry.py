@@ -16,6 +16,7 @@ from src.scrape.att_mobile import scrape as scrape_att_mobile
 from src.scrape.adsbexchange_live import scrape as scrape_adsbexchange_live
 from src.scrape.marinetraffic_kauai import scrape as scrape_marinetraffic_kauai
 from src.scrape.kauai_county_press import scrape as scrape_kauai_county_press
+from src.scrape.global_events_wire import scrape as scrape_global_events_wire
 
 
 SCRAPERS = {
@@ -37,6 +38,7 @@ SCRAPERS = {
     "adsbexchange_live": scrape_adsbexchange_live,
     "marinetraffic_kauai": scrape_marinetraffic_kauai,
     "kauai_county_press": scrape_kauai_county_press,
+    "global_events_wire": scrape_global_events_wire,
 }
 
 

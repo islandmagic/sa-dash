@@ -13,7 +13,7 @@ def scrape() -> dict:
     )
     return {
         "id": "kauai_now",
-        "label": f"News (<a href=\"{SITE_URL}\">Kauai Now</a>)",
+        "label": f"Local News (<a href=\"{SITE_URL}\">Kauai Now</a>)",
         "retrieved_at": now_iso(),
         "source_urls": [SITE_URL, FEED_URL],
         "html": block_html,

@@ -18,6 +18,7 @@ ISLANDS = {
             "marinetraffic_kauai",
             "kauai_county_press",
             "kauai_now",
+            "global_events_wire",
         ],
     }
 }
