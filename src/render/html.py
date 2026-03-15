@@ -140,7 +140,6 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
     toc_nav = "<nav class=\"toc\"><ul>" + "".join(toc_items) + "</ul></nav>"
     toc_section = (
         "<section class=\"module module--narrow\" id=\"toc\">"
-        "<h2>Contents</h2>"
         f"{toc_nav}"
         "</section>"
     )
