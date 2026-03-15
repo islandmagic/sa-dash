@@ -137,7 +137,13 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
     generated = _format_ts(generated_at)
     schedule = _load_cron_schedule()
     next_update = _next_update_ts(generated_at, schedule)
-    toc_html = "<nav class=\"toc\"><ul>" + "".join(toc_items) + "</ul></nav>"
+    toc_nav = "<nav class=\"toc\"><ul>" + "".join(toc_items) + "</ul></nav>"
+    toc_section = (
+        "<section class=\"module module--narrow\" id=\"toc\">"
+        "<h2>Contents</h2>"
+        f"{toc_nav}"
+        "</section>"
+    )
     html = f"""<!doctype html>
 <html lang="en">
 <head>
@@ -175,13 +181,6 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
       margin: 0;
       font-size: 1rem;
     }}
-    .toc {{
-      border: 1px solid #e2e2e2;
-      padding: 0.75rem;
-      margin: 0 0 1rem 0;
-      border-radius: 6px;
-      background: #f0f0f0;
-    }}
     .toc ul {{
       margin: 0;
       padding-left: 1.1rem;
@@ -200,6 +199,9 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
       background: #fff;
       display: flex;
       flex-direction: column;
+    }}
+    .module--narrow {{
+      grid-column: span 1;
     }}
     .module--full {{
       grid-column: 1 / -1;
@@ -283,8 +285,7 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
       Get this page via email by sending a message to <code>query@saildocs.com</code> with <code>send http://kauai.islandmagic.co</code> in the body.
     </p>
   </header>
-  {toc_html}
-  <div class="modules">{"".join(sections)}</div>
+  <div class="modules">{toc_section}{"".join(sections)}</div>
   <footer class="footer">
     <p>This page aggregates publicly available data from multiple sources. Information may be delayed, incomplete, or contain errors. Always refer to official sources for confirmation.</p>
   </footer>
