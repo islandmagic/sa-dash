@@ -1,5 +1,5 @@
 {
-  "timestamp_utc": "2026-03-17T08:28:01Z",
+  "timestamp_utc": "2026-03-17T09:28:01Z",
   "window_minutes": 60,
   "nvis": {
     "status": "UNKNOWN",
@@ -37,34 +37,34 @@
     "explain": "Limited recent reports."
   },
   "mainland": {
-    "status": "OPEN",
-    "score": 56,
+    "status": "INTERMITTENT",
+    "score": 50,
     "confidence": "MEDIUM",
     "bands": {
       "80m": {
-        "score": 46,
-        "paths": 1,
-        "tx": 1.0,
+        "score": 37,
+        "paths": 2,
+        "tx": 1.4,
         "rx": 1.0,
-        "median_snr_db": -11.0,
+        "median_snr_db": -20.5,
         "js8_paths": 0,
         "ft8_paths": 1
       },
       "40m": {
-        "score": 77,
-        "paths": 24,
-        "tx": 19.8,
-        "rx": 4.0,
-        "median_snr_db": -16.0,
-        "js8_paths": 5,
-        "ft8_paths": 15
+        "score": 73,
+        "paths": 7,
+        "tx": 7.4,
+        "rx": 2.2,
+        "median_snr_db": -16.5,
+        "js8_paths": 2,
+        "ft8_paths": 3
       },
       "30m": {
-        "score": 38,
-        "paths": 2,
-        "tx": 1.4,
-        "rx": 1.4,
-        "median_snr_db": -22.0,
+        "score": 32,
+        "paths": 1,
+        "tx": 1.0,
+        "rx": 1.0,
+        "median_snr_db": -21.0,
         "js8_paths": 0,
         "ft8_paths": 1
       },
@@ -114,12 +114,12 @@
         "ft8_paths": 0
       }
     },
-    "explain": "HI<->CONUS paths observed on 20m+ (JS8)."
+    "explain": "Intermittent HI\u2194CONUS activity; openings may be brief."
   },
   "sources": {
     "pskreporter": {
       "ok": true,
-      "last_fetch_utc": "2026-03-17T08:28:01.485585Z",
+      "last_fetch_utc": "2026-03-17T09:28:01.534227Z",
       "requests_last_hour": 2
     },
     "notes": ""
