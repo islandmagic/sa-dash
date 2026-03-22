@@ -1,17 +1,17 @@
 {
-  "timestamp_utc": "2026-03-22T14:28:01Z",
+  "timestamp_utc": "2026-03-22T15:28:01Z",
   "window_minutes": 60,
   "nvis": {
-    "status": "UNKNOWN",
-    "score": 0,
+    "status": "POOR",
+    "score": 13,
     "confidence": "LOW",
     "bands": {
       "80m": {
-        "score": 0,
-        "paths": 0,
-        "tx": 0,
-        "rx": 0,
-        "median_snr_db": null,
+        "score": 13,
+        "paths": 1,
+        "tx": 0.4,
+        "rx": 0.4,
+        "median_snr_db": -23.0,
         "js8_paths": 0,
         "ft8_paths": 0
       },
@@ -34,39 +34,39 @@
         "ft8_paths": 0
       }
     },
-    "explain": "Limited recent reports."
+    "explain": "Little inter-island activity. Low report volume."
   },
   "mainland": {
     "status": "OPEN",
-    "score": 60,
+    "score": 75,
     "confidence": "MEDIUM",
     "bands": {
       "80m": {
-        "score": 74,
-        "paths": 5,
-        "tx": 4.4,
-        "rx": 1.4,
-        "median_snr_db": -11.0,
+        "score": 0,
+        "paths": 0,
+        "tx": 0,
+        "rx": 0,
+        "median_snr_db": null,
         "js8_paths": 0,
-        "ft8_paths": 4
+        "ft8_paths": 0
       },
       "40m": {
-        "score": 69,
+        "score": 75,
         "paths": 18,
-        "tx": 12.0,
-        "rx": 2.0,
-        "median_snr_db": -18.5,
-        "js8_paths": 0,
-        "ft8_paths": 18
+        "tx": 14.2,
+        "rx": 2.8,
+        "median_snr_db": -16.5,
+        "js8_paths": 1,
+        "ft8_paths": 16
       },
       "30m": {
-        "score": 38,
-        "paths": 3,
-        "tx": 1.4,
-        "rx": 1.8,
-        "median_snr_db": -25.0,
+        "score": 0,
+        "paths": 0,
+        "tx": 0,
+        "rx": 0,
+        "median_snr_db": null,
         "js8_paths": 0,
-        "ft8_paths": 1
+        "ft8_paths": 0
       },
       "20m": {
         "score": 0,
@@ -114,13 +114,13 @@
         "ft8_paths": 0
       }
     },
-    "explain": "HI<->CONUS paths observed on 20m+ (FT8)."
+    "explain": "HI<->CONUS paths observed on 20m+ (JS8)."
   },
   "sources": {
     "pskreporter": {
       "ok": true,
-      "last_fetch_utc": "2026-03-22T14:28:01.198611Z",
-      "requests_last_hour": 4
+      "last_fetch_utc": "2026-03-22T15:28:01.217728Z",
+      "requests_last_hour": 2
     },
     "notes": ""
   }
