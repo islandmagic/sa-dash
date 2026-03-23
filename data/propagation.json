@@ -1,17 +1,17 @@
 {
-  "timestamp_utc": "2026-03-23T12:28:01Z",
+  "timestamp_utc": "2026-03-23T13:28:01Z",
   "window_minutes": 60,
   "nvis": {
-    "status": "UNKNOWN",
-    "score": 0,
+    "status": "POOR",
+    "score": 12,
     "confidence": "LOW",
     "bands": {
       "80m": {
-        "score": 0,
-        "paths": 0,
-        "tx": 0,
-        "rx": 0,
-        "median_snr_db": null,
+        "score": 12,
+        "paths": 1,
+        "tx": 0.4,
+        "rx": 0.4,
+        "median_snr_db": -29.0,
         "js8_paths": 0,
         "ft8_paths": 0
       },
@@ -34,39 +34,39 @@
         "ft8_paths": 0
       }
     },
-    "explain": "Limited recent reports."
+    "explain": "Little inter-island activity. Low report volume."
   },
   "mainland": {
-    "status": "INTERMITTENT",
-    "score": 60,
+    "status": "OPEN",
+    "score": 67,
     "confidence": "MEDIUM",
     "bands": {
       "80m": {
-        "score": 66,
-        "paths": 6,
-        "tx": 5.4,
+        "score": 59,
+        "paths": 3,
+        "tx": 3.0,
         "rx": 1.0,
-        "median_snr_db": -16.5,
+        "median_snr_db": -14.0,
         "js8_paths": 0,
-        "ft8_paths": 5
+        "ft8_paths": 3
       },
       "40m": {
         "score": 75,
-        "paths": 23,
-        "tx": 15.8,
-        "rx": 3.2,
+        "paths": 41,
+        "tx": 15.6,
+        "rx": 20.8,
         "median_snr_db": -17.0,
-        "js8_paths": 0,
-        "ft8_paths": 19
+        "js8_paths": 1,
+        "ft8_paths": 38
       },
       "30m": {
-        "score": 38,
-        "paths": 1,
+        "score": 64,
+        "paths": 3,
         "tx": 1.0,
-        "rx": 1.0,
-        "median_snr_db": -17.0,
+        "rx": 3.0,
+        "median_snr_db": -11.0,
         "js8_paths": 0,
-        "ft8_paths": 1
+        "ft8_paths": 3
       },
       "20m": {
         "score": 0,
@@ -114,13 +114,13 @@
         "ft8_paths": 0
       }
     },
-    "explain": "Intermittent HI\u2194CONUS activity; openings may be brief."
+    "explain": "HI<->CONUS paths observed on 20m+ (JS8)."
   },
   "sources": {
     "pskreporter": {
       "ok": true,
-      "last_fetch_utc": "2026-03-23T12:28:01.734345Z",
-      "requests_last_hour": 2
+      "last_fetch_utc": "2026-03-23T13:28:01.115213Z",
+      "requests_last_hour": 4
     },
     "notes": ""
   }
