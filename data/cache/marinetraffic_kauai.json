@@ -1,11 +1,11 @@
 {
   "id": "marinetraffic_kauai",
   "label": "Marine Traffic (<a href=\"https://www.marinetraffic.com\">MarineTraffic</a>)",
-  "retrieved_at": "2026-03-25T16:29:02-10:00",
+  "retrieved_at": "2026-03-25T17:29:02-10:00",
   "source_urls": [
     "https://www.marinetraffic.com"
   ],
-  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>HANSA SEALIFTER</td><td>Tanker</td><td>MH</td><td>42.6</td><td>118.0</td><td>W</td><td>JPCHB</td><td></td><td></td></tr><tr><td>LADY KAILANI</td><td>Sight seeing tour boat</td><td>US</td><td></td><td>1.0</td><td>NE</td><td></td><td>At port</td><td>Port Allen</td></tr><tr><td>RUBY PRINCESS</td><td>Passenger</td><td>BM</td><td></td><td>0.0</td><td>W</td><td>USOGG</td><td>At port</td><td>Nawiliwili</td></tr><tr><td>TORPEDO RETREIVER</td><td>Special category</td><td>US</td><td>8.2</td><td>128.0</td><td>WNW</td><td>PMRF KAUAI HI RANGE</td><td></td><td></td></tr></tbody></table>",
+  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>HANSA SEALIFTER</td><td>Tanker</td><td>MH</td><td>42.6</td><td>118.0</td><td>W</td><td>JPCHB</td><td></td><td></td></tr><tr><td>LADY KAILANI</td><td>Sight seeing tour boat</td><td>US</td><td></td><td>1.0</td><td>NE</td><td></td><td>At port</td><td>Port Allen</td></tr><tr><td>RUBY PRINCESS</td><td>Passenger</td><td>BM</td><td>1.3</td><td>101.0</td><td>ESE</td><td>USOGG</td><td>Departing</td><td>Nawiliwili</td></tr><tr><td>TIGER5</td><td>Tug</td><td>US</td><td></td><td>1.0</td><td>S</td><td></td><td>At port</td><td>Nawiliwili</td></tr></tbody></table>",
   "error": null,
   "stale": false,
   "layout": "full"
