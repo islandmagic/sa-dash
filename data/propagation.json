@@ -1,17 +1,17 @@
 {
-  "timestamp_utc": "2026-03-30T13:28:01Z",
+  "timestamp_utc": "2026-03-30T14:28:01Z",
   "window_minutes": 60,
   "nvis": {
     "status": "POOR",
-    "score": 16,
+    "score": 17,
     "confidence": "LOW",
     "bands": {
       "80m": {
-        "score": 16,
-        "paths": 1,
-        "tx": 0.4,
+        "score": 17,
+        "paths": 2,
+        "tx": 0.8,
         "rx": 0.4,
-        "median_snr_db": -21.0,
+        "median_snr_db": -25.5,
         "js8_paths": 0,
         "ft8_paths": 0
       },
@@ -37,34 +37,34 @@
     "explain": "Little inter-island activity. Low report volume."
   },
   "mainland": {
-    "status": "INTERMITTENT",
-    "score": 55,
+    "status": "OPEN",
+    "score": 81,
     "confidence": "MEDIUM",
     "bands": {
       "80m": {
-        "score": 83,
-        "paths": 6,
-        "tx": 5.4,
-        "rx": 1.0,
-        "median_snr_db": -5.0,
+        "score": 0,
+        "paths": 0,
+        "tx": 0,
+        "rx": 0,
+        "median_snr_db": null,
         "js8_paths": 0,
-        "ft8_paths": 5
+        "ft8_paths": 0
       },
       "40m": {
-        "score": 68,
-        "paths": 19,
-        "tx": 18.4,
-        "rx": 1.0,
-        "median_snr_db": -15.0,
-        "js8_paths": 0,
-        "ft8_paths": 18
+        "score": 81,
+        "paths": 22,
+        "tx": 19.4,
+        "rx": 3.4,
+        "median_snr_db": -13.0,
+        "js8_paths": 2,
+        "ft8_paths": 15
       },
       "30m": {
-        "score": 16,
-        "paths": 1,
-        "tx": 0.4,
-        "rx": 0.4,
-        "median_snr_db": -22.0,
+        "score": 0,
+        "paths": 0,
+        "tx": 0,
+        "rx": 0,
+        "median_snr_db": null,
         "js8_paths": 0,
         "ft8_paths": 0
       },
@@ -114,12 +114,12 @@
         "ft8_paths": 0
       }
     },
-    "explain": "Intermittent HI\u2194CONUS activity; openings may be brief."
+    "explain": "HI<->CONUS paths observed on 20m+ (JS8)."
   },
   "sources": {
     "pskreporter": {
       "ok": true,
-      "last_fetch_utc": "2026-03-30T13:28:01.177656Z",
+      "last_fetch_utc": "2026-03-30T14:28:01.237607Z",
       "requests_last_hour": 2
     },
     "notes": ""
