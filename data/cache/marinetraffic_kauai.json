@@ -1,11 +1,11 @@
 {
   "id": "marinetraffic_kauai",
   "label": "Marine Traffic (<a href=\"https://www.marinetraffic.com\">MarineTraffic</a>)",
-  "retrieved_at": "2026-04-01T03:29:04-10:00",
+  "retrieved_at": "2026-04-01T04:29:03-10:00",
   "source_urls": [
     "https://www.marinetraffic.com"
   ],
-  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>NAPALI STAR</td><td>Other</td><td>US</td><td>6.5</td><td>46.0</td><td>E</td><td>CLASS B</td><td></td><td></td></tr><tr><td>TIGER5</td><td>Tug</td><td>US</td><td>0.3</td><td>3.0</td><td>E</td><td></td><td></td><td>Nawiliwili</td></tr></tbody></table>",
+  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>EMERALD PRINCESS</td><td>Passenger</td><td>BM</td><td>62.1</td><td>113.0</td><td>NW</td><td>US LIH</td><td></td><td></td></tr><tr><td>NAPALI STAR</td><td>Other</td><td>US</td><td>6.5</td><td>46.0</td><td>E</td><td>CLASS B</td><td></td><td></td></tr><tr><td>TIGER5</td><td>Tug</td><td>US</td><td>0.3</td><td>3.0</td><td>E</td><td></td><td></td><td>Nawiliwili</td></tr></tbody></table>",
   "error": null,
   "stale": false,
   "layout": "full"
