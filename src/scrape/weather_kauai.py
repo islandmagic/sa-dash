@@ -1,15 +1,29 @@
 import html
-import re
 from datetime import datetime, timedelta, timezone
 
 from src.scrape.base import clean_text, fetch_json, now_iso
-
+from src.hcdp.client import HCDP_BASE_URL, MesonetClient
+from src.hcdp.parse import pivot_latest_measurements
 
 POINTS_URL = "https://api.weather.gov/points/22.2,-159.42"
 ALERTS_URL = "https://api.weather.gov/alerts?active=true&point=22.21%2C-159.41&limit=500"
 MAP_URL = "https://forecast.weather.gov/MapClick.php?lat=22.2&lon=-159.42"
 PHLI_STATION_URL = "https://api.weather.gov/stations/PHLI"
 PHLI_LATEST_URL = "https://api.weather.gov/stations/PHLI/observations/latest"
+
+HCDP_DOCS_URL = "https://hcdp.github.io/hcdp_api_docs/"
+HCDP_MAP_URL = "https://www.hawaii.edu/climate-data-portal/hawaii-mesonet-data/#/data-map"
+HCDP_STATION_IDS = ("0603", "0601", "0602", "0611", "0641", "0621")
+HCDP_WEATHER_VAR_IDS = (
+    "Tair_1_Avg",
+    "RH_1_Avg",
+    "Psl_hPa_1_Avg",
+    "P_hPa_1_Avg",
+    "P_1_Avg",
+    "WS_1_Avg",
+    "WDrs_1_Avg",
+    "WG_1_Max",
+)
 
 
 def _format_temp_f(value_c: float | None) -> str:
@@ -41,11 +55,43 @@ def _format_pressure_inhg(value_pa: float | None) -> str:
         return "N/A"
 
 
+def _format_pressure_from_hpa(value_hpa: float | None) -> str:
+    if value_hpa is None:
+        return "N/A"
+    try:
+        inhg = float(value_hpa) * 0.02953
+        indicator = _pressure_indicator(inhg)
+        return f"{inhg:.2f} {indicator}".strip()
+    except (TypeError, ValueError):
+        return "N/A"
+
+
+def _format_pressure_from_kpa(value_kpa: float | None) -> str:
+    if value_kpa is None:
+        return "N/A"
+    try:
+        inhg = float(value_kpa) * 0.2953
+        indicator = _pressure_indicator(inhg)
+        return f"{inhg:.2f} {indicator}".strip()
+    except (TypeError, ValueError):
+        return "N/A"
+
+
 def _format_wind_mph(value_kmh: float | None) -> str:
     if value_kmh is None:
         return "N/A"
     try:
         mph = value_kmh * 0.621371
+        return f"{mph:.0f}"
+    except (TypeError, ValueError):
+        return "N/A"
+
+
+def _format_wind_mph_from_ms(value_ms: float | None) -> str:
+    if value_ms is None:
+        return "N/A"
+    try:
+        mph = float(value_ms) * 2.23694
         return f"{mph:.0f}"
     except (TypeError, ValueError):
         return "N/A"
@@ -115,11 +161,63 @@ def _fetch_station(station_url: str, obs_url: str) -> dict | None:
     }
 
 
+def _fetch_hcdp_stations() -> list[dict]:
+    client = MesonetClient()
+    if not client.has_credentials:
+        return []
+    n_st = len(HCDP_STATION_IDS)
+    n_var = len(HCDP_WEATHER_VAR_IDS)
+    limit = max(n_st * n_var * 4, 120)
+    try:
+        raw = client.get_measurements(
+            station_ids=HCDP_STATION_IDS,
+            var_ids=HCDP_WEATHER_VAR_IDS,
+            limit=limit,
+        )
+    except Exception:
+        return []
+    pivoted = pivot_latest_measurements(raw)
+    by_id = {p["station_id"]: p for p in pivoted}
+    rows = []
+    for sid in HCDP_STATION_IDS:
+        p = by_id.get(sid)
+        if not p:
+            continue
+        vals = p["values"]
+        label = str(p["station_name"])
+        nws = p.get("nws_id")
+        if nws:
+            label = f"{label} ({nws})"
+        else:
+            label = f"{label} ({sid})"
+        ts = p["timestamp"]
+        ts_str = ts.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S") + "Z"
+        pressure_hpa = vals.get("Psl_hPa_1_Avg") or vals.get("P_hPa_1_Avg")
+        rows.append(
+            {
+                "station": label,
+                "temperature": _format_temp_f(vals.get("Tair_1_Avg")),
+                "humidity": _format_humidity(vals.get("RH_1_Avg")),
+                "pressure": (
+                    _format_pressure_from_hpa(pressure_hpa)
+                    if pressure_hpa is not None
+                    else _format_pressure_from_kpa(vals.get("P_1_Avg"))
+                ),
+                "wind": _format_wind_mph_from_ms(vals.get("WS_1_Avg")),
+                "wind_dir": _format_wind_dir(vals.get("WDrs_1_Avg")),
+                "wind_gust": _format_wind_mph_from_ms(vals.get("WG_1_Max")),
+                "timestamp": _format_timestamp(ts_str),
+            }
+        )
+    return rows
+
+
 def _build_station_block() -> str:
     stations = [
         _fetch_station(PHLI_STATION_URL, PHLI_LATEST_URL),
     ]
     stations = [station for station in stations if station]
+    stations.extend(_fetch_hcdp_stations())
     if not stations:
         return "<p>Station observations unavailable.</p>"
     rows = "".join(
@@ -137,6 +235,8 @@ def _build_station_block() -> str:
     )
     return (
         "<h3>Stations</h3>"
+        "<p class=\"info\">NWS: Līhuʻe (PHLI). Mesonet: Hawaiʻi Climate Data Portal stations "
+        "(5-minute averages where available).</p>"
         "<table>"
         "<thead><tr>"
         "<th></th>"
@@ -280,14 +380,16 @@ def scrape() -> dict:
 
     return {
         "id": "weather_kauai",
-        "label": f"Weather (<a href=\"{MAP_URL}\">NWS</a>)",
+        "label": f'Weather (<a href="{MAP_URL}">NWS</a>, <a href="{HCDP_MAP_URL}">HCDP Mesonet</a>)',
         "retrieved_at": now_iso(),
         "source_urls": [
             POINTS_URL,
             forecast_url,
             ALERTS_URL,
             PHLI_STATION_URL,
-            PHLI_LATEST_URL
+            PHLI_LATEST_URL,
+            HCDP_BASE_URL + "/mesonet/db/measurements",
+            HCDP_DOCS_URL,
         ],
         "html": block_html,
         "error": None,

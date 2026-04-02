@@ -66,12 +66,6 @@ def _extract_reported_outages(page_html: str, limit: int = 5) -> list[dict]:
 def scrape() -> dict:
     page_html = fetch_html(WATER_URL)
     items = _extract_reported_outages(page_html, limit=5)
-
-    info_html = (
-        "<p><strong>Emergencies:</strong> Nights, weekends and holidays: "
-        "<a href=\"tel:+18082411711\">808-241-1711</a>. Business hours: "
-        "<a href=\"tel:+18082455400\">808-245-5400</a>, option 1.</p>"
-    )
     if items:
         details_blocks = []
         for item in items:
@@ -95,12 +89,9 @@ def scrape() -> dict:
                 f"<div>{summary}</div>"
                 "</details>"
             )
-        block_html = f"{info_html}{''.join(details_blocks)}"
+        block_html = "".join(details_blocks)
     else:
-        block_html = (
-            "<p>No reported outages found.</p>"
-            f"{info_html}"
-        )
+        block_html = "<p>No reported outages found.</p>"
 
     return {
         "id": "kauai_water",

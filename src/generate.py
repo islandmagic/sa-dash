@@ -1,11 +1,15 @@
 import argparse
 from pathlib import Path
 
+from dotenv import load_dotenv
+
 from src.config import ISLANDS
 from src.render.html import render_html
 from src.scrape.base import now_iso
 from src.scrape.cache import load_cache, save_cache
 from src.scrape.registry import get_scraper
+
+_REPO_ROOT = Path(__file__).resolve().parents[1]
 
 
 def scrape_with_cache(scraper_name: str, cache_dir: Path, offline: bool) -> dict:
@@ -67,6 +71,7 @@ def generate_island(
 
 
 def main() -> None:
+    load_dotenv(_REPO_ROOT / ".env")
     parser = argparse.ArgumentParser(description="Generate emergency dashboard pages.")
     parser.add_argument("--island", default="kauai", help="Island key to generate")
     parser.add_argument(

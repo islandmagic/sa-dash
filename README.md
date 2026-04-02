@@ -37,9 +37,11 @@ This requires git credentials configured on that machine so `git push` succeeds.
 
 ## Secrets
 
-USGS uses an API key. Set it as an environment variable locally or in GitHub Actions:
-- Local: create `.env` (see `.env.example`) with `USGS_API_KEY=...`
-- GitHub Actions: add a repository secret named `USGS_API_KEY`
+Put keys in a **`.env`** file at the repo root (see `.env.example`). When you run `python3 -m src.generate ...`, that file is loaded automatically via `python-dotenv` (`USGS_API_KEY`, `HCDP_API_KEY`, etc.). Variables you already exported in the shell still override `.env`.
+
+- GitHub Actions: add repository secrets (e.g. `USGS_API_KEY`, `HCDP_API_KEY`) and map them in `.github/workflows/generate.yml`.
+
+**Cron / other scripts** that call `python3` directly should either `cd` to the repo root (so the same `.env` path applies if you add `load_dotenv` there) or `export`/`source` the keys before running. The generate entrypoint loads only when using `src.generate`.
 
 ## Notes
 

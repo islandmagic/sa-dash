@@ -39,11 +39,7 @@ def scrape() -> dict:
             item = {**item, "summary": full_summary}
         lihue_items.append(item)
     items = lihue_items[:5]
-    info_html = (
-        "<p><strong>Road and closure conditions:</strong> <a href=\"tel:+18082411725\">808-241-1725</a><br/>"
-        "<strong>Report a problem:</strong> <a href=\"tel:+18082413000\">808-241-3000</a></p>"
-    )
-    block_html = f"{info_html}" + render_rss_html(items)
+    block_html = render_rss_html(items)
     return {
         "id": "hidot_highways_news",
         "label": f"Roads &amp; Bridges (<a href=\"{SITE_URL}\">HDOT News</a>)",

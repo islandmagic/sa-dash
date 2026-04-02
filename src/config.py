@@ -5,6 +5,7 @@ ISLANDS = {
         "name": "Kauai",
         "scrapers": [
             "time_wheel",
+            "info_kauai",
             "weather_kauai",
             "precipitation",
             "kiuc",

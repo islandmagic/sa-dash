@@ -3,6 +3,8 @@ from datetime import date, datetime, timedelta
 
 import httpx
 
+from src.hcdp.client import HCDP_BASE_URL, MesonetClient
+from src.hcdp.parse import pivot_latest_measurements
 from src.scrape.base import now_iso
 
 COCORAS_MAP_URL = "https://maps.cocorahs.org/?maptype=active-stations"
@@ -28,6 +30,122 @@ STATION_QUALIFIERS = {
     39: "Town",
     9: "Airport",
 }
+
+HCDP_DOCS_URL = "https://hcdp.github.io/hcdp_api_docs/"
+HCDP_STATION_IDS = ("0603", "0601", "0602", "0611", "0641", "0621")
+HCDP_RAIN_VAR_ID = "RF_1_Tot300s"  # 5-minute total rainfall, mm
+
+# Compact labels (also used in weather module)
+HCDP_STATION_NAMES = {
+    "0603": "Lower Limahuli",
+    "0601": "Waipa",
+    "0602": "Common Ground",
+    "0611": "Kealia",
+    "0641": "Hanamaulu",
+    "0621": "Lawai NTBG",
+}
+
+
+def _mm_to_inches(value_mm: float | None) -> str:
+    if value_mm is None:
+        return "—"
+    try:
+        inches = float(value_mm) / 25.4
+        return f"{inches:.2f}"
+    except (TypeError, ValueError):
+        return "—"
+
+
+def _sum_mm(values: list[float]) -> float:
+    total = 0.0
+    for v in values:
+        try:
+            total += float(v)
+        except (TypeError, ValueError):
+            continue
+    return total
+
+
+def _build_mesonet_rain_table() -> str:
+    # HCDP endpoint can intermittently 504; fail fast so the whole module renders.
+    client = MesonetClient(timeout=20.0)
+    if not client.has_credentials:
+        return (
+            "<p class=\"info\">Mesonet rainfall is available when <code>HCDP_API_KEY</code> is set.</p>"
+        )
+
+    # Rolling window totals (RF_1_Tot3600s / RF_1_Tot86400s) were not available in measurements
+    # for Kauai stations; compute closest match by summing the 5-minute totals.
+    from datetime import timezone
+
+    now_utc = datetime.now(tz=timezone.utc)
+    start_utc = now_utc - timedelta(hours=24, minutes=15)
+    start_date = start_utc.isoformat(timespec="seconds").replace("+00:00", "Z")
+
+    try:
+        raw = client.get_measurements(
+            station_ids=HCDP_STATION_IDS,
+            var_ids=(HCDP_RAIN_VAR_ID,),
+            start_date=start_date,
+            limit=8000,
+            join_metadata=False,
+        )
+    except Exception as exc:
+        return f"<p>Mesonet rainfall unavailable: {html.escape(str(exc))}</p>"
+
+    # Group 5-min totals by station and time.
+    by_station: dict[str, list[tuple[datetime, float]]] = {}
+    for row in raw:
+        if row.get("variable") != HCDP_RAIN_VAR_ID:
+            continue
+        sid = str(row.get("station_id") or "").strip()
+        if not sid:
+            continue
+        ts_raw = str(row.get("timestamp") or "").strip()
+        if not ts_raw:
+            continue
+        try:
+            ts = datetime.fromisoformat(ts_raw.replace("Z", "+00:00"))
+        except ValueError:
+            continue
+        try:
+            v = float(str(row.get("value") or "").strip())
+        except (TypeError, ValueError):
+            continue
+        by_station.setdefault(sid, []).append((ts, v))
+
+    rows_html = []
+    for sid in HCDP_STATION_IDS:
+        series = by_station.get(sid, [])
+        if not series:
+            continue
+        # Compute last 1h and last 24h based on timestamps.
+        series.sort(key=lambda x: x[0], reverse=True)
+        cutoff_1h = now_utc - timedelta(hours=1)
+        cutoff_24h = now_utc - timedelta(hours=24)
+        mm_1h = _sum_mm([v for ts, v in series if ts >= cutoff_1h])
+        mm_24h = _sum_mm([v for ts, v in series if ts >= cutoff_24h])
+        name = html.escape(HCDP_STATION_NAMES.get(sid, sid))
+        last_1h = _mm_to_inches(mm_1h)
+        last_24h = _mm_to_inches(mm_24h)
+        rows_html.append(
+            "<tr>"
+            f"<td>{name}</td>"
+            f"<td style=\"text-align:right;\">{html.escape(last_1h)}</td>"
+            f"<td style=\"text-align:right;\">{html.escape(last_24h)}</td>"
+            "</tr>"
+        )
+
+    if not rows_html:
+        return "<p>No Mesonet rainfall values for configured stations.</p>"
+
+    return (
+        "<table>"
+        "<thead><tr><th>Station</th><th>Last 1h [in]</th><th>Last 24h [in]</th></tr></thead>"
+        f"<tbody>{''.join(rows_html)}</tbody>"
+        "</table>"
+    )
+
 
 def _format_cocorahs_date(value: date) -> tuple[str, str]:
     display = f"{value.month}/{value.day}/{value.year}"
@@ -214,12 +332,22 @@ def scrape() -> dict:
     body = (
         "<h3>Precipitation</h3>"
         f"{_build_precip_table(today)}"
+        "<h3>Mesonet rainfall</h3>"
+        f"{_build_mesonet_rain_table()}"
     )
     return {
         "id": "precipitation",
-        "label": f"Precipitation (<a href=\"{COCORAS_MAP_URL}\">CoCoRaHS</a>)",
+        "label": (
+            f'Precipitation (<a href="{COCORAS_MAP_URL}">CoCoRaHS</a>, '
+            f'<a href="{HCDP_DOCS_URL}">HCDP Mesonet</a>)'
+        ),
         "retrieved_at": now_iso(),
-        "source_urls": [DEX_STATION_URL, DEX_PRECIP_URL],
+        "source_urls": [
+            DEX_STATION_URL,
+            DEX_PRECIP_URL,
+            HCDP_BASE_URL + "/mesonet/db/measurements",
+            HCDP_DOCS_URL,
+        ],
         "html": body,
         "error": None,
         "stale": False,
