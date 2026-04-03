@@ -2,6 +2,8 @@ import datetime as dt
 import re
 from pathlib import Path
 
+from bs4 import BeautifulSoup
+
 HST = dt.timezone(dt.timedelta(hours=-10))
 
 
@@ -109,6 +111,39 @@ def _label_to_id(label: str) -> str:
     return text or "section"
 
 
+def _ensure_compact_tables(fragment: str) -> str:
+    """Wrap every table in a horizontal-scroll container and mark compact styling."""
+    if "<table" not in fragment.lower():
+        return fragment
+    soup = BeautifulSoup(f"<body>{fragment}</body>", "lxml")
+    body = soup.body
+    if not body:
+        return fragment
+    for table in list(body.find_all("table", recursive=True)):
+        parent = table.parent
+        if parent and parent.name == "div":
+            pclass = parent.get("class") or []
+            if isinstance(pclass, str):
+                pclass = pclass.split()
+            if "status-table-wrap" in pclass:
+                tclass = table.get("class") or []
+                if isinstance(tclass, str):
+                    tclass = tclass.split()
+                if "status-table-compact" not in tclass:
+                    tclass.append("status-table-compact")
+                    table["class"] = tclass
+                continue
+        tclass = table.get("class") or []
+        if isinstance(tclass, str):
+            tclass = tclass.split()
+        if "status-table-compact" not in tclass:
+            tclass.append("status-table-compact")
+            table["class"] = tclass
+        wrap = soup.new_tag("div", attrs={"class": "status-table-wrap"})
+        table.wrap(wrap)
+    return body.decode_contents()
+
+
 def render_html(island_name: str, providers: list[dict], generated_at: str) -> str:
     sections = []
     toc_items = []
@@ -117,6 +152,7 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
         last_retrieved = _format_ts(provider.get("retrieved_at"))
 
         body = provider.get("html") or "<p>No updates available.</p>"
+        body = _ensure_compact_tables(body)
         section_id = _label_to_id(str(provider.get("label", "")))
         toc_items.append(
             f"<li><a href=\"#{section_id}\">{provider['label']}</a></li>"
@@ -198,6 +234,7 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
       background: #fff;
       display: flex;
       flex-direction: column;
+      min-width: 0;
     }}
     .module--narrow {{
       grid-column: span 1;
@@ -259,6 +296,30 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
     }}
     .status-cell {{
       text-align: center;
+    }}
+    .module .status-table-wrap {{
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+    }}
+    .module table.status-table-compact {{
+      width: 100%;
+      max-width: 100%;
+      font-size: 0.88rem;
+      border-collapse: collapse;
+      table-layout: auto;
+    }}
+    .module table.status-table-compact th,
+    .module table.status-table-compact td {{
+      white-space: normal;
+      overflow-wrap: break-word;
+      word-break: break-word;
+      padding: 0.06rem 0.35rem;
+      vertical-align: top;
+    }}
+    .module .info-module td.info-td-phone {{
+      white-space: nowrap;
     }}
     .footer {{
       border-top: 1px solid #eee;

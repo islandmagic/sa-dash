@@ -62,18 +62,26 @@ def scrape() -> dict:
     station_rows = "".join(
         "<tr>"
         f"<td>{html.escape(call)}</td>"
-        f"<td style=\"text-align:right;\">{html.escape(freq)}</td>"
+        f"<td class=\"info-td-num\">{html.escape(freq)}</td>"
         f"<td>{html.escape(band)}</td>"
         f"<td>{html.escape(area)}</td>"
         "</tr>"
         for call, freq, band, area in stations
     )
     broadcast_table = (
-        "<h3>Broadcast Radio</h3>"
-        "<table class=\"info-table\">"
-        "<thead><tr><th>Station</th><th style=\"text-align:right;\">Freq</th><th>Band</th><th>Area</th></tr></thead>"
+        "<table class=\"info-table info-table--radio\">"
+        "<thead><tr><th>Station</th><th class=\"info-td-num\">Freq</th><th>Band</th><th>Area</th></tr></thead>"
         f"<tbody>{station_rows}</tbody>"
         "</table>"
+    )
+
+    broadcast_radio_block = (
+        "<details class=\"info-details-broadcast\">"
+        "<summary>Broadcast radio</summary>"
+        "<div class=\"info-details-body\">"
+        f"{broadcast_table}"
+        "</div>"
+        "</details>"
     )
 
     repeaters = [
@@ -90,7 +98,8 @@ def scrape() -> dict:
     ]
     rep_rows = "".join(
         "<tr>"
-        f"<td style=\"text-align:right;\">{html.escape(freq)}</td>"
+        f"<td>{html.escape(call)}</td>"
+        f"<td class=\"info-td-num\">{html.escape(freq)}</td>"
         f"<td>{html.escape(offset)}</td>"
         f"<td>{html.escape(pl)}</td>"
         f"<td>{html.escape(site)}</td>"
@@ -98,37 +107,44 @@ def scrape() -> dict:
         for call, freq, offset, pl, site in repeaters
     )
     repeater_table = (
-        "<h3>Amateur Radio</h3>"
-        "<p class=\"info-kicker\">Simplex 146.520 (National calling). "
-        "<strong>GMRS:</strong> CH 20 — 462.675 MHz.</p>"
-        "<table class=\"info-table\">"
-        "<thead><tr><th>Freq</th><th>Offset</th><th>PL</th><th>Site/Area</th></tr></thead>"
+        "<p class=\"info-kicker\">National calling: 146.520 MHz<br/>GMRS calling: 462.675 MHz (CH 20)</p>"
+        "<table class=\"info-table info-table--radio\">"
+        "<thead><tr><th>Call</th><th class=\"info-td-num\">Freq</th><th>Offset</th><th>PL</th><th>Site</th></tr></thead>"
         f"<tbody>{rep_rows}</tbody>"
         "</table>"
     )
 
+    amateur_radio_block = (
+        "<details class=\"info-details-amradio\">"
+        "<summary>Amateur radio</summary>"
+        "<div class=\"info-details-body\">"
+        f"{repeater_table}"
+        "</div>"
+        "</details>"
+    )
+
     css = """
-.info-module .info-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 0.75rem; }
-.info-module .info-table { width: 100%; border-collapse: collapse; }
-.info-module .info-table th, .info-module .info-table td { padding: 0.15rem 0.4rem; }
+.info-module .info-contacts { margin-bottom: 0.35rem; }
+.info-module .info-table { border-collapse: collapse; }
 .info-module .info-td-phone { white-space: nowrap; }
 .info-module .info-td-notes { color: #555; font-size: 0.85em; }
 .info-module .info-kicker { margin-top: 0; color: #555; font-size: 0.9em; }
+.info-module .info-subhead { margin: 0.75rem 0 0.35rem; font-size: 1rem; }
 .info-module .info-compact-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.25rem 1rem; }
-@media (max-width: 720px) { .info-module .info-grid { grid-template-columns: 1fr; } }
+.info-module .info-details-broadcast,
+.info-module .info-details-amradio { margin-top: 0.5rem; }
+.info-module .info-details-body { margin-top: 0.5rem; }
+.info-module .info-table--radio .info-td-num { text-align: right; }
 """
 
     body = (
         "<style>" + css + "</style>"
         "<div class=\"info-module\">"
-        "<div class=\"info-grid\">"
-        "<div>"
+        "<div class=\"info-contacts\">"
         f"{contacts_table}"
         "</div>"
-        "<div>"
-        f"{broadcast_table}"
-        f"{repeater_table}"
-        "</div>"
+        f"{broadcast_radio_block}"
+        f"{amateur_radio_block}"
         "</div>"
     )
 
