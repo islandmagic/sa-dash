@@ -1,7 +1,7 @@
 {
   "last": {
-    "nvis_status": "POOR",
-    "mainland_status": "OPEN",
-    "timestamp_utc": "2026-04-06T14:28:01Z"
+    "nvis_status": "UNKNOWN",
+    "mainland_status": "CLOSED",
+    "timestamp_utc": "2026-04-06T15:28:01Z"
   }
 }
