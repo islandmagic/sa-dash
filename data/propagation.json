@@ -1,26 +1,26 @@
 {
-  "timestamp_utc": "2026-04-07T08:28:01Z",
+  "timestamp_utc": "2026-04-07T09:28:01Z",
   "window_minutes": 60,
   "nvis": {
     "status": "POOR",
-    "score": 12,
+    "score": 13,
     "confidence": "LOW",
     "bands": {
       "80m": {
+        "score": 13,
+        "paths": 1,
+        "tx": 0.4,
+        "rx": 0.4,
+        "median_snr_db": -23.0,
+        "js8_paths": 0,
+        "ft8_paths": 0
+      },
+      "40m": {
         "score": 0,
         "paths": 0,
         "tx": 0,
         "rx": 0,
         "median_snr_db": null,
-        "js8_paths": 0,
-        "ft8_paths": 0
-      },
-      "40m": {
-        "score": 12,
-        "paths": 1,
-        "tx": 0.4,
-        "rx": 0.4,
-        "median_snr_db": -25.0,
         "js8_paths": 0,
         "ft8_paths": 0
       },
@@ -38,7 +38,7 @@
   },
   "mainland": {
     "status": "OPEN",
-    "score": 73,
+    "score": 71,
     "confidence": "MEDIUM",
     "bands": {
       "80m": {
@@ -51,31 +51,31 @@
         "ft8_paths": 0
       },
       "40m": {
-        "score": 78,
-        "paths": 8,
-        "tx": 6.2,
-        "rx": 3.0,
-        "median_snr_db": -15.0,
+        "score": 68,
+        "paths": 12,
+        "tx": 7.6,
+        "rx": 2.6,
+        "median_snr_db": -21.0,
         "js8_paths": 1,
-        "ft8_paths": 4
+        "ft8_paths": 3
       },
       "30m": {
-        "score": 73,
-        "paths": 6,
-        "tx": 2.8,
-        "rx": 2.4,
-        "median_snr_db": -16.5,
+        "score": 25,
+        "paths": 3,
+        "tx": 1.2,
+        "rx": 0.4,
+        "median_snr_db": -27.0,
         "js8_paths": 0,
-        "ft8_paths": 4
+        "ft8_paths": 0
       },
       "20m": {
-        "score": 71,
-        "paths": 7,
-        "tx": 3.4,
-        "rx": 5.0,
-        "median_snr_db": -20.0,
+        "score": 90,
+        "paths": 32,
+        "tx": 3.0,
+        "rx": 31.0,
+        "median_snr_db": -7.0,
         "js8_paths": 0,
-        "ft8_paths": 6
+        "ft8_paths": 32
       },
       "17m": {
         "score": 0,
@@ -119,8 +119,8 @@
   "sources": {
     "pskreporter": {
       "ok": true,
-      "last_fetch_utc": "2026-04-07T08:28:01.035466Z",
-      "requests_last_hour": 4
+      "last_fetch_utc": "2026-04-07T09:28:01.114036Z",
+      "requests_last_hour": 2
     },
     "notes": ""
   }
