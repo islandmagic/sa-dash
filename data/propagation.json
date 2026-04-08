@@ -1,5 +1,5 @@
 {
-  "timestamp_utc": "2026-04-08T06:28:00Z",
+  "timestamp_utc": "2026-04-08T07:28:00Z",
   "window_minutes": 60,
   "nvis": {
     "status": "POOR",
@@ -37,8 +37,8 @@
     "explain": "Little inter-island activity. Low report volume."
   },
   "mainland": {
-    "status": "OPEN",
-    "score": 82,
+    "status": "INTERMITTENT",
+    "score": 49,
     "confidence": "MEDIUM",
     "bands": {
       "80m": {
@@ -51,40 +51,40 @@
         "ft8_paths": 0
       },
       "40m": {
-        "score": 81,
-        "paths": 14,
-        "tx": 14.0,
-        "rx": 2.2,
-        "median_snr_db": -11.0,
-        "js8_paths": 3,
-        "ft8_paths": 8
+        "score": 73,
+        "paths": 16,
+        "tx": 17.4,
+        "rx": 1.8,
+        "median_snr_db": -15.0,
+        "js8_paths": 4,
+        "ft8_paths": 10
       },
       "30m": {
-        "score": 70,
-        "paths": 6,
-        "tx": 3.2,
-        "rx": 2.0,
-        "median_snr_db": -15.0,
+        "score": 62,
+        "paths": 7,
+        "tx": 4.0,
+        "rx": 1.0,
+        "median_snr_db": -16.0,
         "js8_paths": 0,
-        "ft8_paths": 3
+        "ft8_paths": 2
       },
       "20m": {
-        "score": 87,
-        "paths": 48,
-        "tx": 15.8,
-        "rx": 11.2,
-        "median_snr_db": -9.0,
+        "score": 41,
+        "paths": 2,
+        "tx": 1.0,
+        "rx": 2.0,
+        "median_snr_db": -22.0,
         "js8_paths": 0,
-        "ft8_paths": 43
+        "ft8_paths": 2
       },
       "17m": {
-        "score": 0,
-        "paths": 0,
-        "tx": 0,
-        "rx": 0,
-        "median_snr_db": null,
+        "score": 35,
+        "paths": 2,
+        "tx": 1.4,
+        "rx": 1.4,
+        "median_snr_db": -24.0,
         "js8_paths": 0,
-        "ft8_paths": 0
+        "ft8_paths": 1
       },
       "15m": {
         "score": 0,
@@ -114,13 +114,13 @@
         "ft8_paths": 0
       }
     },
-    "explain": "HI<->CONUS paths observed on 20m+ (JS8)."
+    "explain": "Intermittent HI\u2194CONUS activity; openings may be brief."
   },
   "sources": {
     "pskreporter": {
       "ok": true,
-      "last_fetch_utc": "2026-04-08T06:28:00.866644Z",
-      "requests_last_hour": 4
+      "last_fetch_utc": "2026-04-08T07:28:00.951084Z",
+      "requests_last_hour": 2
     },
     "notes": ""
   }
