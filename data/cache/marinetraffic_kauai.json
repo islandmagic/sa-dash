@@ -1,11 +1,11 @@
 {
   "id": "marinetraffic_kauai",
   "label": "Marine Traffic (<a href=\"https://www.marinetraffic.com\">MarineTraffic</a>)",
-  "retrieved_at": "2026-04-09T05:29:02-10:00",
+  "retrieved_at": "2026-04-09T06:29:02-10:00",
   "source_urls": [
     "https://www.marinetraffic.com"
   ],
-  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>NAVIGATOR CERES</td><td>Tanker</td><td>LR</td><td>6.1</td><td>18.0</td><td>NNW</td><td>US NIJ</td><td></td><td></td></tr><tr><td>PRIDE OF AMERICA</td><td>Passenger</td><td>US</td><td>21.6</td><td>103.0</td><td>W</td><td>USNIJ</td><td></td><td></td></tr></tbody></table>",
+  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>NAVIGATOR CERES</td><td>Tanker</td><td>LR</td><td>4.9</td><td>22.0</td><td>NNW</td><td>US NIJ</td><td></td><td></td></tr><tr><td>PRIDE OF AMERICA</td><td>Passenger</td><td>US</td><td>9.5</td><td>101.0</td><td>W</td><td>USNIJ</td><td></td><td></td></tr><tr><td>TIGER5</td><td>Tug</td><td>US</td><td>0.3</td><td>5.0</td><td>ENE</td><td></td><td></td><td>Nawiliwili</td></tr></tbody></table>",
   "error": null,
   "stale": false,
   "layout": "full"
