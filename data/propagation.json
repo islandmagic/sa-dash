@@ -1,17 +1,17 @@
 {
-  "timestamp_utc": "2026-04-11T10:28:01Z",
+  "timestamp_utc": "2026-04-11T11:28:01Z",
   "window_minutes": 60,
   "nvis": {
-    "status": "POOR",
-    "score": 15,
+    "status": "UNKNOWN",
+    "score": 0,
     "confidence": "LOW",
     "bands": {
       "80m": {
-        "score": 15,
-        "paths": 1,
-        "tx": 0.4,
-        "rx": 0.4,
-        "median_snr_db": -22.0,
+        "score": 0,
+        "paths": 0,
+        "tx": 0,
+        "rx": 0,
+        "median_snr_db": null,
         "js8_paths": 0,
         "ft8_paths": 0
       },
@@ -34,37 +34,37 @@
         "ft8_paths": 0
       }
     },
-    "explain": "Little inter-island activity. Low report volume."
+    "explain": "Limited recent reports."
   },
   "mainland": {
     "status": "OPEN",
-    "score": 66,
+    "score": 62,
     "confidence": "MEDIUM",
     "bands": {
       "80m": {
-        "score": 55,
-        "paths": 6,
-        "tx": 3.6,
-        "rx": 1.0,
+        "score": 66,
+        "paths": 7,
+        "tx": 4.2,
+        "rx": 1.8,
         "median_snr_db": -19.5,
         "js8_paths": 0,
-        "ft8_paths": 2
+        "ft8_paths": 3
       },
       "40m": {
-        "score": 74,
-        "paths": 11,
-        "tx": 11.6,
+        "score": 85,
+        "paths": 12,
+        "tx": 12.2,
         "rx": 1.8,
-        "median_snr_db": -14.5,
-        "js8_paths": 3,
-        "ft8_paths": 6
+        "median_snr_db": -7.0,
+        "js8_paths": 1,
+        "ft8_paths": 10
       },
       "30m": {
-        "score": 0,
-        "paths": 0,
-        "tx": 0,
-        "rx": 0,
-        "median_snr_db": null,
+        "score": 32,
+        "paths": 4,
+        "tx": 0.8,
+        "rx": 1.6,
+        "median_snr_db": -24.5,
         "js8_paths": 0,
         "ft8_paths": 0
       },
@@ -119,7 +119,7 @@
   "sources": {
     "pskreporter": {
       "ok": true,
-      "last_fetch_utc": "2026-04-11T10:28:01.394550Z",
+      "last_fetch_utc": "2026-04-11T11:28:01.104368Z",
       "requests_last_hour": 4
     },
     "notes": ""
