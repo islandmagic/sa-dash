@@ -1,28 +1,28 @@
 {
-  "timestamp_utc": "2026-04-15T10:28:01Z",
+  "timestamp_utc": "2026-04-15T11:28:01Z",
   "window_minutes": 60,
   "nvis": {
     "status": "MARGINAL",
-    "score": 55,
+    "score": 59,
     "confidence": "LOW",
     "bands": {
       "80m": {
-        "score": 53,
-        "paths": 2,
-        "tx": 1.4,
+        "score": 59,
+        "paths": 1,
+        "tx": 1.0,
         "rx": 1.0,
-        "median_snr_db": -6.5,
+        "median_snr_db": 13.0,
         "js8_paths": 0,
         "ft8_paths": 1
       },
       "40m": {
-        "score": 57,
-        "paths": 2,
-        "tx": 1.0,
-        "rx": 2.0,
-        "median_snr_db": -7.5,
+        "score": 0,
+        "paths": 0,
+        "tx": 0,
+        "rx": 0,
+        "median_snr_db": null,
         "js8_paths": 0,
-        "ft8_paths": 2
+        "ft8_paths": 0
       },
       "30m": {
         "score": 0,
@@ -43,28 +43,28 @@
     "bands": {
       "80m": {
         "score": 94,
-        "paths": 31,
-        "tx": 6.6,
-        "rx": 24.0,
+        "paths": 19,
+        "tx": 4.8,
+        "rx": 15.0,
         "median_snr_db": -4.0,
         "js8_paths": 0,
-        "ft8_paths": 27
+        "ft8_paths": 17
       },
       "40m": {
-        "score": 89,
-        "paths": 60,
-        "tx": 22.8,
-        "rx": 34.8,
-        "median_snr_db": -7.5,
-        "js8_paths": 5,
-        "ft8_paths": 54
+        "score": 88,
+        "paths": 31,
+        "tx": 17.6,
+        "rx": 4.0,
+        "median_snr_db": -8.0,
+        "js8_paths": 2,
+        "ft8_paths": 23
       },
       "30m": {
         "score": 53,
-        "paths": 2,
-        "tx": 2.0,
-        "rx": 2.0,
-        "median_snr_db": -17.5,
+        "paths": 4,
+        "tx": 1.8,
+        "rx": 2.4,
+        "median_snr_db": -20.5,
         "js8_paths": 0,
         "ft8_paths": 2
       },
@@ -119,8 +119,8 @@
   "sources": {
     "pskreporter": {
       "ok": true,
-      "last_fetch_utc": "2026-04-15T10:28:01.530557Z",
-      "requests_last_hour": 2
+      "last_fetch_utc": "2026-04-15T11:28:01.001473Z",
+      "requests_last_hour": 4
     },
     "notes": ""
   }
