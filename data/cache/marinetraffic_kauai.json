@@ -1,11 +1,11 @@
 {
   "id": "marinetraffic_kauai",
   "label": "Marine Traffic (<a href=\"https://www.marinetraffic.com\">MarineTraffic</a>)",
-  "retrieved_at": "2026-04-16T23:29:04-10:00",
+  "retrieved_at": "2026-04-17T00:29:02-10:00",
   "source_urls": [
     "https://www.marinetraffic.com"
   ],
-  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>BROOKE CHAPMAN</td><td>Tug</td><td>US</td><td>70.4</td><td>39.0</td><td>NNW</td><td>P0RT-ALLEN</td><td></td><td></td></tr><tr><td>LADY KAILANI</td><td>Sight seeing tour boat</td><td>US</td><td>3.9</td><td>178.0</td><td>SE</td><td></td><td></td><td></td></tr><tr><td>POSEIDON</td><td>Special category</td><td>US</td><td>5.8</td><td>15.0</td><td>S</td><td>HONOLULU</td><td></td><td></td></tr><tr><td>PRIDE OF AMERICA</td><td>Passenger</td><td>US</td><td></td><td>0.0</td><td>SSW</td><td>USNIJ</td><td>At port</td><td>Nawiliwili</td></tr></tbody></table>",
+  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>BROOKE CHAPMAN</td><td>Tug</td><td>US</td><td>70.4</td><td>39.0</td><td>NNW</td><td>P0RT-ALLEN</td><td></td><td></td></tr><tr><td>LADY KAILANI</td><td>Sight seeing tour boat</td><td>US</td><td>3.9</td><td>178.0</td><td>SE</td><td></td><td></td><td></td></tr><tr><td>POSEIDON</td><td>Special category</td><td>US</td><td>5.5</td><td>39.0</td><td>ENE</td><td>HONOLULU</td><td></td><td></td></tr><tr><td>PRIDE OF AMERICA</td><td>Passenger</td><td>US</td><td></td><td>0.0</td><td>WSW</td><td>USNIJ</td><td>At port</td><td>Nawiliwili</td></tr></tbody></table>",
   "error": null,
   "stale": false,
   "layout": "full"
