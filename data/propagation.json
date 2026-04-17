@@ -1,5 +1,5 @@
 {
-  "timestamp_utc": "2026-04-16T23:28:01Z",
+  "timestamp_utc": "2026-04-17T00:28:00Z",
   "window_minutes": 60,
   "nvis": {
     "status": "UNKNOWN",
@@ -60,56 +60,56 @@
         "ft8_paths": 0
       },
       "30m": {
-        "score": 41,
+        "score": 40,
         "paths": 1,
         "tx": 0.4,
         "rx": 0.4,
-        "median_snr_db": -5.0,
+        "median_snr_db": -6.0,
         "js8_paths": 0,
         "ft8_paths": 0
       },
       "20m": {
-        "score": 82,
-        "paths": 86,
-        "tx": 25.0,
-        "rx": 42.0,
-        "median_snr_db": -12.0,
+        "score": 75,
+        "paths": 35,
+        "tx": 23.0,
+        "rx": 2.0,
+        "median_snr_db": -14.0,
         "js8_paths": 0,
-        "ft8_paths": 86
+        "ft8_paths": 35
       },
       "17m": {
-        "score": 62,
-        "paths": 5,
-        "tx": 5.0,
-        "rx": 1.0,
-        "median_snr_db": -19.0,
+        "score": 74,
+        "paths": 14,
+        "tx": 11.4,
+        "rx": 2.2,
+        "median_snr_db": -15.5,
         "js8_paths": 0,
-        "ft8_paths": 5
+        "ft8_paths": 11
       },
       "15m": {
-        "score": 71,
-        "paths": 24,
-        "tx": 22.4,
-        "rx": 1.8,
-        "median_snr_db": -16.5,
+        "score": 82,
+        "paths": 68,
+        "tx": 17.8,
+        "rx": 45.0,
+        "median_snr_db": -12.0,
         "js8_paths": 0,
-        "ft8_paths": 22
+        "ft8_paths": 64
       },
       "12m": {
         "score": 45,
-        "paths": 3,
-        "tx": 2.4,
+        "paths": 1,
+        "tx": 1.0,
         "rx": 1.0,
-        "median_snr_db": -21.0,
+        "median_snr_db": -12.0,
         "js8_paths": 0,
-        "ft8_paths": 2
+        "ft8_paths": 1
       },
       "10m": {
-        "score": 0,
-        "paths": 0,
-        "tx": 0,
-        "rx": 0,
-        "median_snr_db": null,
+        "score": 52,
+        "paths": 6,
+        "tx": 2.0,
+        "rx": 1.2,
+        "median_snr_db": -17.0,
         "js8_paths": 0,
         "ft8_paths": 0
       }
@@ -119,8 +119,8 @@
   "sources": {
     "pskreporter": {
       "ok": true,
-      "last_fetch_utc": "2026-04-16T23:28:01.503792Z",
-      "requests_last_hour": 2
+      "last_fetch_utc": "2026-04-17T00:28:00.848262Z",
+      "requests_last_hour": 4
     },
     "notes": ""
   }
