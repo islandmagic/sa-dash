@@ -1,11 +1,11 @@
 {
   "id": "marinetraffic_kauai",
   "label": "Marine Traffic (<a href=\"https://www.marinetraffic.com\">MarineTraffic</a>)",
-  "retrieved_at": "2026-04-18T01:29:03-10:00",
+  "retrieved_at": "2026-04-18T02:29:03-10:00",
   "source_urls": [
     "https://www.marinetraffic.com"
   ],
-  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>BROOKE CHAPMAN</td><td>Tug</td><td>US</td><td></td><td>0.0</td><td>N</td><td>NAWILIWILI</td><td>At port</td><td>Nawiliwili</td></tr><tr><td>HOKU LOA</td><td>Special category</td><td>US</td><td>103.4</td><td>83.0</td><td>WSW</td><td>NAWILIWILI</td><td></td><td></td></tr><tr><td>KAPENA BOB PURDY</td><td>Special category</td><td>US</td><td>7.5</td><td>73.0</td><td>ESE</td><td>HONOLULU,OAHU</td><td></td><td></td></tr><tr><td>LADY KAILANI</td><td>Sight seeing tour boat</td><td>US</td><td>4.0</td><td>125.0</td><td>NW</td><td></td><td></td><td></td></tr><tr><td>POSEIDON</td><td>Special category</td><td>US</td><td>3.1</td><td>6.0</td><td>WNW</td><td>HONOLULU</td><td></td><td></td></tr></tbody></table>",
+  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>BROOKE CHAPMAN</td><td>Tug</td><td>US</td><td>0.2</td><td>2.0</td><td>WSW</td><td>NAWILIWILI</td><td>Departing</td><td>Nawiliwili</td></tr><tr><td>HOKU LOA</td><td>Special category</td><td>US</td><td>103.4</td><td>83.0</td><td>WSW</td><td>NAWILIWILI</td><td></td><td></td></tr><tr><td>KAPENA BOB PURDY</td><td>Special category</td><td>US</td><td>7.5</td><td>73.0</td><td>ESE</td><td>HONOLULU,OAHU</td><td></td><td></td></tr><tr><td>POSEIDON</td><td>Special category</td><td>US</td><td>4.5</td><td>16.0</td><td>NNW</td><td>HONOLULU</td><td></td><td></td></tr></tbody></table>",
   "error": null,
   "stale": false,
   "layout": "full"
