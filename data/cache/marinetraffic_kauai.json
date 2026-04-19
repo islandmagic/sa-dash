@@ -1,11 +1,11 @@
 {
   "id": "marinetraffic_kauai",
   "label": "Marine Traffic (<a href=\"https://www.marinetraffic.com\">MarineTraffic</a>)",
-  "retrieved_at": "2026-04-19T04:29:03-10:00",
+  "retrieved_at": "2026-04-19T05:29:03-10:00",
   "source_urls": [
     "https://www.marinetraffic.com"
   ],
-  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>KAHU</td><td>Tug</td><td>US</td><td>86.3</td><td>86.0</td><td>NNW</td><td>NIJ-NAWILIWILI</td><td>En route</td><td></td></tr><tr><td>CG WILLIAM HART</td><td>Special category</td><td>US</td><td>1.1</td><td>61.0</td><td>ESE</td><td></td><td>Departing</td><td>Nawiliwili</td></tr><tr><td>IROISE</td><td>Other</td><td>FR</td><td></td><td>1.0</td><td>S</td><td>CLASS B</td><td>At port</td><td>Nawiliwili</td></tr><tr><td>LADY KAILANI</td><td>Sight seeing tour boat</td><td>US</td><td>4.8</td><td>177.0</td><td>ESE</td><td></td><td></td><td></td></tr><tr><td>POSEIDON</td><td>Special category</td><td>US</td><td>7.9</td><td>68.0</td><td>W</td><td>HONOLULU</td><td></td><td></td></tr><tr><td>TIGER5</td><td>Tug</td><td>US</td><td>0.3</td><td>4.0</td><td>WSW</td><td></td><td>Departing</td><td>Nawiliwili</td></tr></tbody></table>",
+  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>KAHU</td><td>Tug</td><td>US</td><td>8.7</td><td>75.0</td><td>WNW</td><td>NIJ-NAWILIWILI</td><td>En route</td><td></td></tr><tr><td>CG WILLIAM HART</td><td>Special category</td><td>US</td><td>1.1</td><td>61.0</td><td>ESE</td><td></td><td>Departing</td><td>Nawiliwili</td></tr><tr><td>IROISE</td><td>Other</td><td>FR</td><td></td><td>1.0</td><td>S</td><td>CLASS B</td><td>At port</td><td>Nawiliwili</td></tr><tr><td>LADY KAILANI</td><td>Sight seeing tour boat</td><td>US</td><td>4.8</td><td>177.0</td><td>ESE</td><td></td><td></td><td></td></tr><tr><td>POSEIDON</td><td>Special category</td><td>US</td><td>7.9</td><td>68.0</td><td>W</td><td>HONOLULU</td><td></td><td></td></tr><tr><td>TIGER5</td><td>Tug</td><td>US</td><td></td><td>1.0</td><td>S</td><td></td><td>At port</td><td>Nawiliwili</td></tr></tbody></table>",
   "error": null,
   "stale": false,
   "layout": "full"
