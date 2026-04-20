@@ -1,5 +1,5 @@
 {
-  "timestamp_utc": "2026-04-20T08:28:01Z",
+  "timestamp_utc": "2026-04-20T09:28:01Z",
   "window_minutes": 60,
   "nvis": {
     "status": "POOR",
@@ -7,20 +7,20 @@
     "confidence": "LOW",
     "bands": {
       "80m": {
-        "score": 12,
+        "score": 13,
         "paths": 1,
         "tx": 0.4,
         "rx": 0.4,
-        "median_snr_db": -24.0,
+        "median_snr_db": -23.0,
         "js8_paths": 0,
         "ft8_paths": 0
       },
       "40m": {
-        "score": 15,
-        "paths": 1,
-        "tx": 0.4,
-        "rx": 0.4,
-        "median_snr_db": -22.0,
+        "score": 0,
+        "paths": 0,
+        "tx": 0,
+        "rx": 0,
+        "median_snr_db": null,
         "js8_paths": 0,
         "ft8_paths": 0
       },
@@ -38,35 +38,35 @@
   },
   "mainland": {
     "status": "OPEN",
-    "score": 75,
+    "score": 70,
     "confidence": "MEDIUM",
     "bands": {
       "80m": {
-        "score": 79,
-        "paths": 4,
+        "score": 88,
+        "paths": 3,
         "tx": 2.0,
         "rx": 2.0,
-        "median_snr_db": -10.0,
+        "median_snr_db": 0.5,
         "js8_paths": 0,
-        "ft8_paths": 4
+        "ft8_paths": 3
       },
       "40m": {
-        "score": 73,
-        "paths": 8,
-        "tx": 8.2,
+        "score": 77,
+        "paths": 13,
+        "tx": 15.6,
         "rx": 1.8,
-        "median_snr_db": -15.0,
-        "js8_paths": 1,
-        "ft8_paths": 7
+        "median_snr_db": -12.0,
+        "js8_paths": 4,
+        "ft8_paths": 9
       },
       "30m": {
-        "score": 0,
-        "paths": 0,
-        "tx": 0,
-        "rx": 0,
-        "median_snr_db": null,
+        "score": 46,
+        "paths": 1,
+        "tx": 1.0,
+        "rx": 1.0,
+        "median_snr_db": -11.0,
         "js8_paths": 0,
-        "ft8_paths": 0
+        "ft8_paths": 1
       },
       "20m": {
         "score": 0,
@@ -119,8 +119,8 @@
   "sources": {
     "pskreporter": {
       "ok": true,
-      "last_fetch_utc": "2026-04-20T08:28:01.374679Z",
-      "requests_last_hour": 2
+      "last_fetch_utc": "2026-04-20T09:28:01.248005Z",
+      "requests_last_hour": 4
     },
     "notes": ""
   }
