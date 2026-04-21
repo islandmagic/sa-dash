@@ -1,5 +1,5 @@
 {
-  "timestamp_utc": "2026-04-21T02:28:01Z",
+  "timestamp_utc": "2026-04-21T03:28:01Z",
   "window_minutes": 60,
   "nvis": {
     "status": "UNKNOWN",
@@ -51,47 +51,47 @@
         "ft8_paths": 0
       },
       "40m": {
-        "score": 36,
-        "paths": 1,
-        "tx": 1.0,
-        "rx": 1.0,
-        "median_snr_db": -18.0,
-        "js8_paths": 0,
-        "ft8_paths": 1
+        "score": 73,
+        "paths": 19,
+        "tx": 18.0,
+        "rx": 1.8,
+        "median_snr_db": -15.0,
+        "js8_paths": 1,
+        "ft8_paths": 15
       },
       "30m": {
-        "score": 69,
-        "paths": 14,
-        "tx": 13.4,
-        "rx": 1.4,
-        "median_snr_db": -16.0,
+        "score": 77,
+        "paths": 21,
+        "tx": 21.0,
+        "rx": 1.0,
+        "median_snr_db": -9.0,
         "js8_paths": 0,
-        "ft8_paths": 13
+        "ft8_paths": 21
       },
       "20m": {
         "score": 91,
-        "paths": 123,
-        "tx": 34.8,
-        "rx": 53.8,
+        "paths": 75,
+        "tx": 24.8,
+        "rx": 30.0,
         "median_snr_db": -6.0,
-        "js8_paths": 1,
-        "ft8_paths": 123
+        "js8_paths": 0,
+        "ft8_paths": 73
       },
       "17m": {
-        "score": 58,
+        "score": 25,
         "paths": 1,
-        "tx": 1.0,
-        "rx": 1.0,
-        "median_snr_db": -3.0,
+        "tx": 0.4,
+        "rx": 0.4,
+        "median_snr_db": -16.0,
         "js8_paths": 0,
-        "ft8_paths": 1
+        "ft8_paths": 0
       },
       "15m": {
-        "score": 58,
-        "paths": 2,
-        "tx": 1.4,
-        "rx": 1.4,
-        "median_snr_db": -8.0,
+        "score": 53,
+        "paths": 5,
+        "tx": 2.2,
+        "rx": 1.8,
+        "median_snr_db": -20.0,
         "js8_paths": 0,
         "ft8_paths": 1
       },
@@ -119,7 +119,7 @@
   "sources": {
     "pskreporter": {
       "ok": true,
-      "last_fetch_utc": "2026-04-21T02:28:01.233550Z",
+      "last_fetch_utc": "2026-04-21T03:28:01.539614Z",
       "requests_last_hour": 2
     },
     "notes": ""
