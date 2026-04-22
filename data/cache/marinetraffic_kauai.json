@@ -1,11 +1,11 @@
 {
   "id": "marinetraffic_kauai",
   "label": "Marine Traffic (<a href=\"https://www.marinetraffic.com\">MarineTraffic</a>)",
-  "retrieved_at": "2026-04-21T21:29:02-10:00",
+  "retrieved_at": "2026-04-21T22:29:02-10:00",
   "source_urls": [
     "https://www.marinetraffic.com"
   ],
-  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>CG JOSEPH GERCZAK</td><td>Special category</td><td>US</td><td>24.0</td><td>91.0</td><td>N</td><td>WEST SIDE</td><td></td><td></td></tr><tr><td>CG26286</td><td>Special category</td><td>US</td><td>6.8</td><td>58.0</td><td>NNE</td><td></td><td></td><td></td></tr><tr><td>KAPENA RAYMOND ALAPA</td><td>Special category</td><td>US</td><td>20.8</td><td>80.0</td><td>ESE</td><td>HONOLULU</td><td></td><td></td></tr><tr><td>MAMO</td><td>Tug</td><td>US</td><td></td><td>0.0</td><td>NW</td><td>US^0ZAS</td><td>At port</td><td>Nawiliwili</td></tr><tr><td>POSEIDON</td><td>Special category</td><td>US</td><td>4.4</td><td>63.0</td><td>NNE</td><td>HONOLULU</td><td></td><td></td></tr><tr><td>TIGER5</td><td>Tug</td><td>US</td><td></td><td>0.0</td><td>SSW</td><td></td><td>At port</td><td>Nawiliwili</td></tr><tr><td>TORPEDO RETREIVER</td><td>Special category</td><td>US</td><td>5.8</td><td>131.0</td><td>ESE</td><td>PMRF BS RANGE</td><td></td><td></td></tr></tbody></table>",
+  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>CG26286</td><td>Special category</td><td>US</td><td>6.8</td><td>58.0</td><td>NNE</td><td></td><td></td><td></td></tr><tr><td>KAPENA RAYMOND ALAPA</td><td>Special category</td><td>US</td><td>20.8</td><td>80.0</td><td>ESE</td><td>HONOLULU</td><td></td><td></td></tr><tr><td>MAMO</td><td>Tug</td><td>US</td><td></td><td>0.0</td><td>NW</td><td>US^0ZAS</td><td>At port</td><td>Nawiliwili</td></tr><tr><td>NAVIGATOR CERES</td><td>Tanker</td><td>LR</td><td>38.9</td><td>80.0</td><td>NNE</td><td>US NIJ</td><td></td><td></td></tr><tr><td>POSEIDON</td><td>Special category</td><td>US</td><td>2.9</td><td>18.0</td><td>N</td><td>HONOLULU</td><td></td><td></td></tr><tr><td>TIGER5</td><td>Tug</td><td>US</td><td></td><td>0.0</td><td>SSW</td><td></td><td>At port</td><td>Nawiliwili</td></tr><tr><td>TORPEDO RETREIVER</td><td>Special category</td><td>US</td><td>5.8</td><td>131.0</td><td>ESE</td><td>PMRF BS RANGE</td><td></td><td></td></tr></tbody></table>",
   "error": null,
   "stale": false,
   "layout": "full"
