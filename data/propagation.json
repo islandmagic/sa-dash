@@ -1,5 +1,5 @@
 {
-  "timestamp_utc": "2026-04-23T22:28:00Z",
+  "timestamp_utc": "2026-04-23T23:28:01Z",
   "window_minutes": 60,
   "nvis": {
     "status": "UNKNOWN",
@@ -38,7 +38,7 @@
   },
   "mainland": {
     "status": "OPEN",
-    "score": 78,
+    "score": 76,
     "confidence": "MEDIUM",
     "bands": {
       "80m": {
@@ -69,49 +69,49 @@
         "ft8_paths": 0
       },
       "20m": {
-        "score": 80,
-        "paths": 49,
-        "tx": 19.0,
-        "rx": 25.0,
-        "median_snr_db": -14.0,
+        "score": 81,
+        "paths": 104,
+        "tx": 27.0,
+        "rx": 42.0,
+        "median_snr_db": -13.0,
         "js8_paths": 0,
-        "ft8_paths": 49
+        "ft8_paths": 104
       },
       "17m": {
-        "score": 84,
-        "paths": 59,
-        "tx": 18.0,
-        "rx": 31.0,
-        "median_snr_db": -11.0,
+        "score": 82,
+        "paths": 40,
+        "tx": 20.0,
+        "rx": 4.0,
+        "median_snr_db": -12.5,
         "js8_paths": 0,
-        "ft8_paths": 59
+        "ft8_paths": 40
       },
       "15m": {
         "score": 81,
-        "paths": 57,
-        "tx": 14.8,
-        "rx": 31.0,
+        "paths": 55,
+        "tx": 10.8,
+        "rx": 37.0,
         "median_snr_db": -13.0,
         "js8_paths": 0,
-        "ft8_paths": 54
+        "ft8_paths": 50
       },
       "12m": {
-        "score": 55,
-        "paths": 3,
-        "tx": 3.0,
-        "rx": 1.0,
-        "median_snr_db": -17.0,
+        "score": 0,
+        "paths": 0,
+        "tx": 0,
+        "rx": 0,
+        "median_snr_db": null,
         "js8_paths": 0,
-        "ft8_paths": 3
+        "ft8_paths": 0
       },
       "10m": {
-        "score": 83,
-        "paths": 21,
-        "tx": 6.4,
-        "rx": 15.4,
-        "median_snr_db": -11.5,
+        "score": 33,
+        "paths": 1,
+        "tx": 1.0,
+        "rx": 1.0,
+        "median_snr_db": -20.0,
         "js8_paths": 0,
-        "ft8_paths": 19
+        "ft8_paths": 1
       }
     },
     "explain": "HI<->CONUS paths observed on 20m+ (FT8)."
@@ -119,8 +119,8 @@
   "sources": {
     "pskreporter": {
       "ok": true,
-      "last_fetch_utc": "2026-04-23T22:28:00.866694Z",
-      "requests_last_hour": 4
+      "last_fetch_utc": "2026-04-23T23:28:01.020815Z",
+      "requests_last_hour": 2
     },
     "notes": ""
   }
