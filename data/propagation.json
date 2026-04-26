@@ -1,5 +1,5 @@
 {
-  "timestamp_utc": "2026-04-26T19:28:00Z",
+  "timestamp_utc": "2026-04-26T20:28:01Z",
   "window_minutes": 60,
   "nvis": {
     "status": "UNKNOWN",
@@ -38,7 +38,7 @@
   },
   "mainland": {
     "status": "OPEN",
-    "score": 71,
+    "score": 77,
     "confidence": "MEDIUM",
     "bands": {
       "80m": {
@@ -70,48 +70,48 @@
       },
       "20m": {
         "score": 81,
-        "paths": 10,
-        "tx": 6.0,
+        "paths": 23,
+        "tx": 14.0,
         "rx": 3.0,
         "median_snr_db": -13.0,
         "js8_paths": 0,
-        "ft8_paths": 10
+        "ft8_paths": 23
       },
       "17m": {
-        "score": 61,
-        "paths": 3,
-        "tx": 2.0,
-        "rx": 2.0,
-        "median_snr_db": -17.0,
+        "score": 90,
+        "paths": 54,
+        "tx": 21.0,
+        "rx": 11.0,
+        "median_snr_db": -7.0,
         "js8_paths": 0,
-        "ft8_paths": 3
+        "ft8_paths": 54
       },
       "15m": {
-        "score": 80,
-        "paths": 14,
-        "tx": 8.4,
-        "rx": 2.8,
-        "median_snr_db": -13.5,
+        "score": 74,
+        "paths": 23,
+        "tx": 13.4,
+        "rx": 2.4,
+        "median_snr_db": -16.0,
         "js8_paths": 0,
-        "ft8_paths": 12
+        "ft8_paths": 22
       },
       "12m": {
-        "score": 65,
-        "paths": 4,
-        "tx": 3.4,
+        "score": 52,
+        "paths": 3,
+        "tx": 2.4,
         "rx": 1.0,
-        "median_snr_db": -12.0,
+        "median_snr_db": -16.0,
         "js8_paths": 0,
-        "ft8_paths": 3
+        "ft8_paths": 2
       },
       "10m": {
-        "score": 44,
-        "paths": 4,
-        "tx": 1.8,
-        "rx": 1.8,
-        "median_snr_db": -24.5,
+        "score": 78,
+        "paths": 8,
+        "tx": 7.0,
+        "rx": 2.0,
+        "median_snr_db": -12.5,
         "js8_paths": 0,
-        "ft8_paths": 1
+        "ft8_paths": 8
       }
     },
     "explain": "HI<->CONUS paths observed on 20m+ (FT8)."
@@ -119,8 +119,8 @@
   "sources": {
     "pskreporter": {
       "ok": true,
-      "last_fetch_utc": "2026-04-26T19:28:00.894656Z",
-      "requests_last_hour": 4
+      "last_fetch_utc": "2026-04-26T20:28:01.046055Z",
+      "requests_last_hour": 2
     },
     "notes": ""
   }
