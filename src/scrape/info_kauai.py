@@ -20,6 +20,7 @@ def scrape() -> dict:
         ("Hawaii Emergency Mgmt Agency", "808-733-4300", '<a href="mailto:HawaiiEMA@hawaii.gov">HawaiiEMA@hawaii.gov</a>'),
         ("National Weather Service (HFO)", "808-245-6001", '<a href="https://weather.gov/hfo">weather.gov/hfo</a> • automated weather line'),
         ("NOAA Weather Kauai", "808-245-3564", ""),
+        ("Solid Waste weekend updates", "808-212-4683", "Refuse transfer station closures/status line."),
         ("Kauai County", "808-241-6699", ""),
         ("Report a problem (County)", "808-241-3000", ""),
         ("Road & closure conditions", "808-241-1725", ""),

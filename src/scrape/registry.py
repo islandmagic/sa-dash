@@ -16,6 +16,7 @@ from src.scrape.att_mobile import scrape as scrape_att_mobile
 from src.scrape.adsbexchange_live import scrape as scrape_adsbexchange_live
 from src.scrape.marinetraffic_kauai import scrape as scrape_marinetraffic_kauai
 from src.scrape.kauai_county_press import scrape as scrape_kauai_county_press
+from src.scrape.kauai_solid_waste import scrape as scrape_kauai_solid_waste
 from src.scrape.info_kauai import scrape as scrape_info_kauai
 from src.scrape.time_wheel import scrape as scrape_time_wheel
 from src.scrape.global_events_wire import scrape as scrape_global_events_wire
@@ -40,6 +41,7 @@ SCRAPERS = {
     "adsbexchange_live": scrape_adsbexchange_live,
     "marinetraffic_kauai": scrape_marinetraffic_kauai,
     "kauai_county_press": scrape_kauai_county_press,
+    "kauai_solid_waste": scrape_kauai_solid_waste,
     "info_kauai": scrape_info_kauai,
     "time_wheel": scrape_time_wheel,
     "global_events_wire": scrape_global_events_wire,
