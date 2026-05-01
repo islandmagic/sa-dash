@@ -1,5 +1,5 @@
 {
-  "timestamp_utc": "2026-05-01T19:28:02Z",
+  "timestamp_utc": "2026-05-01T20:28:01Z",
   "window_minutes": 60,
   "nvis": {
     "status": "UNKNOWN",
@@ -38,7 +38,7 @@
   },
   "mainland": {
     "status": "OPEN",
-    "score": 74,
+    "score": 66,
     "confidence": "MEDIUM",
     "bands": {
       "80m": {
@@ -69,49 +69,49 @@
         "ft8_paths": 0
       },
       "20m": {
-        "score": 74,
-        "paths": 33,
-        "tx": 23.6,
-        "rx": 2.8,
-        "median_snr_db": -17.0,
-        "js8_paths": 2,
-        "ft8_paths": 33
+        "score": 69,
+        "paths": 18,
+        "tx": 18.2,
+        "rx": 1.8,
+        "median_snr_db": -18.0,
+        "js8_paths": 1,
+        "ft8_paths": 16
       },
       "17m": {
-        "score": 82,
-        "paths": 19,
-        "tx": 13.4,
-        "rx": 3.4,
-        "median_snr_db": -12.0,
+        "score": 73,
+        "paths": 15,
+        "tx": 12.0,
+        "rx": 2.0,
+        "median_snr_db": -16.0,
         "js8_paths": 0,
-        "ft8_paths": 18
+        "ft8_paths": 15
       },
       "15m": {
-        "score": 82,
-        "paths": 37,
-        "tx": 8.4,
-        "rx": 31.4,
-        "median_snr_db": -12.0,
+        "score": 74,
+        "paths": 12,
+        "tx": 10.0,
+        "rx": 2.0,
+        "median_snr_db": -15.0,
         "js8_paths": 0,
-        "ft8_paths": 36
+        "ft8_paths": 12
       },
       "12m": {
-        "score": 54,
+        "score": 38,
         "paths": 1,
         "tx": 1.0,
         "rx": 1.0,
-        "median_snr_db": -6.0,
+        "median_snr_db": -17.0,
         "js8_paths": 0,
         "ft8_paths": 1
       },
       "10m": {
-        "score": 0,
-        "paths": 0,
-        "tx": 0,
-        "rx": 0,
-        "median_snr_db": null,
+        "score": 74,
+        "paths": 16,
+        "tx": 7.6,
+        "rx": 4.2,
+        "median_snr_db": -18.0,
         "js8_paths": 0,
-        "ft8_paths": 0
+        "ft8_paths": 10
       }
     },
     "explain": "HI<->CONUS paths observed on 20m+ (JS8)."
@@ -119,8 +119,8 @@
   "sources": {
     "pskreporter": {
       "ok": true,
-      "last_fetch_utc": "2026-05-01T19:28:02.379209Z",
-      "requests_last_hour": 2
+      "last_fetch_utc": "2026-05-01T20:28:01.706094Z",
+      "requests_last_hour": 4
     },
     "notes": ""
   }
