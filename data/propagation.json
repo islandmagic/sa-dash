@@ -1,5 +1,5 @@
 {
-  "timestamp_utc": "2026-05-01T07:28:01Z",
+  "timestamp_utc": "2026-05-01T08:28:02Z",
   "window_minutes": 60,
   "nvis": {
     "status": "POOR",
@@ -11,7 +11,7 @@
         "paths": 1,
         "tx": 0.4,
         "rx": 0.4,
-        "median_snr_db": -27.0,
+        "median_snr_db": -25.0,
         "js8_paths": 0,
         "ft8_paths": 0
       },
@@ -38,44 +38,44 @@
   },
   "mainland": {
     "status": "OPEN",
-    "score": 68,
+    "score": 72,
     "confidence": "MEDIUM",
     "bands": {
       "80m": {
-        "score": 19,
-        "paths": 1,
-        "tx": 0.4,
-        "rx": 0.4,
-        "median_snr_db": -20.0,
+        "score": 0,
+        "paths": 0,
+        "tx": 0,
+        "rx": 0,
+        "median_snr_db": null,
         "js8_paths": 0,
         "ft8_paths": 0
       },
       "40m": {
-        "score": 74,
-        "paths": 10,
-        "tx": 11.2,
-        "rx": 1.8,
-        "median_snr_db": -14.0,
-        "js8_paths": 3,
-        "ft8_paths": 5
+        "score": 80,
+        "paths": 14,
+        "tx": 9.4,
+        "rx": 2.8,
+        "median_snr_db": -13.0,
+        "js8_paths": 1,
+        "ft8_paths": 9
       },
       "30m": {
-        "score": 82,
-        "paths": 18,
-        "tx": 8.6,
-        "rx": 7.8,
-        "median_snr_db": -12.0,
+        "score": 50,
+        "paths": 2,
+        "tx": 2.2,
+        "rx": 2.2,
+        "median_snr_db": -21.0,
         "js8_paths": 1,
-        "ft8_paths": 15
+        "ft8_paths": 0
       },
       "20m": {
-        "score": 74,
-        "paths": 7,
-        "tx": 3.8,
-        "rx": 3.0,
-        "median_snr_db": -18.0,
+        "score": 77,
+        "paths": 20,
+        "tx": 8.0,
+        "rx": 5.0,
+        "median_snr_db": -16.0,
         "js8_paths": 0,
-        "ft8_paths": 5
+        "ft8_paths": 20
       },
       "17m": {
         "score": 0,
@@ -119,7 +119,7 @@
   "sources": {
     "pskreporter": {
       "ok": true,
-      "last_fetch_utc": "2026-05-01T07:28:01.743173Z",
+      "last_fetch_utc": "2026-05-01T08:28:02.110852Z",
       "requests_last_hour": 2
     },
     "notes": ""
