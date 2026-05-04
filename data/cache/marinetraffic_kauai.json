@@ -1,11 +1,11 @@
 {
   "id": "marinetraffic_kauai",
   "label": "Marine Traffic (<a href=\"https://www.marinetraffic.com\">MarineTraffic</a>)",
-  "retrieved_at": "2026-05-03T17:29:02-10:00",
+  "retrieved_at": "2026-05-03T18:29:02-10:00",
   "source_urls": [
     "https://www.marinetraffic.com"
   ],
-  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>ASIATIC PRIDE</td><td>Cargo</td><td>SG</td><td>72.2</td><td>65.0</td><td>W</td><td>KR BNP</td><td></td><td></td></tr><tr><td>DURBAN HIGHWAY</td><td>Cargo</td><td>PA</td><td>65.1</td><td>185.0</td><td>W</td><td>JP CHB</td><td></td><td></td></tr><tr><td>KAHU</td><td>Tug</td><td>US</td><td>13.5</td><td>70.0</td><td>ESE</td><td>HNL-HONOLULU</td><td></td><td></td></tr><tr><td>KOKUA</td><td>Special category</td><td>US</td><td>15.4</td><td>81.0</td><td>ESE</td><td>HONOLULU</td><td></td><td></td></tr><tr><td>MAMO</td><td>Tug</td><td>US</td><td>0.3</td><td>2.0</td><td>N</td><td>US^0ZAS</td><td></td><td>Nawiliwili</td></tr><tr><td>TIGER5</td><td>Tug</td><td>US</td><td>0.3</td><td>2.0</td><td>SSW</td><td></td><td>Departing</td><td>Nawiliwili</td></tr></tbody></table>",
+  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>ASIATIC PRIDE</td><td>Cargo</td><td>SG</td><td>72.2</td><td>65.0</td><td>W</td><td>KR BNP</td><td></td><td></td></tr><tr><td>DURBAN HIGHWAY</td><td>Cargo</td><td>PA</td><td>36.6</td><td>185.0</td><td>W</td><td>JP CHB</td><td></td><td></td></tr><tr><td>IMUA</td><td>Special category</td><td>US</td><td>73.5</td><td>98.0</td><td>WNW</td><td></td><td></td><td></td></tr><tr><td>KAHU</td><td>Tug</td><td>US</td><td>13.5</td><td>70.0</td><td>ESE</td><td>HNL-HONOLULU</td><td></td><td></td></tr><tr><td>KOKUA</td><td>Special category</td><td>US</td><td>15.4</td><td>81.0</td><td>ESE</td><td>HONOLULU</td><td></td><td></td></tr><tr><td>MAMO</td><td>Tug</td><td>US</td><td>0.3</td><td>2.0</td><td>N</td><td>US^0ZAS</td><td></td><td>Nawiliwili</td></tr><tr><td>TIGER5</td><td>Tug</td><td>US</td><td>0.3</td><td>2.0</td><td>SSW</td><td></td><td>Departing</td><td>Nawiliwili</td></tr></tbody></table>",
   "error": null,
   "stale": false,
   "layout": "full"
