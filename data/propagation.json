@@ -1,5 +1,5 @@
 {
-  "timestamp_utc": "2026-05-10T03:28:01Z",
+  "timestamp_utc": "2026-05-10T04:28:01Z",
   "window_minutes": 60,
   "nvis": {
     "status": "UNKNOWN",
@@ -38,7 +38,7 @@
   },
   "mainland": {
     "status": "OPEN",
-    "score": 63,
+    "score": 72,
     "confidence": "MEDIUM",
     "bands": {
       "80m": {
@@ -51,13 +51,13 @@
         "ft8_paths": 0
       },
       "40m": {
-        "score": 77,
-        "paths": 8,
-        "tx": 8.0,
+        "score": 90,
+        "paths": 18,
+        "tx": 18.0,
         "rx": 1.0,
-        "median_snr_db": -9.0,
+        "median_snr_db": 2.5,
         "js8_paths": 0,
-        "ft8_paths": 8
+        "ft8_paths": 18
       },
       "30m": {
         "score": 0,
@@ -69,47 +69,47 @@
         "ft8_paths": 0
       },
       "20m": {
-        "score": 88,
-        "paths": 104,
-        "tx": 26.4,
-        "rx": 39.0,
-        "median_snr_db": -8.0,
+        "score": 86,
+        "paths": 50,
+        "tx": 23.4,
+        "rx": 3.0,
+        "median_snr_db": -9.5,
         "js8_paths": 0,
-        "ft8_paths": 103
+        "ft8_paths": 49
       },
       "17m": {
-        "score": 25,
-        "paths": 3,
+        "score": 27,
+        "paths": 2,
         "tx": 0.4,
-        "rx": 1.2,
-        "median_snr_db": -27.0,
+        "rx": 0.8,
+        "median_snr_db": -19.0,
         "js8_paths": 0,
         "ft8_paths": 0
       },
       "15m": {
-        "score": 90,
-        "paths": 43,
-        "tx": 5.4,
-        "rx": 33.0,
-        "median_snr_db": -7.0,
+        "score": 75,
+        "paths": 8,
+        "tx": 3.4,
+        "rx": 3.0,
+        "median_snr_db": -17.0,
         "js8_paths": 0,
-        "ft8_paths": 36
+        "ft8_paths": 3
       },
       "12m": {
-        "score": 24,
-        "paths": 1,
-        "tx": 0.4,
-        "rx": 0.4,
-        "median_snr_db": -17.0,
+        "score": 0,
+        "paths": 0,
+        "tx": 0,
+        "rx": 0,
+        "median_snr_db": null,
         "js8_paths": 0,
         "ft8_paths": 0
       },
       "10m": {
-        "score": 19,
-        "paths": 1,
-        "tx": 0.4,
-        "rx": 0.4,
-        "median_snr_db": -20.0,
+        "score": 0,
+        "paths": 0,
+        "tx": 0,
+        "rx": 0,
+        "median_snr_db": null,
         "js8_paths": 0,
         "ft8_paths": 0
       }
@@ -119,8 +119,8 @@
   "sources": {
     "pskreporter": {
       "ok": true,
-      "last_fetch_utc": "2026-05-10T03:28:01.260944Z",
-      "requests_last_hour": 2
+      "last_fetch_utc": "2026-05-10T04:28:01.221188Z",
+      "requests_last_hour": 4
     },
     "notes": ""
   }
