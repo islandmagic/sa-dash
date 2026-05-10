@@ -1,5 +1,5 @@
 {
-  "timestamp_utc": "2026-05-10T14:28:01Z",
+  "timestamp_utc": "2026-05-10T15:28:01Z",
   "window_minutes": 60,
   "nvis": {
     "status": "UNKNOWN",
@@ -38,8 +38,8 @@
   },
   "mainland": {
     "status": "OPEN",
-    "score": 68,
-    "confidence": "LOW",
+    "score": 56,
+    "confidence": "MEDIUM",
     "bands": {
       "80m": {
         "score": 0,
@@ -51,40 +51,40 @@
         "ft8_paths": 0
       },
       "40m": {
-        "score": 67,
-        "paths": 6,
-        "tx": 6.0,
-        "rx": 1.0,
-        "median_snr_db": -15.5,
+        "score": 46,
+        "paths": 2,
+        "tx": 1.0,
+        "rx": 2.0,
+        "median_snr_db": -18.0,
         "js8_paths": 0,
-        "ft8_paths": 6
+        "ft8_paths": 2
       },
       "30m": {
-        "score": 76,
-        "paths": 6,
-        "tx": 4.4,
-        "rx": 1.8,
-        "median_snr_db": -12.5,
+        "score": 36,
+        "paths": 2,
+        "tx": 1.4,
+        "rx": 1.4,
+        "median_snr_db": -23.0,
         "js8_paths": 0,
-        "ft8_paths": 4
+        "ft8_paths": 1
       },
       "20m": {
-        "score": 66,
-        "paths": 4,
-        "tx": 4.0,
-        "rx": 1.0,
-        "median_snr_db": -13.5,
-        "js8_paths": 0,
-        "ft8_paths": 4
+        "score": 80,
+        "paths": 36,
+        "tx": 28.0,
+        "rx": 5.8,
+        "median_snr_db": -14.0,
+        "js8_paths": 2,
+        "ft8_paths": 34
       },
       "17m": {
-        "score": 0,
-        "paths": 0,
-        "tx": 0,
-        "rx": 0,
-        "median_snr_db": null,
+        "score": 33,
+        "paths": 1,
+        "tx": 1.0,
+        "rx": 1.0,
+        "median_snr_db": -20.0,
         "js8_paths": 0,
-        "ft8_paths": 0
+        "ft8_paths": 1
       },
       "15m": {
         "score": 0,
@@ -114,12 +114,12 @@
         "ft8_paths": 0
       }
     },
-    "explain": "HI<->CONUS paths observed on 20m+ (FT8). Low report volume."
+    "explain": "HI<->CONUS paths observed on 20m+ (JS8)."
   },
   "sources": {
     "pskreporter": {
       "ok": true,
-      "last_fetch_utc": "2026-05-10T14:28:01.347715Z",
+      "last_fetch_utc": "2026-05-10T15:28:01.165253Z",
       "requests_last_hour": 4
     },
     "notes": ""
