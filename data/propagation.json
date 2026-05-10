@@ -1,5 +1,5 @@
 {
-  "timestamp_utc": "2026-05-10T05:28:01Z",
+  "timestamp_utc": "2026-05-10T06:28:01Z",
   "window_minutes": 60,
   "nvis": {
     "status": "UNKNOWN",
@@ -38,7 +38,7 @@
   },
   "mainland": {
     "status": "OPEN",
-    "score": 89,
+    "score": 94,
     "confidence": "MEDIUM",
     "bands": {
       "80m": {
@@ -52,32 +52,41 @@
       },
       "40m": {
         "score": 97,
-        "paths": 19,
-        "tx": 16.4,
+        "paths": 12,
+        "tx": 9.4,
         "rx": 2.2,
-        "median_snr_db": 0.0,
+        "median_snr_db": 3.0,
         "js8_paths": 0,
-        "ft8_paths": 16
+        "ft8_paths": 9
       },
       "30m": {
-        "score": 90,
-        "paths": 11,
-        "tx": 10.4,
+        "score": 93,
+        "paths": 7,
+        "tx": 6.4,
         "rx": 1.4,
-        "median_snr_db": -2.0,
+        "median_snr_db": 0.0,
         "js8_paths": 0,
-        "ft8_paths": 10
+        "ft8_paths": 6
       },
       "20m": {
         "score": 93,
-        "paths": 89,
-        "tx": 24.0,
-        "rx": 24.0,
+        "paths": 81,
+        "tx": 19.0,
+        "rx": 44.0,
         "median_snr_db": -5.0,
         "js8_paths": 0,
-        "ft8_paths": 89
+        "ft8_paths": 81
       },
       "17m": {
+        "score": 94,
+        "paths": 35,
+        "tx": 3.4,
+        "rx": 28.0,
+        "median_snr_db": -4.0,
+        "js8_paths": 0,
+        "ft8_paths": 32
+      },
+      "15m": {
         "score": 0,
         "paths": 0,
         "tx": 0,
@@ -85,15 +94,6 @@
         "median_snr_db": null,
         "js8_paths": 0,
         "ft8_paths": 0
-      },
-      "15m": {
-        "score": 73,
-        "paths": 15,
-        "tx": 2.4,
-        "rx": 11.6,
-        "median_snr_db": -17.0,
-        "js8_paths": 0,
-        "ft8_paths": 10
       },
       "12m": {
         "score": 0,
@@ -119,8 +119,8 @@
   "sources": {
     "pskreporter": {
       "ok": true,
-      "last_fetch_utc": "2026-05-10T05:28:01.747710Z",
-      "requests_last_hour": 2
+      "last_fetch_utc": "2026-05-10T06:28:01.314801Z",
+      "requests_last_hour": 4
     },
     "notes": ""
   }
