@@ -1,5 +1,5 @@
 {
-  "timestamp_utc": "2026-05-10T04:28:01Z",
+  "timestamp_utc": "2026-05-10T05:28:01Z",
   "window_minutes": 60,
   "nvis": {
     "status": "UNKNOWN",
@@ -38,7 +38,7 @@
   },
   "mainland": {
     "status": "OPEN",
-    "score": 72,
+    "score": 89,
     "confidence": "MEDIUM",
     "bands": {
       "80m": {
@@ -51,15 +51,33 @@
         "ft8_paths": 0
       },
       "40m": {
-        "score": 90,
-        "paths": 18,
-        "tx": 18.0,
-        "rx": 1.0,
-        "median_snr_db": 2.5,
+        "score": 97,
+        "paths": 19,
+        "tx": 16.4,
+        "rx": 2.2,
+        "median_snr_db": 0.0,
         "js8_paths": 0,
-        "ft8_paths": 18
+        "ft8_paths": 16
       },
       "30m": {
+        "score": 90,
+        "paths": 11,
+        "tx": 10.4,
+        "rx": 1.4,
+        "median_snr_db": -2.0,
+        "js8_paths": 0,
+        "ft8_paths": 10
+      },
+      "20m": {
+        "score": 93,
+        "paths": 89,
+        "tx": 24.0,
+        "rx": 24.0,
+        "median_snr_db": -5.0,
+        "js8_paths": 0,
+        "ft8_paths": 89
+      },
+      "17m": {
         "score": 0,
         "paths": 0,
         "tx": 0,
@@ -68,32 +86,14 @@
         "js8_paths": 0,
         "ft8_paths": 0
       },
-      "20m": {
-        "score": 86,
-        "paths": 50,
-        "tx": 23.4,
-        "rx": 3.0,
-        "median_snr_db": -9.5,
-        "js8_paths": 0,
-        "ft8_paths": 49
-      },
-      "17m": {
-        "score": 27,
-        "paths": 2,
-        "tx": 0.4,
-        "rx": 0.8,
-        "median_snr_db": -19.0,
-        "js8_paths": 0,
-        "ft8_paths": 0
-      },
       "15m": {
-        "score": 75,
-        "paths": 8,
-        "tx": 3.4,
-        "rx": 3.0,
+        "score": 73,
+        "paths": 15,
+        "tx": 2.4,
+        "rx": 11.6,
         "median_snr_db": -17.0,
         "js8_paths": 0,
-        "ft8_paths": 3
+        "ft8_paths": 10
       },
       "12m": {
         "score": 0,
@@ -119,8 +119,8 @@
   "sources": {
     "pskreporter": {
       "ok": true,
-      "last_fetch_utc": "2026-05-10T04:28:01.221188Z",
-      "requests_last_hour": 4
+      "last_fetch_utc": "2026-05-10T05:28:01.747710Z",
+      "requests_last_hour": 2
     },
     "notes": ""
   }
