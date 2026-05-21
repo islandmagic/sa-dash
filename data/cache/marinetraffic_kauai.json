@@ -1,11 +1,11 @@
 {
   "id": "marinetraffic_kauai",
   "label": "Marine Traffic (<a href=\"https://www.marinetraffic.com\">MarineTraffic</a>)",
-  "retrieved_at": "2026-05-21T00:29:04-10:00",
+  "retrieved_at": "2026-05-21T01:29:03-10:00",
   "source_urls": [
     "https://www.marinetraffic.com"
   ],
-  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>GRAND WINNER 7</td><td>Tanker</td><td>LR</td><td>31.6</td><td>121.0</td><td>SSE</td><td>USHNL</td><td></td><td></td></tr><tr><td>HIGH LEADER</td><td>Tanker</td><td>LR</td><td>38.8</td><td>25.0</td><td>WSW</td><td>NAWILIWILI HAWAII</td><td></td><td></td></tr><tr><td>IMUA</td><td>Special category</td><td>US</td><td>18.8</td><td>68.0</td><td>ESE</td><td></td><td></td><td></td></tr><tr><td>LADY KAILANI</td><td>Sight seeing tour boat</td><td>US</td><td>5.1</td><td>161.0</td><td>ESE</td><td></td><td></td><td></td></tr><tr><td>PB KUKII POINT</td><td>Pilot</td><td>US</td><td></td><td>1.0</td><td></td><td></td><td>At port</td><td>Nawiliwili</td></tr><tr><td>PRINCESS JASMINE</td><td>Wing in ground</td><td>US</td><td>94.7</td><td>91.0</td><td>WNW</td><td>CLASS B</td><td></td><td></td></tr><tr><td>TIGER5</td><td>Tug</td><td>US</td><td></td><td>1.0</td><td>SE</td><td></td><td>At port</td><td>Nawiliwili</td></tr></tbody></table>",
+  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>GRAND WINNER 7</td><td>Tanker</td><td>LR</td><td>31.6</td><td>123.0</td><td>SSE</td><td>USHNL</td><td></td><td></td></tr><tr><td>HIGH LEADER</td><td>Tanker</td><td>LR</td><td>40.7</td><td>10.0</td><td>W</td><td>NAWILIWILI HAWAII</td><td></td><td></td></tr><tr><td>IMUA</td><td>Special category</td><td>US</td><td>18.8</td><td>68.0</td><td>ESE</td><td></td><td></td><td></td></tr><tr><td>PB KUKII POINT</td><td>Pilot</td><td>US</td><td></td><td>1.0</td><td></td><td></td><td>At port</td><td>Nawiliwili</td></tr><tr><td>TIGER5</td><td>Tug</td><td>US</td><td></td><td>1.0</td><td>SE</td><td></td><td>At port</td><td>Nawiliwili</td></tr></tbody></table>",
   "error": null,
   "stale": false,
   "layout": "full"
