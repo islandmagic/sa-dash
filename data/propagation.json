@@ -1,106 +1,106 @@
 {
-  "timestamp_utc": "2026-05-22T05:28:01Z",
+  "timestamp_utc": "2026-05-22T06:28:01Z",
   "window_minutes": 60,
   "nvis": {
     "status": "POOR",
-    "score": 33,
+    "score": 39,
     "confidence": "LOW",
     "bands": {
       "80m": {
-        "score": 15,
+        "score": 13,
         "paths": 1,
         "tx": 0.4,
         "rx": 0.4,
-        "median_snr_db": -22.0,
+        "median_snr_db": -23.0,
         "js8_paths": 0,
         "ft8_paths": 0
       },
       "40m": {
-        "score": 0,
-        "paths": 0,
-        "tx": 0,
-        "rx": 0,
-        "median_snr_db": null,
+        "score": 70,
+        "paths": 3,
+        "tx": 2.4,
+        "rx": 1.0,
+        "median_snr_db": 8.0,
         "js8_paths": 0,
-        "ft8_paths": 0
+        "ft8_paths": 2
       },
       "30m": {
-        "score": 81,
-        "paths": 4,
-        "tx": 2.4,
-        "rx": 2.0,
-        "median_snr_db": 9.0,
+        "score": 12,
+        "paths": 1,
+        "tx": 0.4,
+        "rx": 0.4,
+        "median_snr_db": -28.0,
         "js8_paths": 0,
-        "ft8_paths": 3
+        "ft8_paths": 0
       }
     },
     "explain": "Little inter-island activity. Low report volume."
   },
   "mainland": {
     "status": "OPEN",
-    "score": 72,
+    "score": 78,
     "confidence": "MEDIUM",
     "bands": {
       "80m": {
-        "score": 49,
+        "score": 35,
         "paths": 2,
-        "tx": 2.0,
+        "tx": 1.4,
         "rx": 1.0,
-        "median_snr_db": -18.0,
-        "js8_paths": 0,
-        "ft8_paths": 2
-      },
-      "40m": {
-        "score": 85,
-        "paths": 27,
-        "tx": 25.0,
-        "rx": 3.8,
-        "median_snr_db": -10.0,
-        "js8_paths": 5,
-        "ft8_paths": 15
-      },
-      "30m": {
-        "score": 92,
-        "paths": 68,
-        "tx": 7.2,
-        "rx": 33.8,
-        "median_snr_db": -5.5,
-        "js8_paths": 1,
-        "ft8_paths": 62
-      },
-      "20m": {
-        "score": 94,
-        "paths": 122,
-        "tx": 30.4,
-        "rx": 47.8,
-        "median_snr_db": -4.0,
-        "js8_paths": 1,
-        "ft8_paths": 112
-      },
-      "17m": {
-        "score": 70,
-        "paths": 7,
-        "tx": 5.4,
-        "rx": 1.8,
-        "median_snr_db": -17.0,
-        "js8_paths": 0,
-        "ft8_paths": 5
-      },
-      "15m": {
-        "score": 58,
-        "paths": 9,
-        "tx": 1.8,
-        "rx": 3.4,
-        "median_snr_db": -23.0,
+        "median_snr_db": -22.0,
         "js8_paths": 0,
         "ft8_paths": 1
       },
+      "40m": {
+        "score": 88,
+        "paths": 59,
+        "tx": 21.2,
+        "rx": 42.8,
+        "median_snr_db": -8.0,
+        "js8_paths": 4,
+        "ft8_paths": 56
+      },
+      "30m": {
+        "score": 71,
+        "paths": 10,
+        "tx": 7.0,
+        "rx": 3.0,
+        "median_snr_db": -20.0,
+        "js8_paths": 1,
+        "ft8_paths": 4
+      },
+      "20m": {
+        "score": 88,
+        "paths": 58,
+        "tx": 23.4,
+        "rx": 10.4,
+        "median_snr_db": -8.0,
+        "js8_paths": 1,
+        "ft8_paths": 49
+      },
+      "17m": {
+        "score": 82,
+        "paths": 20,
+        "tx": 1.4,
+        "rx": 16.2,
+        "median_snr_db": -7.0,
+        "js8_paths": 0,
+        "ft8_paths": 15
+      },
+      "15m": {
+        "score": 74,
+        "paths": 22,
+        "tx": 4.2,
+        "rx": 13.2,
+        "median_snr_db": -17.5,
+        "js8_paths": 0,
+        "ft8_paths": 13
+      },
       "12m": {
-        "score": 13,
-        "paths": 1,
-        "tx": 0.4,
-        "rx": 0.4,
-        "median_snr_db": -24.0,
+        "score": 0,
+        "paths": 0,
+        "tx": 0,
+        "rx": 0,
+        "median_snr_db": null,
         "js8_paths": 0,
         "ft8_paths": 0
       },
@@ -119,8 +119,8 @@
   "sources": {
     "pskreporter": {
       "ok": true,
-      "last_fetch_utc": "2026-05-22T05:28:01.754665Z",
-      "requests_last_hour": 2
+      "last_fetch_utc": "2026-05-22T06:28:01.097621Z",
+      "requests_last_hour": 4
     },
     "notes": ""
   }
