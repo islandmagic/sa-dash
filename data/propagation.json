@@ -1,5 +1,5 @@
 {
-  "timestamp_utc": "2026-05-24T15:28:01Z",
+  "timestamp_utc": "2026-05-24T16:28:01Z",
   "window_minutes": 60,
   "nvis": {
     "status": "MARGINAL",
@@ -39,7 +39,7 @@
   "mainland": {
     "status": "OPEN",
     "score": 70,
-    "confidence": "MEDIUM",
+    "confidence": "LOW",
     "bands": {
       "80m": {
         "score": 0,
@@ -114,7 +114,7 @@
         "ft8_paths": 0
       }
     },
-    "explain": "HI<->CONUS paths observed on 20m+ (FT8)."
+    "explain": "HI<->CONUS paths observed on 20m+ (FT8). Low report volume."
   },
   "sources": {
     "pskreporter": {
@@ -122,6 +122,6 @@
       "last_fetch_utc": "2026-05-24T15:28:01.621825Z",
       "requests_last_hour": 2
     },
-    "notes": ""
+    "notes": "BL: Server error '502 Bad Gateway' for url 'https://retrieve.pskreporter.info/query?callsign=BL&modify=grid&flowStartSeconds=-3600&rronly=1&rptlimit=2000&appcontact=aloha%40islandmagic.co'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/502; BK: Server error '502 Bad Gateway' for url 'https://retrieve.pskreporter.info/query?callsign=BK&modify=grid&flowStartSeconds=-3600&rronly=1&rptlimit=2000&appcontact=aloha%40islandmagic.co'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/502"
   }
 }
