@@ -1,5 +1,5 @@
 {
-  "timestamp_utc": "2026-05-28T00:28:01Z",
+  "timestamp_utc": "2026-05-28T01:28:01Z",
   "window_minutes": 60,
   "nvis": {
     "status": "UNKNOWN",
@@ -38,7 +38,7 @@
   },
   "mainland": {
     "status": "OPEN",
-    "score": 65,
+    "score": 68,
     "confidence": "MEDIUM",
     "bands": {
       "80m": {
@@ -70,30 +70,30 @@
       },
       "20m": {
         "score": 81,
-        "paths": 73,
-        "tx": 26.4,
-        "rx": 5.4,
+        "paths": 91,
+        "tx": 33.0,
+        "rx": 10.0,
         "median_snr_db": -13.0,
         "js8_paths": 0,
-        "ft8_paths": 72
+        "ft8_paths": 91
       },
       "17m": {
-        "score": 22,
-        "paths": 1,
-        "tx": 0.4,
-        "rx": 0.4,
-        "median_snr_db": -18.0,
+        "score": 83,
+        "paths": 37,
+        "tx": 16.4,
+        "rx": 20.8,
+        "median_snr_db": -11.5,
         "js8_paths": 0,
-        "ft8_paths": 0
+        "ft8_paths": 34
       },
       "15m": {
-        "score": 77,
-        "paths": 26,
-        "tx": 1.4,
-        "rx": 25.4,
-        "median_snr_db": -11.0,
+        "score": 30,
+        "paths": 3,
+        "tx": 0.4,
+        "rx": 1.2,
+        "median_snr_db": -20.0,
         "js8_paths": 0,
-        "ft8_paths": 25
+        "ft8_paths": 0
       },
       "12m": {
         "score": 0,
@@ -105,13 +105,13 @@
         "ft8_paths": 0
       },
       "10m": {
-        "score": 0,
-        "paths": 0,
-        "tx": 0,
-        "rx": 0,
-        "median_snr_db": null,
+        "score": 49,
+        "paths": 3,
+        "tx": 2.4,
+        "rx": 1.4,
+        "median_snr_db": -20.0,
         "js8_paths": 0,
-        "ft8_paths": 0
+        "ft8_paths": 2
       }
     },
     "explain": "HI<->CONUS paths observed on 20m+ (FT8)."
@@ -119,8 +119,8 @@
   "sources": {
     "pskreporter": {
       "ok": true,
-      "last_fetch_utc": "2026-05-28T00:28:01.495821Z",
-      "requests_last_hour": 2
+      "last_fetch_utc": "2026-05-28T01:28:01.090655Z",
+      "requests_last_hour": 4
     },
     "notes": ""
   }
