@@ -1,5 +1,5 @@
 {
-  "timestamp_utc": "2026-05-28T13:28:01Z",
+  "timestamp_utc": "2026-05-28T14:28:02Z",
   "window_minutes": 60,
   "nvis": {
     "status": "UNKNOWN",
@@ -38,7 +38,7 @@
   },
   "mainland": {
     "status": "INTERMITTENT",
-    "score": 42,
+    "score": 65,
     "confidence": "LOW",
     "bands": {
       "80m": {
@@ -60,22 +60,22 @@
         "ft8_paths": 0
       },
       "30m": {
-        "score": 0,
-        "paths": 0,
-        "tx": 0,
-        "rx": 0,
-        "median_snr_db": null,
+        "score": 15,
+        "paths": 1,
+        "tx": 0.4,
+        "rx": 0.4,
+        "median_snr_db": -23.0,
         "js8_paths": 0,
         "ft8_paths": 0
       },
       "20m": {
-        "score": 42,
-        "paths": 1,
-        "tx": 1.0,
-        "rx": 1.0,
-        "median_snr_db": -14.0,
+        "score": 82,
+        "paths": 40,
+        "tx": 20.0,
+        "rx": 3.0,
+        "median_snr_db": -12.0,
         "js8_paths": 0,
-        "ft8_paths": 1
+        "ft8_paths": 40
       },
       "17m": {
         "score": 0,
@@ -119,8 +119,8 @@
   "sources": {
     "pskreporter": {
       "ok": true,
-      "last_fetch_utc": "2026-05-28T13:28:01.317688Z",
-      "requests_last_hour": 4
+      "last_fetch_utc": "2026-05-28T14:28:02.209386Z",
+      "requests_last_hour": 2
     },
     "notes": ""
   }
