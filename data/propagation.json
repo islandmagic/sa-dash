@@ -1,5 +1,5 @@
 {
-  "timestamp_utc": "2026-05-30T20:28:01Z",
+  "timestamp_utc": "2026-05-30T21:28:01Z",
   "window_minutes": 60,
   "nvis": {
     "status": "UNKNOWN",
@@ -38,7 +38,7 @@
   },
   "mainland": {
     "status": "OPEN",
-    "score": 77,
+    "score": 71,
     "confidence": "MEDIUM",
     "bands": {
       "80m": {
@@ -69,31 +69,31 @@
         "ft8_paths": 0
       },
       "20m": {
-        "score": 76,
-        "paths": 42,
-        "tx": 26.2,
-        "rx": 2.8,
-        "median_snr_db": -16.0,
-        "js8_paths": 1,
-        "ft8_paths": 41
+        "score": 78,
+        "paths": 38,
+        "tx": 21.6,
+        "rx": 3.8,
+        "median_snr_db": -15.0,
+        "js8_paths": 2,
+        "ft8_paths": 38
       },
       "17m": {
-        "score": 77,
-        "paths": 40,
-        "tx": 17.0,
-        "rx": 15.0,
-        "median_snr_db": -16.0,
+        "score": 74,
+        "paths": 18,
+        "tx": 13.4,
+        "rx": 3.4,
+        "median_snr_db": -17.5,
         "js8_paths": 0,
-        "ft8_paths": 40
+        "ft8_paths": 17
       },
       "15m": {
-        "score": 80,
-        "paths": 62,
-        "tx": 13.4,
-        "rx": 31.0,
-        "median_snr_db": -14.0,
+        "score": 73,
+        "paths": 14,
+        "tx": 9.4,
+        "rx": 2.4,
+        "median_snr_db": -17.0,
         "js8_paths": 0,
-        "ft8_paths": 60
+        "ft8_paths": 13
       },
       "12m": {
         "score": 0,
@@ -105,11 +105,11 @@
         "ft8_paths": 0
       },
       "10m": {
-        "score": 0,
-        "paths": 0,
-        "tx": 0,
-        "rx": 0,
-        "median_snr_db": null,
+        "score": 24,
+        "paths": 1,
+        "tx": 0.4,
+        "rx": 0.4,
+        "median_snr_db": -17.0,
         "js8_paths": 0,
         "ft8_paths": 0
       }
@@ -119,8 +119,8 @@
   "sources": {
     "pskreporter": {
       "ok": true,
-      "last_fetch_utc": "2026-05-30T20:28:01.630159Z",
-      "requests_last_hour": 2
+      "last_fetch_utc": "2026-05-30T21:28:01.515480Z",
+      "requests_last_hour": 4
     },
     "notes": ""
   }
