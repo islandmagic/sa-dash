@@ -1,11 +1,11 @@
 {
   "id": "marinetraffic_kauai",
   "label": "Marine Traffic (<a href=\"https://www.marinetraffic.com\">MarineTraffic</a>)",
-  "retrieved_at": "2026-05-30T02:29:03-10:00",
+  "retrieved_at": "2026-05-30T03:29:03-10:00",
   "source_urls": [
     "https://www.marinetraffic.com"
   ],
-  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>AMERICAN CONTENDER</td><td>Special category</td><td>US</td><td>77.8</td><td>64.0</td><td>W</td><td>US^0YP0</td><td></td><td></td></tr><tr><td>AMERICAN EMERALD</td><td>Special category</td><td>US</td><td>80.4</td><td>65.0</td><td>W</td><td>PEARL HARBOR</td><td></td><td></td></tr><tr><td>ASUKA2</td><td>Passenger</td><td>JP</td><td>82.4</td><td>176.0</td><td>W</td><td>JP YOK</td><td></td><td></td></tr><tr><td>BROOKE CHAPMAN</td><td>Tug</td><td>US</td><td></td><td>0.0</td><td>SE</td><td>HONOLULU</td><td>At port</td><td>Nawiliwili</td></tr></tbody></table>",
+  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>AMERICAN CONTENDER</td><td>Special category</td><td>US</td><td>77.8</td><td>64.0</td><td>W</td><td>US^0YP0</td><td></td><td></td></tr><tr><td>AMERICAN EMERALD</td><td>Special category</td><td>US</td><td>80.4</td><td>65.0</td><td>W</td><td>PEARL HARBOR</td><td></td><td></td></tr><tr><td>BROOKE CHAPMAN</td><td>Tug</td><td>US</td><td></td><td>1.0</td><td>S</td><td>HONOLULU</td><td>At port</td><td>Nawiliwili</td></tr><tr><td>LADY KAILANI</td><td>Sight seeing tour boat</td><td>US</td><td>4.8</td><td>168.0</td><td>NW</td><td></td><td></td><td></td></tr></tbody></table>",
   "error": null,
   "stale": false,
   "layout": "full"
