@@ -1,5 +1,5 @@
 {
-  "timestamp_utc": "2026-06-03T16:28:01Z",
+  "timestamp_utc": "2026-06-03T17:28:01Z",
   "window_minutes": 60,
   "nvis": {
     "status": "POOR",
@@ -38,7 +38,7 @@
   },
   "mainland": {
     "status": "OPEN",
-    "score": 65,
+    "score": 62,
     "confidence": "MEDIUM",
     "bands": {
       "80m": {
@@ -69,13 +69,13 @@
         "ft8_paths": 0
       },
       "20m": {
-        "score": 85,
-        "paths": 123,
-        "tx": 32.4,
-        "rx": 43.8,
-        "median_snr_db": -10.0,
+        "score": 79,
+        "paths": 55,
+        "tx": 35.0,
+        "rx": 3.8,
+        "median_snr_db": -14.5,
         "js8_paths": 2,
-        "ft8_paths": 119
+        "ft8_paths": 51
       },
       "17m": {
         "score": 70,
@@ -87,9 +87,9 @@
         "ft8_paths": 5
       },
       "15m": {
-        "score": 55,
-        "paths": 5,
-        "tx": 2.8,
+        "score": 53,
+        "paths": 4,
+        "tx": 2.4,
         "rx": 1.8,
         "median_snr_db": -21.0,
         "js8_paths": 0,
@@ -119,9 +119,9 @@
   "sources": {
     "pskreporter": {
       "ok": true,
-      "last_fetch_utc": "2026-06-03T16:28:01.976922Z",
-      "requests_last_hour": 2
+      "last_fetch_utc": "2026-06-03T17:28:01.712828Z",
+      "requests_last_hour": 3
     },
-    "notes": ""
+    "notes": "BK: Server error '502 Bad Gateway' for url 'https://retrieve.pskreporter.info/query?callsign=BK&modify=grid&flowStartSeconds=-3600&rronly=1&rptlimit=2000&appcontact=aloha%40islandmagic.co'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/502"
   }
 }
