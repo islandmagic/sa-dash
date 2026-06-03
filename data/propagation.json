@@ -1,5 +1,5 @@
 {
-  "timestamp_utc": "2026-06-03T10:28:01Z",
+  "timestamp_utc": "2026-06-03T11:28:01Z",
   "window_minutes": 60,
   "nvis": {
     "status": "UNKNOWN",
@@ -120,7 +120,7 @@
     "pskreporter": {
       "ok": true,
       "last_fetch_utc": "2026-06-03T09:28:02.121312Z",
-      "requests_last_hour": 2
+      "requests_last_hour": 0
     },
     "notes": "BL: [Errno 8] nodename nor servname provided, or not known; BK: [Errno 8] nodename nor servname provided, or not known"
   }
