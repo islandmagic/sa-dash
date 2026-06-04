@@ -1,9 +1,9 @@
 {
-  "timestamp_utc": "2026-06-04T19:28:02Z",
+  "timestamp_utc": "2026-06-04T20:28:01Z",
   "window_minutes": 60,
   "nvis": {
-    "status": "POOR",
-    "score": 12,
+    "status": "UNKNOWN",
+    "score": 0,
     "confidence": "LOW",
     "bands": {
       "80m": {
@@ -16,11 +16,11 @@
         "ft8_paths": 0
       },
       "40m": {
-        "score": 12,
-        "paths": 1,
-        "tx": 0.4,
-        "rx": 0.4,
-        "median_snr_db": -27.0,
+        "score": 0,
+        "paths": 0,
+        "tx": 0,
+        "rx": 0,
+        "median_snr_db": null,
         "js8_paths": 0,
         "ft8_paths": 0
       },
@@ -34,12 +34,12 @@
         "ft8_paths": 0
       }
     },
-    "explain": "Little inter-island activity. Low report volume."
+    "explain": "Limited recent reports."
   },
   "mainland": {
     "status": "OPEN",
-    "score": 65,
-    "confidence": "LOW",
+    "score": 70,
+    "confidence": "MEDIUM",
     "bands": {
       "80m": {
         "score": 0,
@@ -70,58 +70,58 @@
       },
       "20m": {
         "score": 77,
-        "paths": 20,
-        "tx": 12.2,
-        "rx": 3.8,
+        "paths": 32,
+        "tx": 16.8,
+        "rx": 9.8,
         "median_snr_db": -16.0,
         "js8_paths": 1,
-        "ft8_paths": 19
+        "ft8_paths": 31
       },
       "17m": {
-        "score": 81,
-        "paths": 25,
-        "tx": 7.4,
-        "rx": 18.4,
-        "median_snr_db": -13.0,
+        "score": 52,
+        "paths": 1,
+        "tx": 1.0,
+        "rx": 1.0,
+        "median_snr_db": -7.0,
         "js8_paths": 0,
-        "ft8_paths": 23
+        "ft8_paths": 1
       },
       "15m": {
-        "score": 74,
+        "score": 73,
         "paths": 28,
-        "tx": 13.0,
-        "rx": 17.0,
-        "median_snr_db": -17.5,
+        "tx": 19.0,
+        "rx": 2.0,
+        "median_snr_db": -15.5,
         "js8_paths": 0,
         "ft8_paths": 28
       },
       "12m": {
-        "score": 13,
-        "paths": 1,
-        "tx": 0.4,
-        "rx": 0.4,
-        "median_snr_db": -29.0,
+        "score": 0,
+        "paths": 0,
+        "tx": 0,
+        "rx": 0,
+        "median_snr_db": null,
         "js8_paths": 0,
         "ft8_paths": 0
       },
       "10m": {
-        "score": 35,
-        "paths": 4,
-        "tx": 0.4,
-        "rx": 1.6,
-        "median_snr_db": -19.5,
+        "score": 0,
+        "paths": 0,
+        "tx": 0,
+        "rx": 0,
+        "median_snr_db": null,
         "js8_paths": 0,
         "ft8_paths": 0
       }
     },
-    "explain": "HI<->CONUS paths observed on 20m+ (JS8). Low report volume."
+    "explain": "HI<->CONUS paths observed on 20m+ (JS8)."
   },
   "sources": {
     "pskreporter": {
       "ok": true,
-      "last_fetch_utc": "2026-06-04T18:28:01.749886Z",
-      "requests_last_hour": 0
+      "last_fetch_utc": "2026-06-04T20:28:01.668048Z",
+      "requests_last_hour": 2
     },
-    "notes": "BL: Server error '502 Bad Gateway' for url 'https://retrieve.pskreporter.info/query?callsign=BL&modify=grid&flowStartSeconds=-3600&rronly=1&rptlimit=2000&appcontact=aloha%40islandmagic.co'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/502; BK: Server error '502 Bad Gateway' for url 'https://retrieve.pskreporter.info/query?callsign=BK&modify=grid&flowStartSeconds=-3600&rronly=1&rptlimit=2000&appcontact=aloha%40islandmagic.co'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/502"
+    "notes": ""
   }
 }
