@@ -1,11 +1,11 @@
 {
   "id": "marinetraffic_kauai",
   "label": "Marine Traffic (<a href=\"https://www.marinetraffic.com\">MarineTraffic</a>)",
-  "retrieved_at": "2026-06-04T16:29:03-10:00",
+  "retrieved_at": "2026-06-04T17:29:03-10:00",
   "source_urls": [
     "https://www.marinetraffic.com"
   ],
-  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>AMERICAN CHALLENGER</td><td>Special category</td><td>US</td><td>3.0</td><td>86.0</td><td>SE</td><td>NONYA</td><td></td><td></td></tr><tr><td>LADY KAILANI</td><td>Sight seeing tour boat</td><td>US</td><td>5.1</td><td>186.0</td><td>WNW</td><td></td><td></td><td></td></tr><tr><td>MAMO</td><td>Tug</td><td>US</td><td></td><td>1.0</td><td>N</td><td>US^0ZAS</td><td>At port</td><td>Nawiliwili</td></tr><tr><td>PRIDE OF AMERICA</td><td>Passenger</td><td>US</td><td></td><td>0.0</td><td>SSW</td><td>NAWILIWILI</td><td>At port</td><td>Nawiliwili</td></tr><tr><td>QUEEN VICTORIA</td><td>Wing in ground</td><td>US</td><td>72.5</td><td>74.0</td><td>NW</td><td>CLASS B</td><td></td><td></td></tr></tbody></table>",
+  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>AMERICAN CHALLENGER</td><td>Special category</td><td>US</td><td>10.8</td><td>75.0</td><td>ESE</td><td>NONYA</td><td></td><td></td></tr><tr><td>LADY KAILANI</td><td>Sight seeing tour boat</td><td>US</td><td>5.1</td><td>186.0</td><td>WNW</td><td></td><td></td><td></td></tr><tr><td>MAMO</td><td>Tug</td><td>US</td><td></td><td>1.0</td><td>N</td><td>US^0ZAS</td><td>At port</td><td>Nawiliwili</td></tr><tr><td>PRIDE OF AMERICA</td><td>Passenger</td><td>US</td><td></td><td>0.0</td><td>NW</td><td>NAWILIWILI</td><td>At port</td><td>Nawiliwili</td></tr><tr><td>QUEEN VICTORIA</td><td>Wing in ground</td><td>US</td><td>72.5</td><td>74.0</td><td>NW</td><td>CLASS B</td><td></td><td></td></tr></tbody></table>",
   "error": null,
   "stale": false,
   "layout": "full"
