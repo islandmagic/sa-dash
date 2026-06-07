@@ -1,6 +1,10 @@
 name: Generate dashboard
 
 on:
+  push:
+    branches: [master]
+    paths:
+      - "content/breaking_news.md"
   schedule:
     - cron: "33 * * * *"
   workflow_dispatch:

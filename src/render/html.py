@@ -147,7 +147,20 @@ def _ensure_compact_tables(fragment: str) -> str:
 def render_html(island_name: str, providers: list[dict], generated_at: str) -> str:
     sections = []
     toc_items = []
+    banner_html = ""
     for provider in providers:
+        if provider.get("skip"):
+            continue
+        if provider.get("banner") or provider.get("id") == "breaking_news":
+            body = provider.get("html") or ""
+            banner_html = (
+                '<div class="breaking-news-banner" role="alert">'
+                '<div class="breaking-news-label">Breaking News</div>'
+                f'<div class="breaking-news-body">{body}</div>'
+                "</div>"
+            )
+            continue
+
         error_note = ""
         last_retrieved = _format_ts(provider.get("retrieved_at"))
 
@@ -199,6 +212,30 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
       line-height: 1.4;
       color: #111;
       background: #fff;
+    }}
+    .breaking-news-banner {{
+      background: #fde2e2;
+      border: 2px solid #c62828;
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      margin-bottom: 1rem;
+    }}
+    .breaking-news-label {{
+      font-weight: 700;
+      font-size: 1rem;
+      color: #b71c1c;
+      margin-bottom: 0.35rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }}
+    .breaking-news-body {{
+      font-size: 0.95rem;
+    }}
+    .breaking-news-body p {{
+      margin: 0.35rem 0 0;
+    }}
+    .breaking-news-body p:first-child {{
+      margin-top: 0;
     }}
     header {{
       border-bottom: 1px solid #ddd;
@@ -338,6 +375,7 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
   </style>
 </head>
 <body>
+  {banner_html}
   <header>
     <h1>{island_name} Dashboard</h1>
     <p class="meta">{generated} (Next update: {next_update}) | <a href="https://github.com/islandmagic/sa-dash/issues">Report issue</a></p>

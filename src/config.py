@@ -4,6 +4,7 @@ ISLANDS = {
     "kauai": {
         "name": "Kauai",
         "scrapers": [
+            "breaking_news",
             "time_wheel",
             "info_kauai",
             "weather_kauai",
