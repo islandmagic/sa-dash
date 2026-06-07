@@ -2,6 +2,7 @@ import html
 
 import httpx
 
+from src.http_log import log_provider_failure
 from src.scrape.base import now_iso
 from src.scrape.verizon_mobile import TOWNS
 
@@ -49,14 +50,20 @@ def _fetch_outage(client: httpx.Client, town: dict) -> tuple[str, str, str | Non
         response.raise_for_status()
         payload = response.json()
     except Exception as exc:
+        town_name = town.get("town", "unknown")
         if response is not None:
-            print(
-                "AT&T outage check failed for "
-                f"{town.get('town', 'unknown')} (HTTP {response.status_code})."
+            log_provider_failure(
+                "AT&T outage check",
+                f"for {town_name}",
+                status_code=response.status_code,
+                response_body=response.text,
             )
-            print(response.text[:500])
         else:
-            print(f"AT&T outage check failed for {town.get('town', 'unknown')}: {exc}")
+            log_provider_failure(
+                "AT&T outage check",
+                f"for {town_name}",
+                exc=exc,
+            )
         return "Unknown", "", "Fetch failed."
 
     notifications = payload.get("data", {}).get("WirelessOutageNotifications")

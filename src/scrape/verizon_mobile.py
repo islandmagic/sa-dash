@@ -4,6 +4,7 @@ import time
 
 import httpx
 
+from src.http_log import log_provider_failure
 from src.scrape.base import now_iso
 
 # Example response:
@@ -214,15 +215,19 @@ def _fetch_outage(town: dict) -> tuple[str, str, str | None]:
         response.raise_for_status()
         payload = response.json()
     except Exception as exc:
+        town_name = town.get("town", "unknown")
         if response is not None:
-            print(
-                "Verizon outage check failed for "
-                f"{town.get('town', 'unknown')} (HTTP {response.status_code})."
+            log_provider_failure(
+                "Verizon outage check",
+                f"for {town_name}",
+                status_code=response.status_code,
+                response_body=response.text,
             )
-            print(response.text[:500])
         else:
-            print(
-                f"Verizon outage check failed for {town.get('town', 'unknown')}: {exc}"
+            log_provider_failure(
+                "Verizon outage check",
+                f"for {town_name}",
+                exc=exc,
             )
         return "Unknown", "", "Fetch failed."
 

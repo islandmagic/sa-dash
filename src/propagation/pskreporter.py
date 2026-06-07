@@ -10,6 +10,7 @@ from urllib.parse import urlencode, urljoin
 
 import httpx
 
+from src.http_log import log_provider_failure
 from src.propagation.config import (
     DEFAULT_APP_CONTACT,
     MIN_SECONDS_BETWEEN_IDENTICAL_URL,
@@ -153,16 +154,23 @@ def fetch_reports(
                         if retry.status_code == 200:
                             response = retry
                         else:
-                            print(
-                                "PSKReporter challenge retry failed "
-                                f"(HTTP {retry.status_code})."
+                            log_provider_failure(
+                                "PSKReporter challenge retry",
+                                "after Cloudflare challenge",
+                                status_code=retry.status_code,
+                                response_body=retry.text,
+                                debug_env_var="PSKREPORTER_DEBUG",
                             )
-                            print(retry.text[:500])
                     else:
                         print("PSKReporter Cloudflare challenge detected, no retry URL found.")
                 if response.status_code != 200:
-                    print(f"PSKReporter HTTP {response.status_code} for {url}")
-                    print(response.text[:500])
+                    log_provider_failure(
+                        "PSKReporter",
+                        f"request to {url}",
+                        status_code=response.status_code,
+                        response_body=response.text,
+                        debug_env_var="PSKREPORTER_DEBUG",
+                    )
                     response.raise_for_status()
             text = response.text
     except Exception as exc:  # noqa: BLE001 - keep generator resilient
