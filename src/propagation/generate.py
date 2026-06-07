@@ -110,14 +110,17 @@ def generate(output_path: Path, cache_path: Path, state_path: Path, now: datetim
 
 
 def _print_ip_info() -> None:
+    """Operator-only diagnostic: lookup and print public egress IP."""
     try:
         with urlopen("https://api.ipify.org?format=json", timeout=10) as response:
             payload = json.loads(response.read().decode("utf-8"))
             ip = payload.get("ip")
             if ip:
                 print(f"Public IP: {ip}")
+                return
     except Exception:
-        print("Public IP: unknown")
+        pass
+    print("Public IP: unknown")
 
 
 def main() -> None:
@@ -141,13 +144,19 @@ def main() -> None:
         "--now",
         help="Override current UTC time (ISO format)",
     )
+    parser.add_argument(
+        "--debug",
+        action="store_true",
+        help="Print operator diagnostics (includes public egress IP lookup)",
+    )
     args = parser.parse_args()
 
     now = None
     if args.now:
         now = datetime.fromisoformat(args.now.replace("Z", "+00:00"))
     generate(Path(args.output), Path(args.cache_path), Path(args.state_path), now=now)
-    _print_ip_info()
+    if args.debug:
+        _print_ip_info()
 
 
 if __name__ == "__main__":
