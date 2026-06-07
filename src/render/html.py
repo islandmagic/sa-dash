@@ -375,7 +375,6 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
   </style>
 </head>
 <body>
-  {banner_html}
   <header>
     <h1>{island_name} Dashboard</h1>
     <p class="meta">{generated} (Next update: {next_update}) | <a href="https://github.com/islandmagic/sa-dash/issues">Report issue</a></p>
@@ -383,6 +382,7 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
       Get this page via email by sending a message to <code>query@saildocs.com</code> with <code>send http://kauai.islandmagic.co</code> in the body.
     </p>
   </header>
+  {banner_html}
   <div class="modules">{toc_section}{"".join(sections)}</div>
   <footer class="footer">
     <p>This page aggregates publicly available data from multiple sources. Information may be delayed, incomplete, or contain errors. Always refer to official sources for confirmation.</p>
