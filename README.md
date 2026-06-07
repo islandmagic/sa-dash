@@ -45,5 +45,5 @@ Put keys in a **`.env`** file at the repo root (see `.env.example`). When you ru
 
 ## Notes
 
-- Scrapers prioritize resilience. If a source fails, the last known cache is used and the output will show when it was last retrieved.
+- Scrapers prioritize resilience. If a source fails, the last known cache is used when available. Stale sections are flagged on the dashboard with a **Stale** badge, show the cached data's last-retrieved time, and display any error note.
 - Source URLs are centralized in `src/config.py`.

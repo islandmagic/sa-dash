@@ -1,4 +1,5 @@
 import datetime as dt
+import html as html_module
 import re
 from pathlib import Path
 
@@ -144,6 +145,26 @@ def _ensure_compact_tables(fragment: str) -> str:
     return body.decode_contents()
 
 
+def _provider_status_note(provider: dict) -> tuple[str, list[str]]:
+    extra_classes: list[str] = []
+    parts: list[str] = []
+
+    if provider.get("stale"):
+        extra_classes.append("module--stale")
+        parts.append('<span class="status-badge status-badge--stale">Stale</span>')
+
+    error = provider.get("error")
+    if error:
+        parts.append(
+            f'<span class="status status--error">{html_module.escape(str(error))}</span>'
+        )
+
+    if not parts:
+        return "", extra_classes
+
+    return f'<p class="provider-status">{"".join(parts)}</p>', extra_classes
+
+
 def render_html(island_name: str, providers: list[dict], generated_at: str) -> str:
     sections = []
     toc_items = []
@@ -161,7 +182,7 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
             )
             continue
 
-        error_note = ""
+        status_note, status_classes = _provider_status_note(provider)
         last_retrieved = _format_ts(provider.get("retrieved_at"))
 
         body = provider.get("html") or "<p>No updates available.</p>"
@@ -171,7 +192,7 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
             f"<li><a href=\"#{section_id}\">{provider['label']}</a></li>"
         )
 
-        module_classes = ["module"]
+        module_classes = ["module", *status_classes]
         if provider.get("layout") == "full" or provider.get("full_width"):
             module_classes.append("module--full")
         class_attr = " ".join(module_classes)
@@ -179,7 +200,7 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
             f"<section class=\"{class_attr}\" id=\"{section_id}\">"
             f"<h2>{provider['label']}</h2>"
             f"<p class=\"meta\">{last_retrieved}</p>"
-            f"{error_note}{body}"
+            f"{status_note}{body}"
             f"</section>"
         )
 
@@ -278,6 +299,37 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
     }}
     .module--full {{
       grid-column: 1 / -1;
+    }}
+    .module--stale {{
+      border-color: #e6b800;
+      background: #fffbe6;
+    }}
+    .provider-status {{
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.35rem 0.5rem;
+      margin: 0.15rem 0 0.5rem;
+    }}
+    .status-badge {{
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 0.1rem 0.35rem;
+      border-radius: 3px;
+      line-height: 1.3;
+    }}
+    .status-badge--stale {{
+      background: #fff4cc;
+      color: #7a5d00;
+      border: 1px solid #e6b800;
+    }}
+    .status--error {{
+      color: #8a1c1c;
+      font-size: 0.75rem;
+      margin: 0;
     }}
     .meta {{
       color: #555;
