@@ -1,1 +1,0 @@
-"""Propagation data generator package."""

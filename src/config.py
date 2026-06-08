@@ -13,7 +13,6 @@ ISLANDS = {
             "kauai_water",
             "verizon_mobile",
             "att_mobile",
-            "propagation",
             "kauai_solid_waste",
             "hidot_highways_news",
             "usgs_water_levels",
