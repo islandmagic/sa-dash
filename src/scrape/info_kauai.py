@@ -128,8 +128,8 @@ def scrape() -> dict:
 .info-module .info-contacts { margin-bottom: 0.35rem; }
 .info-module .info-table { border-collapse: collapse; }
 .info-module .info-td-phone { white-space: nowrap; }
-.info-module .info-td-notes { color: #555; font-size: 0.85em; }
-.info-module .info-kicker { margin-top: 0; color: #555; font-size: 0.9em; }
+.info-module .info-td-notes { color: var(--text-muted, #555); font-size: 0.85em; }
+.info-module .info-kicker { margin-top: 0; color: var(--text-muted, #555); font-size: 0.9em; }
 .info-module .info-subhead { margin: 0.75rem 0 0.35rem; font-size: 1rem; }
 .info-module .info-compact-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.25rem 1rem; }
 .info-module .info-details-broadcast,

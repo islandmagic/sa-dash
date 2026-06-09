@@ -221,7 +221,55 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
   <title>{island_name} Dashboard</title>
   <style>
     :root {{
-      color-scheme: light only;
+      color-scheme: light dark;
+      --bg: #fff;
+      --text: #111;
+      --text-muted: #555;
+      --border: #e2e2e2;
+      --header-border: #ddd;
+      --module-bg: #fff;
+      --link: #0b4d9b;
+      --code-bg: #f5f5f5;
+      --footer-border: #eee;
+      --status-text: #111;
+      --stale-bg: #fffbe6;
+      --stale-border: #e6b800;
+      --stale-badge-bg: #fff4cc;
+      --stale-badge-text: #7a5d00;
+      --error-text: #8a1c1c;
+      --breaking-bg: #fde2e2;
+      --breaking-border: #c62828;
+      --breaking-label: #b71c1c;
+      --status-green: #e7f6ea;
+      --status-yellow: #fff4cc;
+      --status-red: #fde2e2;
+      --table-row-border: rgba(0, 0, 0, 0.08);
+    }}
+    @media (prefers-color-scheme: dark) {{
+      :root {{
+        --bg: #121212;
+        --text: #e8e8e8;
+        --text-muted: #aaa;
+        --border: #333;
+        --header-border: #333;
+        --module-bg: #1a1a1a;
+        --link: #6eb3ff;
+        --code-bg: #2a2a2a;
+        --footer-border: #333;
+        --status-text: #e8e8e8;
+        --stale-bg: #2a2610;
+        --stale-border: #b89400;
+        --stale-badge-bg: #3d3510;
+        --stale-badge-text: #e6c84a;
+        --error-text: #f4a4a4;
+        --breaking-bg: #3d1a1a;
+        --breaking-border: #c62828;
+        --breaking-label: #ff8a80;
+        --status-green: #1a3d24;
+        --status-yellow: #3d3510;
+        --status-red: #3d1a1a;
+        --table-row-border: rgba(255, 255, 255, 0.08);
+      }}
     }}
     * {{
       box-sizing: border-box;
@@ -231,12 +279,12 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
       margin: 0;
       padding: 1rem;
       line-height: 1.4;
-      color: #111;
-      background: #fff;
+      color: var(--text);
+      background: var(--bg);
     }}
     .breaking-news-banner {{
-      background: #fde2e2;
-      border: 2px solid #c62828;
+      background: var(--breaking-bg);
+      border: 2px solid var(--breaking-border);
       border-radius: 6px;
       padding: 0.75rem 1rem;
       margin-bottom: 1rem;
@@ -244,7 +292,7 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
     .breaking-news-label {{
       font-weight: 700;
       font-size: 1rem;
-      color: #b71c1c;
+      color: var(--breaking-label);
       margin-bottom: 0.35rem;
       text-transform: uppercase;
       letter-spacing: 0.03em;
@@ -259,7 +307,7 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
       margin-top: 0;
     }}
     header {{
-      border-bottom: 1px solid #ddd;
+      border-bottom: 1px solid var(--header-border);
       margin-bottom: 1rem;
     }}
     h1 {{
@@ -285,11 +333,11 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
       align-items: stretch;
     }}
     .module {{
-      border: 1px solid #e2e2e2;
+      border: 1px solid var(--border);
       padding: 0.75rem;
       margin: 0;
       border-radius: 6px;
-      background: #fff;
+      background: var(--module-bg);
       display: flex;
       flex-direction: column;
       min-width: 0;
@@ -301,8 +349,8 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
       grid-column: 1 / -1;
     }}
     .module--stale {{
-      border-color: #e6b800;
-      background: #fffbe6;
+      border-color: var(--stale-border);
+      background: var(--stale-bg);
     }}
     .provider-status {{
       display: flex;
@@ -322,28 +370,28 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
       line-height: 1.3;
     }}
     .status-badge--stale {{
-      background: #fff4cc;
-      color: #7a5d00;
-      border: 1px solid #e6b800;
+      background: var(--stale-badge-bg);
+      color: var(--stale-badge-text);
+      border: 1px solid var(--stale-border);
     }}
     .status--error {{
-      color: #8a1c1c;
+      color: var(--error-text);
       font-size: 0.75rem;
       margin: 0;
     }}
     .meta {{
-      color: #555;
+      color: var(--text-muted);
       font-size: 0.7rem;
       margin-top: 0;
     }}
     .status {{
-      color: #000;
+      color: var(--status-text);
       font-size: 0.8rem;
       margin-top: 0;
     }}
 
     .info {{
-      color: #555;
+      color: var(--text-muted);
       font-size: 0.8rem;
       margin-top: 0;
     }}
@@ -351,7 +399,7 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
       content: "ⓘ ";
     }}
     .info code {{
-      background: #f5f5f5;
+      background: var(--code-bg);
       padding: 0.2rem 0.4rem;
       border-radius: 4px;
     }}
@@ -360,7 +408,7 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
       margin-top: 0.5rem;
     }}
     a {{
-      color: #0b4d9b;
+      color: var(--link);
       text-decoration: none;
     }}
     a:hover {{
@@ -375,13 +423,13 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
       text-align: left;
     }}
     .status-green {{
-      background: #e7f6ea;
+      background: var(--status-green);
     }}
     .status-yellow {{
-      background: #fff4cc;
+      background: var(--status-yellow);
     }}
     .status-red {{
-      background: #fde2e2;
+      background: var(--status-red);
     }}
     .status-cell {{
       text-align: center;
@@ -411,13 +459,35 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
       white-space: nowrap;
     }}
     .footer {{
-      border-top: 1px solid #eee;
-      color: #555;
+      border-top: 1px solid var(--footer-border);
+      color: var(--text-muted);
       font-size: 0.9rem;
       margin-top: 1rem;
     }}
     details {{
       margin: 0.5rem 0 0 0.5rem;
+    }}
+    .info-module .info-td-notes,
+    .info-module .info-kicker {{
+      color: var(--text-muted);
+    }}
+    .solid-waste-table tbody tr + tr td {{
+      border-top-color: var(--table-row-border);
+    }}
+    @media (prefers-color-scheme: dark) {{
+      .time-wheel .tw-hole {{
+        fill: var(--bg);
+      }}
+      .time-wheel .tw-seg--day {{
+        fill: #1a2a3a;
+      }}
+      .time-wheel .tw-label--inner,
+      .time-wheel .tw-label--outer {{
+        fill: var(--text);
+      }}
+      .time-wheel .tw-outer-label {{
+        fill: var(--text-muted);
+      }}
     }}
     @media (max-width: 720px) {{
       .modules {{

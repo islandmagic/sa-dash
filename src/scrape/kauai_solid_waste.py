@@ -180,7 +180,7 @@ def scrape() -> dict:
 .solid-waste-table th:first-child,
 .solid-waste-table td:first-child { width: 20%; min-width: 10rem; }
 .solid-waste-table td.solid-waste-hours { white-space: nowrap; }
-.solid-waste-table tbody tr + tr td { border-top: 1px solid rgba(0,0,0,0.08); }
+.solid-waste-table tbody tr + tr td { border-top: 1px solid var(--table-row-border, rgba(0,0,0,0.08)); }
 """
 
     body = (
