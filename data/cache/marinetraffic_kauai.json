@@ -1,11 +1,11 @@
 {
   "id": "marinetraffic_kauai",
   "label": "Marine Traffic (<a href=\"https://www.marinetraffic.com\">MarineTraffic</a>)",
-  "retrieved_at": "2026-06-09T03:29:03-10:00",
+  "retrieved_at": "2026-06-09T04:29:02-10:00",
   "source_urls": [
     "https://www.marinetraffic.com"
   ],
-  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>KUPAA</td><td>Special category</td><td>US</td><td></td><td>0.0</td><td></td><td>CLASS B</td><td>At port</td><td>Nawiliwili</td></tr><tr><td>SWAN FUN</td><td>Other</td><td>US</td><td>60.9</td><td>81.0</td><td>NW</td><td>CLASS B</td><td></td><td></td></tr><tr><td>TIGER5</td><td>Tug</td><td>US</td><td>0.3</td><td>2.0</td><td>SW</td><td></td><td>Departing</td><td>Nawiliwili</td></tr><tr><td>TORPEDO RETREIVER</td><td>Special category</td><td>US</td><td>4.5</td><td>131.0</td><td>ESE</td><td>PMRF KAUAI HI RANGE</td><td></td><td></td></tr></tbody></table>",
+  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>KAPENA RAYMOND ALAPA</td><td>Special category</td><td>US</td><td>41.2</td><td>81.0</td><td>WNW</td><td>NAWILIWILI</td><td>En route</td><td></td></tr><tr><td>KUPAA</td><td>Special category</td><td>US</td><td></td><td>0.0</td><td></td><td>CLASS B</td><td>At port</td><td>Nawiliwili</td></tr><tr><td>RCC ASIA</td><td>Cargo</td><td>BS</td><td>41.0</td><td>17.0</td><td>W</td><td>USHNL</td><td></td><td></td></tr><tr><td>SWAN FUN</td><td>Other</td><td>US</td><td>18.7</td><td>74.0</td><td>NNW</td><td>CLASS B</td><td></td><td></td></tr><tr><td>TIGER5</td><td>Tug</td><td>US</td><td>0.3</td><td>2.0</td><td>SW</td><td></td><td>Departing</td><td>Nawiliwili</td></tr><tr><td>TORPEDO RETREIVER</td><td>Special category</td><td>US</td><td>4.5</td><td>131.0</td><td>ESE</td><td>PMRF KAUAI HI RANGE</td><td></td><td></td></tr></tbody></table>",
   "error": null,
   "stale": false,
   "layout": "full"
