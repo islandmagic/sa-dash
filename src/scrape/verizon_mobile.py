@@ -1,5 +1,6 @@
 import base64
 import html
+import random
 import time
 
 import httpx
@@ -117,6 +118,12 @@ def _b64(value: str) -> str:
     return base64.b64encode(value.encode("utf-8")).decode("ascii")
 
 
+def _random_808_mdn() -> str:
+    exchange = random.randint(200, 999)
+    subscriber = random.randint(0, 9999)
+    return f"808-{exchange:03d}-{subscriber:04d}"
+
+
 def _payload_for_town(town: dict) -> dict:
     return {
         "source": "CNS",
@@ -133,7 +140,7 @@ def _payload_for_town(town: dict) -> dict:
         "networkType": "MOBILE",
         "networkSubType": "MOBILE",
         "communicationType": "WIRELESS",
-        "mdn": "",
+        "mdn": _random_808_mdn(),
         "isFiosCovered": False,
         "pinSource": "MVO",
         "pinAuthentication": "Unauthenticated",
