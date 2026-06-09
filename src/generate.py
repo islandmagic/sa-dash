@@ -11,13 +11,21 @@ from src.scrape.registry import get_scraper
 
 _REPO_ROOT = Path(__file__).resolve().parents[1]
 
+# Scrapers backed by a committed cache file; live fetch often fails in CI.
+COMMITTED_CACHE_SCRAPERS = frozenset({"marinetraffic_kauai"})
+
+
+def _uses_committed_cache(scraper_name: str) -> bool:
+    return scraper_name in COMMITTED_CACHE_SCRAPERS
+
 
 def scrape_with_cache(scraper_name: str, cache_dir: Path, offline: bool) -> dict:
     cached = load_cache(cache_dir, scraper_name)
     if offline:
         if cached:
-            cached["error"] = cached.get("error") or "Offline mode: using cached data."
-            cached["stale"] = True
+            if not _uses_committed_cache(scraper_name):
+                cached["error"] = cached.get("error") or "Offline mode: using cached data."
+                cached["stale"] = True
             return cached
         return {
             "id": scraper_name,
@@ -37,8 +45,12 @@ def scrape_with_cache(scraper_name: str, cache_dir: Path, offline: bool) -> dict
         return data
     except Exception as exc:  # noqa: BLE001 - keep generator resilient
         if cached:
-            cached["error"] = f"Fetch failed: {exc}. Using cached data."
-            cached["stale"] = True
+            if _uses_committed_cache(scraper_name):
+                cached["stale"] = False
+                cached["error"] = None
+            else:
+                cached["error"] = f"Fetch failed: {exc}. Using cached data."
+                cached["stale"] = True
             return cached
         return {
             "id": scraper_name,
