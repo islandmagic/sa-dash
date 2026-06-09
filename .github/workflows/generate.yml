@@ -5,6 +5,7 @@ on:
     branches: [master]
     paths:
       - "content/breaking_news.md"
+      - "data/cache/marinetraffic_kauai.json"
   schedule:
     - cron: "33 * * * *"
   workflow_dispatch:
