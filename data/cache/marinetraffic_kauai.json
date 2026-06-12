@@ -1,11 +1,11 @@
 {
   "id": "marinetraffic_kauai",
   "label": "Marine Traffic (<a href=\"https://www.marinetraffic.com\">MarineTraffic</a>)",
-  "retrieved_at": "2026-06-11T21:29:03-10:00",
+  "retrieved_at": "2026-06-11T22:29:03-10:00",
   "source_urls": [
     "https://www.marinetraffic.com"
   ],
-  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>GRASP</td><td>Special category</td><td>US</td><td>53.2</td><td>123.0</td><td>W</td><td>0</td><td></td><td></td></tr><tr><td>HIKIALANI</td><td>Other</td><td>US</td><td>8.6</td><td>79.0</td><td>N</td><td>CLASS B</td><td></td><td></td></tr><tr><td>NAVE OHANA</td><td>Tanker</td><td>PA</td><td>66.7</td><td>131.0</td><td>W</td><td>KR TSN</td><td></td><td></td></tr><tr><td>NORTHERN STAR</td><td>Other</td><td>US</td><td>1.2</td><td>187.0</td><td>WNW</td><td>CLASS B</td><td>Departing</td><td>Port Allen</td></tr><tr><td>PRIDE OF AMERICA</td><td>Passenger</td><td>US</td><td></td><td>0.0</td><td>W</td><td>170000.00</td><td>At port</td><td>Nawiliwili</td></tr><tr><td>SCARLET RAY</td><td>Tanker</td><td>LR</td><td>42.0</td><td>143.0</td><td>W</td><td>CNQDG</td><td></td><td></td></tr><tr><td>SOUTHERN STAR</td><td>Other</td><td>US</td><td>11.6</td><td>173.0</td><td>SSW</td><td>CLASS B</td><td></td><td></td></tr></tbody></table>",
+  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>GRASP</td><td>Special category</td><td>US</td><td>48.9</td><td>126.0</td><td>W</td><td>0</td><td></td><td></td></tr><tr><td>HIKIALANI</td><td>Other</td><td>US</td><td>8.6</td><td>79.0</td><td>N</td><td>CLASS B</td><td></td><td></td></tr><tr><td>NAVE OHANA</td><td>Tanker</td><td>PA</td><td>66.7</td><td>131.0</td><td>W</td><td>KR TSN</td><td></td><td></td></tr><tr><td>NORTHERN STAR</td><td>Other</td><td>US</td><td>1.2</td><td>187.0</td><td>WNW</td><td>CLASS B</td><td>Departing</td><td>Port Allen</td></tr><tr><td>PRIDE OF AMERICA</td><td>Passenger</td><td>US</td><td></td><td>0.0</td><td>W</td><td>170000.00</td><td>At port</td><td>Nawiliwili</td></tr><tr><td>SCARLET RAY</td><td>Tanker</td><td>LR</td><td>40.0</td><td>150.0</td><td>W</td><td>CNQDG</td><td></td><td></td></tr><tr><td>SOUTHERN STAR</td><td>Other</td><td>US</td><td>11.6</td><td>173.0</td><td>SSW</td><td>CLASS B</td><td></td><td></td></tr></tbody></table>",
   "error": null,
   "stale": false,
   "layout": "full"
