@@ -38,6 +38,7 @@ jobs:
         env:
           USGS_API_KEY: ${{ secrets.USGS_API_KEY }}
           HCDP_API_KEY: ${{ secrets.HCDP_API_KEY }}
+          WINLINK_API_KEY: ${{ secrets.WINLINK_API_KEY }}
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:

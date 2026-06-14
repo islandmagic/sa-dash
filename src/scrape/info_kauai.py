@@ -1,6 +1,18 @@
 import html
+import json
+import os
+import re
+from datetime import datetime, timedelta, timezone
+from urllib.parse import urlencode
 
-from src.scrape.base import now_iso
+import httpx
+
+from src.scrape.base import DEFAULT_HEADERS, now_iso
+
+WINLINK_STATUS_BASE = "https://cms.winlink.org/gateway/status"
+WINLINK_STATIONS = ("KH6S", "KH6ESK", "AH7L", "WH6FG")
+HST = timezone(timedelta(hours=-10))
+ASP_NET_DATE_RE = re.compile(r"^/Date\((\d+)\)/$")
 
 
 def _tel(phone_display: str) -> str:
@@ -10,6 +22,147 @@ def _tel(phone_display: str) -> str:
     else:
         tel_href = digits
     return f'<a href="tel:{html.escape(tel_href)}">{html.escape(phone_display)}</a>'
+
+
+def _winlink_status_url(api_key: str) -> str:
+    params = {
+        "historyHours": "36",
+        "mode": "varafm",
+        "serviceCodes": "PUBLIC",
+        "format": "json",
+        "key": api_key,
+    }
+    return f"{WINLINK_STATUS_BASE}?{urlencode(params)}"
+
+
+def _parse_winlink_response(text: str) -> dict:
+    text = text.strip()
+    if text.startswith("{") or text.startswith("["):
+        return json.loads(text)
+    match = re.match(r"^[^(]+\((.*)\)\s*;?\s*$", text, re.DOTALL)
+    if match:
+        return json.loads(match.group(1))
+    raise ValueError("Unrecognized Winlink response format")
+
+
+def _fetch_winlink_json(api_key: str) -> dict:
+    url = _winlink_status_url(api_key)
+    with httpx.Client(follow_redirects=True, timeout=10.0, headers=DEFAULT_HEADERS) as client:
+        response = client.get(url)
+        response.raise_for_status()
+        return _parse_winlink_response(response.text)
+
+
+def _gateway_hours(gateway: dict) -> float | None:
+    hours = gateway.get("HoursSinceStatus")
+    try:
+        return float(hours) if hours is not None else None
+    except (TypeError, ValueError):
+        return None
+
+
+def _classify_hours(hours: float | None) -> tuple[str, str]:
+    if hours is None:
+        return "Offline", "status-red"
+    if hours > 24:
+        return "Offline", "status-red"
+    if hours > 12:
+        return "Warning", "status-yellow"
+    return "OK", "status-green"
+
+
+def _format_last_status_hst(gateway: dict) -> str:
+    timestamp = gateway.get("Timestamp")
+    if timestamp:
+        match = ASP_NET_DATE_RE.match(str(timestamp).strip())
+        if match:
+            ms = int(match.group(1))
+            dt = datetime.fromtimestamp(ms / 1000, tz=timezone.utc).astimezone(HST)
+            return dt.strftime("%Y-%m-%d %H:%M HST")
+
+    last_status = gateway.get("LastStatus")
+    if not last_status:
+        return "—"
+    try:
+        dt = datetime.strptime(str(last_status).strip(), "%a, %d %b %Y %H:%M:%S UTC")
+        dt = dt.replace(tzinfo=timezone.utc).astimezone(HST)
+        return dt.strftime("%Y-%m-%d %H:%M HST")
+    except ValueError:
+        return str(last_status)
+
+
+def _index_gateways_by_base(gateways: list) -> dict[str, dict]:
+    indexed: dict[str, dict] = {}
+    for gateway in gateways:
+        base = gateway.get("BaseCallsign")
+        if not base:
+            continue
+        hours_val = _gateway_hours(gateway)
+        existing = indexed.get(base)
+        if existing is None:
+            indexed[base] = gateway
+            continue
+        existing_hours = _gateway_hours(existing)
+        if hours_val is None:
+            continue
+        if existing_hours is None or hours_val < existing_hours:
+            indexed[base] = gateway
+    return indexed
+
+
+def _build_winlink_rows(
+    gateways_by_base: dict[str, dict],
+    fetch_failed: bool = False,
+) -> str:
+    rows = []
+    for station in WINLINK_STATIONS:
+        if fetch_failed:
+            label, css = "Status unavailable", "status-red"
+            last_status = "—"
+        else:
+            gateway = gateways_by_base.get(station)
+            if gateway is None:
+                label, css = _classify_hours(None)
+                last_status = "—"
+            else:
+                label, css = _classify_hours(_gateway_hours(gateway))
+                last_status = _format_last_status_hst(gateway)
+        rows.append(
+            "<tr>"
+            f"<td>{html.escape(station)}</td>"
+            f"<td class=\"status-cell {css}\">{html.escape(label)}</td>"
+            f"<td>{html.escape(str(last_status))}</td>"
+            "</tr>"
+        )
+    return "".join(rows)
+
+
+def _build_winlink_block(
+    gateways_by_base: dict[str, dict],
+    fetch_failed: bool,
+) -> str:
+    rows = _build_winlink_rows(gateways_by_base, fetch_failed=fetch_failed)
+    table = (
+        "<table class=\"info-table\">"
+        "<thead><tr><th>Station</th><th>Status</th><th>Last status</th></tr></thead>"
+        f"<tbody>{rows}</tbody>"
+        "</table>"
+    )
+    info = (
+        "<p class=\"info\">"
+        "VARA FM gateway status from Winlink. "
+        "OK: last status within 12h; Warning: 12-24h; Error: &gt;24h or missing."
+        "</p>"
+    )
+    return (
+        "<details class=\"info-details-winlink\">"
+        "<summary>Winlink (VARA FM)</summary>"
+        "<div class=\"info-details-body\">"
+        f"{info}"
+        f"{table}"
+        "</div>"
+        "</details>"
+    )
 
 
 def scrape() -> dict:
@@ -124,6 +277,26 @@ def scrape() -> dict:
         "</details>"
     )
 
+    source_urls: list[str] = []
+    winlink_error: str | None = None
+    gateways_by_base: dict[str, dict] = {}
+    fetch_failed = False
+
+    api_key = os.environ.get("WINLINK_API_KEY")
+    if not api_key:
+        fetch_failed = True
+        winlink_error = "WINLINK_API_KEY not set."
+    else:
+        try:
+            data = _fetch_winlink_json(api_key)
+            gateways_by_base = _index_gateways_by_base(data.get("Gateways", []))
+            source_urls.append(WINLINK_STATUS_BASE)
+        except Exception as exc:  # noqa: BLE001 - keep static info module resilient
+            fetch_failed = True
+            winlink_error = f"Winlink status fetch failed: {exc}."
+
+    winlink_block = _build_winlink_block(gateways_by_base, fetch_failed=fetch_failed)
+
     css = """
 .info-module .info-contacts { margin-bottom: 0.35rem; }
 .info-module .info-table { border-collapse: collapse; }
@@ -133,7 +306,8 @@ def scrape() -> dict:
 .info-module .info-subhead { margin: 0.75rem 0 0.35rem; font-size: 1rem; }
 .info-module .info-compact-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.25rem 1rem; }
 .info-module .info-details-broadcast,
-.info-module .info-details-amradio { margin-top: 0.5rem; }
+.info-module .info-details-amradio,
+.info-module .info-details-winlink { margin-top: 0.5rem; }
 .info-module .info-details-body { margin-top: 0.5rem; }
 .info-module .info-table--radio .info-td-num { text-align: right; }
 """
@@ -146,6 +320,7 @@ def scrape() -> dict:
         "</div>"
         f"{broadcast_radio_block}"
         f"{amateur_radio_block}"
+        f"{winlink_block}"
         "</div>"
     )
 
@@ -153,10 +328,9 @@ def scrape() -> dict:
         "id": "info_kauai",
         "label": "Info (Contacts & Radio)",
         "retrieved_at": now_iso(),
-        "source_urls": [],
+        "source_urls": source_urls,
         "html": body,
-        "error": None,
+        "error": winlink_error,
         "stale": False,
         "layout": "full",
     }
-
