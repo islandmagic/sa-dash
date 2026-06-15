@@ -1,11 +1,11 @@
 {
   "id": "marinetraffic_kauai",
   "label": "Marine Traffic (<a href=\"https://www.marinetraffic.com\">MarineTraffic</a>)",
-  "retrieved_at": "2026-06-15T00:29:03-10:00",
+  "retrieved_at": "2026-06-15T01:29:02-10:00",
   "source_urls": [
     "https://www.marinetraffic.com"
   ],
-  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>ASIATIC PRIDE</td><td>Cargo</td><td>SG</td><td>42.5</td><td>103.0</td><td>W</td><td>KR BNP</td><td></td><td></td></tr><tr><td>LADY KAILANI</td><td>Sight seeing tour boat</td><td>US</td><td>4.9</td><td>171.0</td><td>SE</td><td></td><td></td><td></td></tr><tr><td>MAMO</td><td>Tug</td><td>US</td><td>0.3</td><td>2.0</td><td>NNW</td><td>US^0ZAS</td><td></td><td>Nawiliwili</td></tr><tr><td>NAVIGATOR COPERNICO</td><td>Tanker</td><td>LR</td><td>13.0</td><td>17.0</td><td>WSW</td><td>USOGG&gt;&gt;USNIJ</td><td></td><td></td></tr></tbody></table>",
+  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>ASIATIC PRIDE</td><td>Cargo</td><td>SG</td><td>42.5</td><td>103.0</td><td>W</td><td>KR BNP</td><td></td><td></td></tr><tr><td>LADY KAILANI</td><td>Sight seeing tour boat</td><td>US</td><td>4.9</td><td>171.0</td><td>SE</td><td></td><td></td><td></td></tr><tr><td>LILA KINGSTON</td><td>Tanker</td><td>LR</td><td>29.5</td><td>121.0</td><td>SSE</td><td>HONOLULU USA</td><td></td><td></td></tr><tr><td>MAMO</td><td>Tug</td><td>US</td><td>0.3</td><td>2.0</td><td>NNW</td><td>US^0ZAS</td><td></td><td>Nawiliwili</td></tr><tr><td>NAVIGATOR COPERNICO</td><td>Tanker</td><td>LR</td><td>11.3</td><td>25.0</td><td>SW</td><td>USOGG&gt;&gt;USNIJ</td><td></td><td></td></tr></tbody></table>",
   "error": null,
   "stale": false,
   "layout": "full"
