@@ -7,7 +7,7 @@ on:
       - "content/breaking_news.md"
       - "data/cache/marinetraffic_kauai.json"
   schedule:
-    - cron: "33 * * * *"
+    - cron: "55 * * * *"
   workflow_dispatch:
 
 permissions:

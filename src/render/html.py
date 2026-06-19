@@ -499,7 +499,7 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
 <body>
   <header>
     <h1>{island_name} Dashboard</h1>
-    <p class="meta">{generated} (Next update: {next_update}) | <a href="https://github.com/islandmagic/sa-dash/issues">Report issue</a></p>
+    <p class="meta">{generated} | <a href="https://github.com/islandmagic/sa-dash/issues">Report issue</a></p>
     <p class="info">
       Get this page via email by sending a message to <code>query@saildocs.com</code> with <code>send http://kauai.islandmagic.co</code> in the body.
     </p>
