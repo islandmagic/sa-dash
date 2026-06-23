@@ -1,11 +1,11 @@
 {
   "id": "marinetraffic_kauai",
   "label": "Marine Traffic (<a href=\"https://www.marinetraffic.com\">MarineTraffic</a>)",
-  "retrieved_at": "2026-06-23T01:29:03-10:00",
+  "retrieved_at": "2026-06-23T02:29:02-10:00",
   "source_urls": [
     "https://www.marinetraffic.com"
   ],
-  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>BIG MAC</td><td>Other</td><td>US</td><td>24.2</td><td>50.0</td><td>WNW</td><td>CLASS B</td><td></td><td></td></tr><tr><td>DURBAN HIGHWAY</td><td>Cargo</td><td>PA</td><td>50.2</td><td>201.0</td><td>W</td><td>JP NGO</td><td></td><td></td></tr><tr><td>TIGER5</td><td>Tug</td><td>US</td><td></td><td>1.0</td><td>W</td><td></td><td>At port</td><td>Nawiliwili</td></tr></tbody></table>",
+  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>KAPENA BOB PURDY</td><td>Special category</td><td>US</td><td>64.4</td><td>81.0</td><td>NW</td><td>NAWILIWILI,KAUAI</td><td>En route</td><td></td></tr><tr><td>BIG MAC</td><td>Other</td><td>US</td><td>24.2</td><td>50.0</td><td>WNW</td><td>CLASS B</td><td></td><td></td></tr><tr><td>DURBAN HIGHWAY</td><td>Cargo</td><td>PA</td><td>48.7</td><td>202.0</td><td>W</td><td>JP NGO</td><td></td><td></td></tr><tr><td>LADY KAILANI</td><td>Sight seeing tour boat</td><td>US</td><td>6.0</td><td>167.0</td><td>NW</td><td></td><td></td><td></td></tr><tr><td>TIGER5</td><td>Tug</td><td>US</td><td></td><td>1.0</td><td>W</td><td></td><td>At port</td><td>Nawiliwili</td></tr></tbody></table>",
   "error": null,
   "stale": false,
   "layout": "full"
