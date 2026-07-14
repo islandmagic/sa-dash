@@ -29,11 +29,11 @@ def test_classify_hours_warning():
 
 def test_classify_hours_error():
     label, css = _classify_hours(25)
-    assert label == "Error"
+    assert label == "Offline"
     assert css == "status-red"
 
     label, css = _classify_hours(None)
-    assert label == "Error"
+    assert label == "Offline"
     assert css == "status-red"
 
 
@@ -64,7 +64,7 @@ def test_build_winlink_rows_missing_station_is_error():
     assert "2026-06-13 19:21 HST" in rows
     assert "WH6FG" in rows
     assert "status-red" in rows
-    assert rows.count("Error") >= 3
+    assert rows.count("Offline") >= 3
 
 
 def test_format_last_status_hst_from_last_status_string():

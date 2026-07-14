@@ -238,6 +238,40 @@ def scrape() -> dict:
         "</details>"
     )
 
+    nwr_stations = [
+        ("WWG74", "162.400", "1", "Kokee"),
+        ("WZ2557", "162.450", "3", "Lihue"),
+        ("KBA99", "162.550", "7", "Mt. Kaala, Oahu"),
+    ]
+    nwr_rows = "".join(
+        "<tr>"
+        f"<td>{html.escape(call)}</td>"
+        f"<td class=\"info-td-num\">{html.escape(freq)}</td>"
+        f"<td class=\"info-td-num\">{html.escape(channel)}</td>"
+        f"<td>{html.escape(site)}</td>"
+        "</tr>"
+        for call, freq, channel, site in nwr_stations
+    )
+    nwr_table = (
+        "<p class=\"info-kicker\">"
+        "24/7 NWS Honolulu warnings, watches, forecasts, and hazards. "
+        "<a href=\"https://www.weather.gov/hfo/nwr\">weather.gov/hfo/nwr</a>"
+        "</p>"
+        "<table class=\"info-table info-table--radio\">"
+        "<thead><tr><th>Station</th><th class=\"info-td-num\">Freq (MHz)</th>"
+        "<th class=\"info-td-num\">Ch</th><th>Site</th></tr></thead>"
+        f"<tbody>{nwr_rows}</tbody>"
+        "</table>"
+    )
+    nwr_block = (
+        "<details class=\"info-details-nwr\">"
+        "<summary>NOAA Weather Radio</summary>"
+        "<div class=\"info-details-body\">"
+        f"{nwr_table}"
+        "</div>"
+        "</details>"
+    )
+
     repeaters = [
         ("KH6E", "146.700", "-", "PL100", "Crater Hill, Kilauea"),
         ("KH6E", "147.280", "+", "PL100", "Kalepa Ridge, Lihue"),
@@ -261,7 +295,7 @@ def scrape() -> dict:
         for call, freq, offset, pl, site in repeaters
     )
     repeater_table = (
-        "<p class=\"info-kicker\">National calling: 146.520 MHz<br/>GMRS calling: 462.675 MHz (CH 20)</p>"
+        "<p class=\"info-kicker\">National calling: 146.520 MHz<br/>GMRS calling: 462.675 MHz (CH 20)<br/>GMRS CERT calling: 462.550 MHz (CH 15)</p>"
         "<table class=\"info-table info-table--radio\">"
         "<thead><tr><th>Call</th><th class=\"info-td-num\">Freq</th><th>Offset</th><th>PL</th><th>Site</th></tr></thead>"
         f"<tbody>{rep_rows}</tbody>"
@@ -306,6 +340,7 @@ def scrape() -> dict:
 .info-module .info-subhead { margin: 0.75rem 0 0.35rem; font-size: 1rem; }
 .info-module .info-compact-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.25rem 1rem; }
 .info-module .info-details-broadcast,
+.info-module .info-details-nwr,
 .info-module .info-details-amradio,
 .info-module .info-details-winlink { margin-top: 0.5rem; }
 .info-module .info-details-body { margin-top: 0.5rem; }
@@ -319,6 +354,7 @@ def scrape() -> dict:
         f"{contacts_table}"
         "</div>"
         f"{broadcast_radio_block}"
+        f"{nwr_block}"
         f"{amateur_radio_block}"
         f"{winlink_block}"
         "</div>"
