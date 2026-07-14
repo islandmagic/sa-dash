@@ -183,7 +183,12 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
             continue
 
         status_note, status_classes = _provider_status_note(provider)
-        last_retrieved = _format_ts(provider.get("retrieved_at"))
+        retrieved_at_raw = provider.get("retrieved_at")
+        last_retrieved = _format_ts(retrieved_at_raw)
+        retrieved_dt_attr = html_module.escape(str(retrieved_at_raw)) if retrieved_at_raw else ""
+        meta_html = (
+            f"<p class=\"meta\"><time datetime=\"{retrieved_dt_attr}\">{last_retrieved}</time></p>"
+        )
 
         body = provider.get("html") or "<p>No updates available.</p>"
         body = _ensure_compact_tables(body)
@@ -199,7 +204,7 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
         sections.append(
             f"<section class=\"{class_attr}\" id=\"{section_id}\">"
             f"<h2>{provider['label']}</h2>"
-            f"<p class=\"meta\">{last_retrieved}</p>"
+            f"{meta_html}"
             f"{status_note}{body}"
             f"</section>"
         )
@@ -240,9 +245,10 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
       --breaking-bg: #fde2e2;
       --breaking-border: #c62828;
       --breaking-label: #b71c1c;
-      --status-green: #e7f6ea;
-      --status-yellow: #fff4cc;
-      --status-red: #fde2e2;
+      --warn-text: #8a6d00;
+      --alert-text: #8a1c1c;
+      --shadow: rgba(0, 0, 0, 0.05);
+      --row-hover: rgba(0, 0, 0, 0.03);
       --table-row-border: rgba(0, 0, 0, 0.08);
     }}
     @media (prefers-color-scheme: dark) {{
@@ -265,9 +271,10 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
         --breaking-bg: #3d1a1a;
         --breaking-border: #c62828;
         --breaking-label: #ff8a80;
-        --status-green: #1a3d24;
-        --status-yellow: #3d3510;
-        --status-red: #3d1a1a;
+        --warn-text: #e6c84a;
+        --alert-text: #f4a4a4;
+        --shadow: rgba(0, 0, 0, 0.3);
+        --row-hover: rgba(255, 255, 255, 0.04);
         --table-row-border: rgba(255, 255, 255, 0.08);
       }}
     }}
@@ -311,20 +318,32 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
       margin-bottom: 1rem;
     }}
     h1 {{
-      margin: 0;
-      font-size: 1.5rem;
+      margin: 0 0 0.15rem;
+      font-size: 1.6rem;
+      letter-spacing: -0.01em;
     }}
     h2 {{
       margin: 0;
-      font-size: 1.1rem;
+      font-size: 1.05rem;
     }}
     h3 {{
-      margin: 0;
-      font-size: 1rem;
+      margin: 0.5rem 0 0.25rem;
+      font-size: 0.95rem;
+      color: var(--text-muted);
     }}
     .toc ul {{
       margin: 0;
       padding-left: 1.1rem;
+      columns: 2;
+      column-gap: 1.25rem;
+    }}
+    .toc li {{
+      break-inside: avoid;
+    }}
+    @media (max-width: 480px) {{
+      .toc ul {{
+        columns: 1;
+      }}
     }}
     .modules {{
       display: grid;
@@ -334,13 +353,22 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
     }}
     .module {{
       border: 1px solid var(--border);
-      padding: 0.75rem;
+      padding: 0.85rem 1rem;
       margin: 0;
-      border-radius: 6px;
+      border-radius: 8px;
       background: var(--module-bg);
+      box-shadow: 0 1px 2px var(--shadow);
       display: flex;
       flex-direction: column;
       min-width: 0;
+    }}
+    .module > h2 {{
+      padding-bottom: 0.4rem;
+      margin-bottom: 0.4rem;
+      border-bottom: 1px solid var(--border);
+    }}
+    .module > .meta {{
+      margin: -0.15rem 0 0.5rem;
     }}
     .module--narrow {{
       grid-column: span 1;
@@ -349,8 +377,8 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
       grid-column: 1 / -1;
     }}
     .module--stale {{
-      border-color: var(--stale-border);
-      background: var(--stale-bg);
+      border-left: 3px solid var(--stale-border);
+      background: var(--module-bg);
     }}
     .provider-status {{
       display: flex;
@@ -416,23 +444,27 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
     }}
     th,
     td {{
-      padding: 0.1rem 0.5rem;
+      padding: 0.15rem 0.5rem;
       vertical-align: top;
     }}
     th {{
       text-align: left;
-    }}
-    .status-green {{
-      background: var(--status-green);
-    }}
-    .status-yellow {{
-      background: var(--status-yellow);
-    }}
-    .status-red {{
-      background: var(--status-red);
+      font-weight: 600;
     }}
     .status-cell {{
-      text-align: center;
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }}
+    .status-green {{
+      color: var(--text-muted);
+    }}
+    .status-yellow {{
+      color: var(--warn-text);
+      font-weight: 600;
+    }}
+    .status-red {{
+      color: var(--alert-text);
+      font-weight: 700;
     }}
     .module .status-table-wrap {{
       display: block;
@@ -443,17 +475,32 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
     .module table.status-table-compact {{
       width: 100%;
       max-width: 100%;
-      font-size: 0.88rem;
+      font-size: 0.85rem;
       border-collapse: collapse;
       table-layout: auto;
+    }}
+    .module table.status-table-compact th {{
+      color: var(--text-muted);
+      font-weight: 600;
+      border-bottom: 1px solid var(--border);
     }}
     .module table.status-table-compact th,
     .module table.status-table-compact td {{
       white-space: normal;
       overflow-wrap: break-word;
       word-break: break-word;
-      padding: 0.06rem 0.35rem;
+      padding: 0.18rem 0.4rem;
       vertical-align: top;
+    }}
+    .module table.status-table-compact tbody tr + tr td {{
+      border-top: 1px solid var(--table-row-border);
+    }}
+    .module table.status-table-compact tbody tr:hover td {{
+      background: var(--row-hover);
+    }}
+    .module .info-td-num {{
+      text-align: right;
+      font-variant-numeric: tabular-nums;
     }}
     .module .info-module td.info-td-phone {{
       white-space: nowrap;
