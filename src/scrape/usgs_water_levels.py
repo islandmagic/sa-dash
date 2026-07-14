@@ -1,6 +1,9 @@
 import os
+import time
 from datetime import date, datetime, timedelta, timezone
 from urllib.parse import urlencode
+
+import httpx
 
 from src.scrape.base import fetch_json, now_iso
 
@@ -22,20 +25,29 @@ USGS_LOCATIONS = [
     "16060000",  # Wailua River
 ]
 
-BASELINE_DAYS = 30
-BASELINE_YEARS = 3
-MIN_BASELINE_SAMPLES = 30
+BASELINE_YEARS = 15
+WINDOW_DAYS = 15
+MIN_BASELINE_SAMPLES = 100
+
+FLOW_CODE = "00060"
+LEVEL_CODES = {"00065"}
+# Sites where the level reading is representative enough to classify/report.
+LEVEL_CONDITION_LOCATIONS = {"16104200", "16094150"}
+DAILY_MEAN_STAT = "00003"
 
 PARAMETER_LABELS = {
     "00065": "Level",
     "00060": "Flow",
 }
 
-INDICATOR_CLASSES = {
-    "Unknown": None,
+CONDITION_CLASSES = {
+    "High": "status-red",
+    "Much above normal": "status-yellow",
+    "Above normal": "",
     "Normal": "status-green",
-    "Elevated": "status-yellow",
-    "Critical": "status-red",
+    "Below normal": "status-green",
+    "Low": "status-green",
+    "Unknown": "",
 }
 
 FLOOD_THRESHOLDS_FT = {
@@ -108,37 +120,134 @@ def _flood_status(location_id: str, value: float | None) -> str | None:
     return None
 
 
-def _fetch_daily_values(
+def _should_classify(location_id: str, parameter_code: str | None) -> bool:
+    if parameter_code == FLOW_CODE:
+        return True
+    return parameter_code in LEVEL_CODES and location_id in LEVEL_CONDITION_LOCATIONS
+
+
+def _should_omit_row(location_id: str, parameter_code: str | None) -> bool:
+    """Level readings at sites where the datum is not representative are dropped."""
+    return parameter_code in LEVEL_CODES and location_id not in LEVEL_CONDITION_LOCATIONS
+
+
+def _classify_percentile(value: float | None, pcts: dict[str, float]) -> str:
+    if value is None:
+        return "Unknown"
+    if value >= pcts["p98"]:
+        return "High"
+    if value >= pcts["p90"]:
+        return "Much above normal"
+    if value >= pcts["p75"]:
+        return "Above normal"
+    if value >= pcts["p25"]:
+        return "Normal"
+    if value >= pcts["p10"]:
+        return "Below normal"
+    return "Low"
+
+
+def _fetch_json_retry(url: str, attempts: int = 4, base_delay: float = 1.5) -> dict:
+    """fetch_json with exponential backoff on HTTP 429 (rate limiting)."""
+    last_exc: Exception | None = None
+    for attempt in range(attempts):
+        try:
+            return fetch_json(url)
+        except httpx.HTTPStatusError as exc:
+            status = exc.response.status_code if exc.response is not None else None
+            if status == 429 and attempt < attempts - 1:
+                last_exc = exc
+                time.sleep(base_delay * (2 ** attempt))
+                continue
+            raise
+    if last_exc is not None:
+        raise last_exc
+    raise RuntimeError("unreachable")
+
+
+def _daily_series_url(
     monitoring_location_id: str,
     start: date,
     end: date,
     parameter_code: str | None,
-) -> list[float]:
-    params = _with_api_key(
-        {
+    offset: int = 0,
+    limit: int = 10000,
+    skip_geometry: bool = True,
+) -> str:
+    query = {
         "f": "json",
         "lang": "en-US",
-        "limit": 1000,
-        "skipGeometry": "true",
-        "offset": 0,
+        "limit": limit,
+        "skipGeometry": "true" if skip_geometry else "false",
+        "offset": offset,
         "monitoring_location_id": f"USGS-{monitoring_location_id}",
+        "statistic_id": DAILY_MEAN_STAT,
         "time": f"{start.isoformat()}/{end.isoformat()}",
-        }
-    )
-    url = _build_url(USGS_DAILY_URL, params)
-    payload = fetch_json(url)
-    values = []
-    for feature in payload.get("features", []):
-        props = feature.get("properties", {})
-        if parameter_code and props.get("parameter_code") != parameter_code:
-            continue
-        value = props.get("value")
-        if value is None:
-            continue
-        try:
-            values.append(float(value))
-        except ValueError:
-            continue
+    }
+    if parameter_code:
+        query["parameter_code"] = parameter_code
+    return _build_url(USGS_DAILY_URL, _with_api_key(query))
+
+
+def _fetch_daily_mean_series(
+    monitoring_location_id: str,
+    start: date,
+    end: date,
+    parameter_code: str | None,
+    page: int = 10000,
+) -> list[tuple[date, float]]:
+    """Fetch the full daily-mean series for a gage/parameter in as few requests as possible.
+
+    Uses numberMatched for pagination so a server-capped page size does not cause an
+    early break. Most gages fit in a single request.
+    """
+    series: list[tuple[date, float]] = []
+    offset = 0
+    total: int | None = None
+    while True:
+        url = _daily_series_url(
+            monitoring_location_id, start, end, parameter_code, offset=offset, limit=page
+        )
+        payload = _fetch_json_retry(url)
+        if total is None:
+            total = payload.get("numberMatched")
+        features = payload.get("features", [])
+        for feature in features:
+            props = feature.get("properties", {})
+            if parameter_code and props.get("parameter_code") != parameter_code:
+                continue
+            if props.get("statistic_id") != DAILY_MEAN_STAT:
+                continue
+            value = props.get("value")
+            if value is None:
+                continue
+            try:
+                day = date.fromisoformat(str(props.get("time"))[:10])
+                series.append((day, float(value)))
+            except (ValueError, TypeError):
+                continue
+        offset += len(features)
+        if not features:
+            break
+        if total is not None and offset >= total:
+            break
+        if total is None and len(features) < page:
+            break
+    return series
+
+
+def _doy_window_values(
+    series: list[tuple[date, float]], target: date, window_days: int
+) -> list[float]:
+    """Values whose day-of-year is within +/- window_days of the target (wraps year end)."""
+    target_doy = target.timetuple().tm_yday
+    values: list[float] = []
+    for day, value in series:
+        doy = day.timetuple().tm_yday
+        diff = abs(doy - target_doy)
+        diff = min(diff, 365 - diff)
+        if diff <= window_days:
+            values.append(value)
     return values
 
 
@@ -200,57 +309,48 @@ def scrape() -> dict:
         latest_values = _fetch_latest_values(location)
 
         for latest in latest_values:
+            parameter_code = latest.get("parameter_code")
+            if _should_omit_row(location, parameter_code):
+                continue
+
             latest_time = _parse_time(latest.get("time"))
             baseline_samples = 0
             indicator = "Unknown"
-            parameter_code = latest.get("parameter_code")
-            latest_value = None
 
-            if latest_time:
-                baseline_values = []
-                for year_offset in range(1, BASELINE_YEARS + 1):
-                    baseline_end = (latest_time - timedelta(days=365 * year_offset)).date()
-                    baseline_start = baseline_end - timedelta(days=BASELINE_DAYS)
-                    baseline_values.extend(
-                        _fetch_daily_values(
-                            location,
-                            baseline_start,
-                            baseline_end,
-                            parameter_code,
-                        )
-                    )
+            try:
+                latest_value = (
+                    float(latest.get("value"))
+                    if latest.get("value") is not None
+                    else None
+                )
+            except (TypeError, ValueError):
+                latest_value = None
+
+            if latest_time and _should_classify(location, parameter_code):
+                series_start = (
+                    latest_time - timedelta(days=365 * BASELINE_YEARS + WINDOW_DAYS)
+                ).date()
+                series_end = latest_time.date()
+                series = _fetch_daily_mean_series(
+                    location, series_start, series_end, parameter_code
+                )
+                baseline_values = _doy_window_values(
+                    series, latest_time.date(), WINDOW_DAYS
+                )
                 baseline_samples = len(baseline_values)
 
-                if len(baseline_values) >= MIN_BASELINE_SAMPLES:
-                    p75 = _percentile(baseline_values, 0.75)
-                    p95 = _percentile(baseline_values, 0.95)
-                    try:
-                        latest_value = (
-                            float(latest.get("value"))
-                            if latest.get("value") is not None
-                            else None
-                        )
-                    except ValueError:
-                        latest_value = None
-                    if latest_value is not None:
-                        if latest_value >= p95:
-                            indicator = "Critical"
-                        elif latest_value >= p75:
-                            indicator = "Elevated"
-                        else:
-                            indicator = "Normal"
-            if latest_value is None:
-                try:
-                    latest_value = (
-                        float(latest.get("value"))
-                        if latest.get("value") is not None
-                        else None
-                    )
-                except ValueError:
-                    latest_value = None
+                if baseline_samples >= MIN_BASELINE_SAMPLES and latest_value is not None:
+                    pcts = {
+                        "p10": _percentile(baseline_values, 0.10),
+                        "p25": _percentile(baseline_values, 0.25),
+                        "p75": _percentile(baseline_values, 0.75),
+                        "p90": _percentile(baseline_values, 0.90),
+                        "p98": _percentile(baseline_values, 0.98),
+                    }
+                    indicator = _classify_percentile(latest_value, pcts)
 
             flood_status = None
-            if parameter_code == "00065":
+            if parameter_code in LEVEL_CODES:
                 flood_status = _flood_status(location, latest_value)
 
             items.append(
@@ -295,27 +395,24 @@ def scrape() -> dict:
             )
         )
         for latest in latest_values:
+            parameter_code = latest.get("parameter_code")
+            if not _should_classify(location, parameter_code):
+                continue
             latest_time = _parse_time(latest.get("time"))
             if latest_time:
-                for year_offset in range(1, BASELINE_YEARS + 1):
-                    baseline_end = (latest_time - timedelta(days=365 * year_offset)).date()
-                    baseline_start = baseline_end - timedelta(days=BASELINE_DAYS)
-                    source_urls.append(
-                        _build_url(
-                            USGS_DAILY_URL,
-                            _with_api_key(
-                                {
-                                    "f": "json",
-                                    "lang": "en-US",
-                                    "limit": 1000,
-                                    "skipGeometry": "false",
-                                    "offset": 0,
-                                    "monitoring_location_id": f"USGS-{location}",
-                                    "time": f"{baseline_start.isoformat()}/{baseline_end.isoformat()}",
-                                }
-                            ),
-                        )
+                series_start = (
+                    latest_time - timedelta(days=365 * BASELINE_YEARS + WINDOW_DAYS)
+                ).date()
+                series_end = latest_time.date()
+                source_urls.append(
+                    _daily_series_url(
+                        location,
+                        series_start,
+                        series_end,
+                        parameter_code,
+                        skip_geometry=False,
                     )
+                )
 
     html_rows = []
     for item in items:
@@ -323,11 +420,10 @@ def scrape() -> dict:
         unit = item.get("unit") or ""
         value_text = f"{value} {unit}".strip() if value else "unknown"
         indicator = item.get("indicator", "Unknown")
-        indicator_class = INDICATOR_CLASSES.get(indicator, "")
+        indicator_class = CONDITION_CLASSES.get(indicator, "")
+        indicator_text = "—" if indicator == "Unknown" else indicator
         parameter_code = item.get("parameter_code")
         metric = PARAMETER_LABELS.get(parameter_code, parameter_code or "metric")
-        samples = item.get("baseline_samples", 0)
-        samples_text = str(samples) if samples else "0"
         flood_status = item.get("flood_status")
         flood_class = FLOOD_CLASSES.get(flood_status, "")
         flood_text = flood_status or "—"
@@ -336,16 +432,17 @@ def scrape() -> dict:
             f"<td>{item['name']}</td>"
             f"<td>{metric}</td>"
             f"<td style=\"text-align:right;\">{value_text}</td>"
-            f"<td class=\"status-cell {indicator_class}\">{indicator}</td>"
+            f"<td class=\"status-cell {indicator_class}\">{indicator_text}</td>"
             f"<td class=\"status-cell {flood_class}\">{flood_text}</td>"
             f"<td>{item['time']}</td>"
             "</tr>"
         )
 
     info_html = (
-        "<p class=\"info\">Condition labels are determined by comparing the latest value to a 30-day baseline derived from the past three years: "
-        "Normal (&lt;75th percentile), Elevated (75th–95th percentile), and Critical (≥95th percentile). "
-        "Flood indicators are based on USGS site-specific thresholds.</p>"
+        "<p class=\"info\">Condition compares the latest reading to USGS WaterWatch-style percentiles of daily mean values for this time of year (period of record): "
+        "Normal (25th–75th), Above normal (75th–90th), Much above normal (90th–98th), and High (≥98th percentile). "
+        "Streamflow is shown for all gages; river and reservoir level is shown only where the datum is representative. "
+        "Flood indicators for river level are based on USGS/NWS site-specific thresholds.</p>"
     )
     block_html = (
         f"{info_html}"
