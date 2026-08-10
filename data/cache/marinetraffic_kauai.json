@@ -1,11 +1,11 @@
 {
   "id": "marinetraffic_kauai",
   "label": "Marine Traffic (<a href=\"https://www.marinetraffic.com\">MarineTraffic</a>)",
-  "retrieved_at": "2026-08-09T17:29:03-10:00",
+  "retrieved_at": "2026-08-09T18:29:03-10:00",
   "source_urls": [
     "https://www.marinetraffic.com"
   ],
-  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>CDN WARSHIP 334</td><td>Special category</td><td>CA</td><td>31.6</td><td>148.0</td><td>W</td><td>PEARLHARBOR</td><td></td><td></td></tr><tr><td>KEKOA</td><td>Special category</td><td>US</td><td>23.6</td><td>68.0</td><td>ESE</td><td>USHNL HONOLULU</td><td></td><td></td></tr><tr><td>LADY KAILANI</td><td>Sight seeing tour boat</td><td>US</td><td>4.7</td><td>160.0</td><td>NW</td><td></td><td></td><td></td></tr><tr><td>MAMO</td><td>Tug</td><td>US</td><td></td><td>0.0</td><td>WSW</td><td>US^0ZAS</td><td>At port</td><td>Nawiliwili</td></tr><tr><td>NALU V</td><td>Other</td><td>US</td><td>11.3</td><td>65.0</td><td>NNE</td><td>CLASS B</td><td></td><td></td></tr><tr><td>OCEAN SURVEYOR</td><td>Special category</td><td>MH</td><td>29.4</td><td>76.0</td><td>SW</td><td>SURVEY GROUNDS</td><td></td><td></td></tr><tr><td>TIGER5</td><td>Tug</td><td>US</td><td></td><td>0.0</td><td>SSW</td><td></td><td>At port</td><td>Nawiliwili</td></tr></tbody></table>",
+  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>CDN WARSHIP 334</td><td>Special category</td><td>CA</td><td>31.6</td><td>148.0</td><td>W</td><td>PEARLHARBOR</td><td></td><td></td></tr><tr><td>KEKOA</td><td>Special category</td><td>US</td><td>25.1</td><td>65.0</td><td>ESE</td><td>USHNL HONOLULU</td><td></td><td></td></tr><tr><td>LADY KAILANI</td><td>Sight seeing tour boat</td><td>US</td><td>4.7</td><td>160.0</td><td>NW</td><td></td><td></td><td></td></tr><tr><td>MAMO</td><td>Tug</td><td>US</td><td></td><td>0.0</td><td>WSW</td><td>US^0ZAS</td><td>At port</td><td>Nawiliwili</td></tr><tr><td>NALU V</td><td>Other</td><td>US</td><td>11.3</td><td>65.0</td><td>NNE</td><td>CLASS B</td><td></td><td></td></tr><tr><td>TIGER5</td><td>Tug</td><td>US</td><td></td><td>1.0</td><td>NNW</td><td></td><td>At port</td><td>Nawiliwili</td></tr></tbody></table>",
   "error": null,
   "stale": false,
   "layout": "full"
