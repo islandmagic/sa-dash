@@ -1,11 +1,11 @@
 {
   "id": "marinetraffic_kauai",
   "label": "Marine Traffic (<a href=\"https://www.marinetraffic.com\">MarineTraffic</a>)",
-  "retrieved_at": "2026-08-13T09:29:03-10:00",
+  "retrieved_at": "2026-08-13T10:29:02-10:00",
   "source_urls": [
     "https://www.marinetraffic.com"
   ],
-  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>NAUSICAA</td><td>Other</td><td>BM</td><td>6.3</td><td>2.0</td><td>E</td><td>KAUAI</td><td>En route</td><td></td></tr><tr><td>BEETHOVEN</td><td>Other</td><td>US</td><td>1.8</td><td>56.0</td><td>E</td><td>CLASS B</td><td>Departing</td><td>Nawiliwili</td></tr><tr><td>ES DIGNITY</td><td>Cargo</td><td>PA</td><td>133.9</td><td>111.0</td><td>E</td><td>USHNL</td><td></td><td></td></tr><tr><td>LADY KAILANI</td><td>Sight seeing tour boat</td><td>US</td><td>4.6</td><td>186.0</td><td>NW</td><td></td><td></td><td></td></tr><tr><td>NORWEGIAN SPIRIT</td><td>Passenger</td><td>BS</td><td>24.0</td><td>195.0</td><td>ESE</td><td>USHNL</td><td></td><td></td></tr><tr><td>PRIDE OF AMERICA</td><td>Passenger</td><td>US</td><td></td><td>0.0</td><td>W</td><td>USNIJ</td><td>At port</td><td>Nawiliwili</td></tr><tr><td>REEL TIME</td><td>Other</td><td>US</td><td>7.9</td><td>64.0</td><td>SW</td><td>CLASS B</td><td></td><td></td></tr></tbody></table>",
+  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>NAUSICAA</td><td>Other</td><td>BM</td><td>6.3</td><td>2.0</td><td>E</td><td>KAUAI</td><td>En route</td><td></td></tr><tr><td>BEETHOVEN</td><td>Other</td><td>US</td><td>2.1</td><td>69.0</td><td>WNW</td><td>CLASS B</td><td></td><td>Nawiliwili</td></tr><tr><td>ES DIGNITY</td><td>Cargo</td><td>PA</td><td>42.6</td><td>108.0</td><td>E</td><td>USHNL</td><td></td><td></td></tr><tr><td>LADY KAILANI</td><td>Sight seeing tour boat</td><td>US</td><td>4.6</td><td>186.0</td><td>NW</td><td></td><td></td><td></td></tr><tr><td>PRIDE OF AMERICA</td><td>Passenger</td><td>US</td><td></td><td>0.0</td><td>SSW</td><td>USNIJ</td><td>At port</td><td>Nawiliwili</td></tr></tbody></table>",
   "error": null,
   "stale": false,
   "layout": "full"
