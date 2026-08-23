@@ -1,11 +1,11 @@
 {
   "id": "marinetraffic_kauai",
   "label": "Marine Traffic (<a href=\"https://www.marinetraffic.com\">MarineTraffic</a>)",
-  "retrieved_at": "2026-08-23T03:29:03-10:00",
+  "retrieved_at": "2026-08-23T04:29:03-10:00",
   "source_urls": [
     "https://www.marinetraffic.com"
   ],
-  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>JOSEPH SAUSE</td><td>Special category</td><td>US</td><td>65.8</td><td>60.0</td><td>NNW</td><td>NAWILIWILI</td><td>En route</td><td></td></tr><tr><td>KEKOA</td><td>Special category</td><td>US</td><td>34.0</td><td>78.0</td><td>W</td><td>USNIJ NAWILIWILI</td><td>En route</td><td></td></tr><tr><td>KAPENA JACK YOUNG</td><td>Special category</td><td>US</td><td>67.2</td><td>98.0</td><td>NW</td><td>NAWILLIWILI,HI</td><td></td><td></td></tr><tr><td>LUCKY STAR</td><td>Other</td><td>US</td><td></td><td>0.0</td><td>ESE</td><td>CLASS B</td><td>At port</td><td>Nawiliwili</td></tr><tr><td>PLAN SEA</td><td>Other</td><td>US</td><td>0.5</td><td>2.0</td><td>WNW</td><td>CLASS B</td><td></td><td>Nawiliwili</td></tr></tbody></table>",
+  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>JOSEPH SAUSE</td><td>Special category</td><td>US</td><td>20.6</td><td>61.0</td><td>WNW</td><td>NAWILIWILI</td><td>En route</td><td></td></tr><tr><td>KEKOA</td><td>Special category</td><td>US</td><td>20.3</td><td>75.0</td><td>WNW</td><td>USNIJ NAWILIWILI</td><td>En route</td><td></td></tr><tr><td>KAPENA JACK YOUNG</td><td>Special category</td><td>US</td><td>6.4</td><td>75.0</td><td>WNW</td><td>NAWILLIWILI,HI</td><td></td><td></td></tr><tr><td>LADY KAILANI</td><td>Sight seeing tour boat</td><td>US</td><td>4.7</td><td>148.0</td><td>SE</td><td></td><td></td><td></td></tr><tr><td>MAMO</td><td>Tug</td><td>US</td><td></td><td>0.0</td><td>SSW</td><td>US^0ZAS</td><td>At port</td><td>Nawiliwili</td></tr><tr><td>PLAN SEA</td><td>Other</td><td>US</td><td>0.5</td><td>2.0</td><td>WNW</td><td>CLASS B</td><td></td><td>Nawiliwili</td></tr></tbody></table>",
   "error": null,
   "stale": false,
   "layout": "full"
