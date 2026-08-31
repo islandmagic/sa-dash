@@ -273,16 +273,16 @@ def scrape() -> dict:
     )
 
     repeaters = [
-        ("KH6E", "146.700", "-", "PL100", "Crater Hill, Kilauea"),
-        ("KH6E", "147.280", "+", "PL100", "Kalepa Ridge, Lihue"),
-        ("KH6E", "147.080", "+", "PL100", "Kukuiolono Park, Kalaheo"),
-        ("KH6E", "147.100", "+", "PL100", "Kukui, Waimea Canyon"),
-        ("KH6E", "147.160", "+", "PL100", "Wilcox Hospital, Lihue"),
-        ("KH6S", "147.000", "+", "PL100", "Princeville"),
-        ("KH6NS", "146.740", "-", "PL100", "Kilauea"),
-        ("KH6S", "442.500", "+", "PL100", "Kapaa"),
-        ("KH6S", "442.250", "+", "PL100", "Lihue"),
-        ("KH6S", "444.975", "+", "PL100", "Kalaheo"),
+        ("KH6E", "146.700", "-", "PL100", "Crater Hill, Kilauea", "RF"),
+        ("KH6E", "147.280", "+", "PL100", "Kalepa Ridge, Lihue", "RF"),
+        ("KH6E", "147.080", "+", "PL100", "Kukuiolono Park, Kalaheo", "RF"),
+        ("KH6E", "147.100", "+", "PL100", "Kukui, Waimea Canyon", "RF"),
+        ("KH6E", "147.160", "+", "PL100", "Wilcox Hospital, Lihue", "RF"),
+        ("KH6S", "147.000", "+", "PL100", "Princeville", "Internet"),
+        ("KH6NS", "146.740", "-", "PL100", "Kilauea", "Internet"),
+        ("KH6S", "442.500", "+", "PL100", "Kapaa", "Internet"),
+        ("KH6S", "442.250", "+", "PL100", "Lihue", "Internet"),
+        ("KH6S", "444.975", "+", "PL100", "Kalaheo", "Internet"),
     ]
     rep_rows = "".join(
         "<tr>"
@@ -291,13 +291,19 @@ def scrape() -> dict:
         f"<td>{html.escape(offset)}</td>"
         f"<td>{html.escape(pl)}</td>"
         f"<td>{html.escape(site)}</td>"
+        f"<td>{html.escape(link)}</td>"
         "</tr>"
-        for call, freq, offset, pl, site in repeaters
+        for call, freq, offset, pl, site, link in repeaters
     )
     repeater_table = (
-        "<p class=\"info-kicker\">National calling: 146.520 MHz<br/>GMRS calling: 462.675 MHz (CH 20)<br/>GMRS CERT calling: 462.550 MHz (CH 15)</p>"
+        "<p class=\"info-kicker\">"
+        "National calling: 146.520 MHz<br/>"
+        "GMRS calling: 462.675 MHz (CH 20)<br/>"
+        "GMRS CERT calling: 462.550 MHz (CH 15)<br/>"
+        "</p>"
         "<table class=\"info-table info-table--radio\">"
-        "<thead><tr><th>Call</th><th class=\"info-td-num\">Freq</th><th>Offset</th><th>PL</th><th>Site</th></tr></thead>"
+        "<thead><tr><th>Call</th><th class=\"info-td-num\">Freq</th><th>Offset</th>"
+        "<th>PL</th><th>Site</th><th>Link</th></tr></thead>"
         f"<tbody>{rep_rows}</tbody>"
         "</table>"
     )
