@@ -367,7 +367,17 @@ def scrape() -> dict:
     )
 
     station_html = _build_station_block()
+    links_html = (
+        "<p class=\"info\">"
+        f'<a href="https://kiloino.org/kilauea">Kilo ʻino</a>'
+        " · "
+        f'<a href="https://www.nhc.noaa.gov">NHC</a>'
+        " · "
+        f'<a href="https://www.youtube.com/@WorldWideWeatherWatch/videos">World Wide Weather Watch</a>'
+        "</p>"
+    )
     block_html = (
+        f"{links_html}"
         f"<h3>Forecast ({html.escape(location_name)})</h3>"
         "<table>"
         "<thead><tr><th></th><th>Day</th><th>Night</th></tr></thead>"
