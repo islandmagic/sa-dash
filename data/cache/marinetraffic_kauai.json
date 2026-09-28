@@ -1,11 +1,11 @@
 {
   "id": "marinetraffic_kauai",
   "label": "Marine Traffic (<a href=\"https://www.marinetraffic.com\">MarineTraffic</a>)",
-  "retrieved_at": "2026-09-27T19:29:03-10:00",
+  "retrieved_at": "2026-09-27T20:29:03-10:00",
   "source_urls": [
     "https://www.marinetraffic.com"
   ],
-  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>CMA CGM GEORGIA</td><td>Cargo</td><td>MT</td><td>34.6</td><td>161.0</td><td>NNW</td><td>USLAX&gt;KRKAN</td><td></td><td></td></tr><tr><td>KEKOA</td><td>Special category</td><td>US</td><td>28.1</td><td>63.0</td><td>ESE</td><td>USHNL HONOLULU</td><td></td><td></td></tr><tr><td>MAMO</td><td>Tug</td><td>US</td><td>0.3</td><td>4.0</td><td>NNW</td><td>US^0ZAS</td><td></td><td>Nawiliwili</td></tr></tbody></table>",
+  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>CMA CGM GEORGIA</td><td>Cargo</td><td>MT</td><td>34.6</td><td>161.0</td><td>NNW</td><td>USLAX&gt;KRKAN</td><td></td><td></td></tr><tr><td>HANSA SEALIFTER</td><td>Tanker</td><td>MH</td><td>36.2</td><td>16.0</td><td>E</td><td>US HNL</td><td></td><td></td></tr><tr><td>KEKOA</td><td>Special category</td><td>US</td><td>28.1</td><td>63.0</td><td>ESE</td><td>USHNL HONOLULU</td><td></td><td></td></tr><tr><td>MAMO</td><td>Tug</td><td>US</td><td>0.3</td><td>4.0</td><td>NNW</td><td>US^0ZAS</td><td></td><td>Nawiliwili</td></tr></tbody></table>",
   "error": null,
   "stale": false,
   "layout": "full"
