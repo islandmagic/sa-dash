@@ -1,11 +1,11 @@
 {
   "id": "marinetraffic_kauai",
   "label": "Marine Traffic (<a href=\"https://www.marinetraffic.com\">MarineTraffic</a>)",
-  "retrieved_at": "2026-10-04T15:29:03-10:00",
+  "retrieved_at": "2026-10-04T16:29:03-10:00",
   "source_urls": [
     "https://www.marinetraffic.com"
   ],
-  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>FEET</td><td>Other</td><td>US</td><td>1.5</td><td>65.0</td><td>W</td><td>CLASS B</td><td></td><td>Nawiliwili</td></tr><tr><td>HENRY SAUSE</td><td>Special category</td><td>US</td><td>0.5</td><td>37.0</td><td>ENE</td><td>HONOLULU</td><td>Departing</td><td>Nawiliwili</td></tr><tr><td>KILO MOANA</td><td>Special category</td><td>US</td><td>30.9</td><td>71.0</td><td>E</td><td>USHNL&gt;USHNL</td><td></td><td></td></tr><tr><td>NAVIGATOR CERES</td><td>Tanker</td><td>LR</td><td></td><td>0.0</td><td>WSW</td><td>US NIJ</td><td>At port</td><td>Nawiliwili</td></tr></tbody></table>",
+  "html": "<p class=\"info\">Commercial vessels nearby Kauai ports.</p><table><thead><tr><th>Vessel</th><th>Type</th><th>Origin</th><th>Distance [mi]</th><th>Speed [kt]</th><th>Course</th><th>Destination</th><th>Status</th><th>Port</th></tr></thead><tbody><tr><td>FEET</td><td>Other</td><td>US</td><td>1.5</td><td>65.0</td><td>W</td><td>CLASS B</td><td></td><td>Nawiliwili</td></tr><tr><td>HENRY SAUSE</td><td>Special category</td><td>US</td><td>7.8</td><td>85.0</td><td>SE</td><td>HONOLULU</td><td></td><td></td></tr><tr><td>KEKOA</td><td>Special category</td><td>US</td><td></td><td>1.0</td><td>N</td><td>USNIJ NAWILIWILI</td><td>At port</td><td>Nawiliwili</td></tr><tr><td>NAVIGATOR CERES</td><td>Tanker</td><td>LR</td><td></td><td>0.0</td><td>WSW</td><td>US NIJ</td><td>At port</td><td>Nawiliwili</td></tr></tbody></table>",
   "error": null,
   "stale": false,
   "layout": "full"
