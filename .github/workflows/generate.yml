@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -39,6 +39,26 @@ jobs:
           USGS_API_KEY: ${{ secrets.USGS_API_KEY }}
           HCDP_API_KEY: ${{ secrets.HCDP_API_KEY }}
           WINLINK_API_KEY: ${{ secrets.WINLINK_API_KEY }}
+          MAIL_USER: ${{ secrets.MAIL_USER }}
+          MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
+          MAIL_IMAP_HOST: ${{ secrets.MAIL_IMAP_HOST }}
+          MAIL_SMTP_HOST: ${{ secrets.MAIL_SMTP_HOST }}
+          MAIL_OWNER_FROM: ${{ secrets.MAIL_OWNER_FROM }}
+          WINLINK_TO: ${{ secrets.WINLINK_TO }}
+          EVENT_MODE: ${{ vars.EVENT_MODE }}
+          DIGEST_SEND_HOURS_HST: ${{ vars.DIGEST_SEND_HOURS_HST }}
+      - name: Commit alert cache and event state
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/cache/county_alerts.json data/state/event.json || true
+          if git diff --cached --quiet; then
+            echo "No state changes to commit."
+          else
+            git commit -m "Update county alerts cache and event state"
+            git pull --rebase origin master || true
+            git push origin master
+          fi
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:

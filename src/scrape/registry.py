@@ -1,5 +1,6 @@
 from src.scrape.hawaiiantelcom import scrape as scrape_hawaiiantelcom
 from src.scrape.hidot_highways_news import scrape as scrape_hidot_highways_news
+from src.scrape.hidot_status import scrape as scrape_hidot_status
 from src.scrape.khon2_kauai import scrape as scrape_khon2_kauai
 from src.scrape.kauai_now import scrape as scrape_kauai_now
 from src.scrape.kauai_water import scrape as scrape_kauai_water
@@ -20,6 +21,10 @@ from src.scrape.breaking_news import scrape as scrape_breaking_news
 from src.scrape.info_kauai import scrape as scrape_info_kauai
 from src.scrape.time_wheel import scrape as scrape_time_wheel
 from src.scrape.global_events_wire import scrape as scrape_global_events_wire
+from src.scrape.tropical_outlook import scrape as scrape_tropical_outlook
+from src.scrape.helpmefind import scrape as scrape_helpmefind
+from src.scrape.kauai_recovers import scrape as scrape_kauai_recovers
+from src.scrape.county_alerts import scrape as scrape_county_alerts
 
 
 SCRAPERS = {
@@ -27,6 +32,7 @@ SCRAPERS = {
     "foxnews_us": scrape_foxnews_us,
     "hawaiiantelcom": scrape_hawaiiantelcom,
     "hidot_highways_news": scrape_hidot_highways_news,
+    "hidot_status": scrape_hidot_status,
     "kauai_now": scrape_kauai_now,
     "khon2_kauai": scrape_khon2_kauai,
     "kauai_water": scrape_kauai_water,
@@ -45,6 +51,10 @@ SCRAPERS = {
     "info_kauai": scrape_info_kauai,
     "time_wheel": scrape_time_wheel,
     "global_events_wire": scrape_global_events_wire,
+    "tropical_outlook": scrape_tropical_outlook,
+    "helpmefind": scrape_helpmefind,
+    "kauai_recovers": scrape_kauai_recovers,
+    "county_alerts": scrape_county_alerts,
 }
 
 

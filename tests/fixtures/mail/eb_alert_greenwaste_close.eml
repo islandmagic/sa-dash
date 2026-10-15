@@ -1,0 +1,187 @@
+Return-Path: <subscriber@example.com>
+X-Original-To: owner@example.com
+Delivered-To: x21416063@pdx1-sub0-mail-mx207.dreamhost.com
+Received: from postfix-inbound-5.inbound.mailchannels.net
+ (inbound-egress-7.mailchannels.net [23.83.220.5])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest
+ SHA256)
+	(No client certificate requested)
+	by pdx1-sub0-mail-mx207.dreamhost.com (Postfix) with ESMTPS id
+ 4hpV4V3zfJz9MQs
+	for <owner@example.com>; Mon, 21 Sep 2026 10:06:18 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; d=mailchannels.net; s=arc-2022; cv=none;
+	t=1790010373;
+	b=Fh2j8qZyifh7z+1W53nC1r5DxckMZV4TLeQJNX3KuzS3osSGXHshWBKvfVLvbDT7mFjudL
+	tkH8/JHLcCm7XYnMxmyj91ZdlEXYaFZo6sc+cTeNgj88nr0WMzDn6nSa+Lml6CK+lKoTYW
+	uyE3bm1XskqSrozqQBYvtSvOiYQchcuw65t431+43KB6WfD87fnRYaiVHbA/R2cStWsQb3
+	HmLq/DuGvvaUsPWDrimjVnKorafaFTfzkro0V4HKRYyvWUVJNbdILo9OPVN2xdWwJIzxiz
+	o5X6BieYzaBwxv68RZUfWVl0mmhGjyAr2Z8kKq1Ro6914m8riVcqvVEO1kt+vA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net;
+	s=arc-2022; t=1790010373;
+	h=from:from:reply-to:reply-to:subject:subject:date:date:
+	 message-id:message-id:to:to:cc:mime-version:mime-version:
+	 content-type:content-type:dkim-signature;
+	bh=CWFdUreabyVDm8YiIgbkX5gkylDsHDfXNxyNASieg7w=;
+	b=mKdqbNST4n5Qrwq+1B2srUtCvJzNtBVQ8dLhoorQG5zoJBKM4o/5hbeuFxnJc0Dk6XFKgq
+	th73na7hyR+sntET+tGJyaDtq79sB93LLIIHx2d1HZuN4CRGXkEuAZuHNkjIqmxBbnvaOU
+	i0XEqdbcCOZk0SbP88eRlFY4Kx3iKG/F1dMFHyI/hJ6F3DWKbnRuD4cFFhjsiKJYMnjuaF
+	v2DYCGkDmqW7IXS1L4XEdup7JEJhBL3+3ZmLamDV5s7tgqbM/MWDoiiFKJUthXuxxUsRoS
+	Kbjigu/vNeZ/0lAlhFXaKWnmFO7Ebho/1o3ZqwU1B6M8iaEOL22pDPnYpO2tHg==
+ARC-Authentication-Results: i=1;
+	inbound-rspamd-7848b4cf88-cm5hj;
+	none
+X-Message-ID: 5AnJfjRaAO8UpMK5Dv9GcNCv
+Received: from outbound.mr.icloud.com (mr-2004c-snip4-4.eps.apple.com
+ [57.103.69.235])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+	by 100.100.241.170 (trex/8.0.2);
+	Mon, 21 Sep 2026 17:06:17 +0000
+Authentication-Results: inbound.mailchannels.net;
+ spf=pass
+ smtp.mailfrom=subscriber@example.com;
+ dkim=pass header.d=icloud.com;
+ dmarc=pass (policy=quarantine; pct=100; status=pass);
+ arc=none
+Received-SPF: pass (dmarc-service-65c559855c-srjgv: domain of icloud.com
+ designates 57.103.69.235 as permitted sender) client-ip=57.103.69.235;
+ envelope-from=subscriber@example.com;
+ helo=outbound.mr.icloud.com;
+Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
+	by p00-icloudmta-asmtp-us-west-2a-100-percent-1 (Postfix) with ESMTPS id
+ DB8C218003DA
+	for <owner@example.com>; Mon, 21 Sep 2026 17:06:10 +0000 (UTC)
+X-ICL-RepId: 01a0c4ee-aad3-7f43-afd0-fb4879c7afa5
+X-ICL-Out-Info: 
+ HUtFAUMEWwJACUgATUQeDx5WFlZNRAJCTUwWWANYHFxQXBwOA1gZVwBVAWwMQzRXBlwKUR9eD1UVZhZWGWgMXEhfC1lcBA9IFF8bATIEClhFCEEKWncCURxWDVdDVARfUF8cDgRUB10FXVZQAlpLQBMESRMFUgddTVYNRw9YHlwUFxVBQ14IXh9MHB0OWAYSAE0KDjYGWQVeCVYDQwU2EhRdRVoOWwRHFBcbXAAMDkQVSxpBBFMMV15XHUdNWgJWTQVJB1oCWwJACEECQwZYB0MBTQZVGVoFSQlIAl0EXQRCCE1zA1JbAF1XG1wDWUZXHVgRX0BHGV0UFA1AQFMOQhxWAV4IWR8fRg9OVQ5UDwZIAFVdHkQJBE4ZDEodUlZaHVw=
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com; s=1a1hai;
+ t=1790010373; x=1792602373; bh=CWFdUreabyVDm8YiIgbkX5gkylDsHDfXNxyNASieg7w=;
+ h=Date:From:To:Message-ID:Subject:MIME-Version:Content-Type:X-ICLOUD-HME:x-icloud-hme;
+ b=ywu1acheWrxhWarfCHVGJPZcxPVWOXkzHnbKabDT59QgJ2Mhk76QFC+AvsyTRUuvtuB1cBSqQcR6ckE9x6Dw9TVjAT6MLNMRLDpA+0q9p4BC6fjjKLU53iQ9fOWSugC4W7C4bWkI8kADGOmmi1u7vNtlBHtZyVg3IDPp3GVMkZWM8lesZMThKO0p7H1bw/FaNe5o/hIkkQms+0ZfAHgcU7XKgH5pbAIqrDdCb/BBCL8Z+gwfg/m5xddYkK7ClkSMIsQBaKc66j59k6Zspin8lQqus5XMpyG5swO/CCNuktc3R7VyVNfqL/89dN6R7VaFObZharPHRoYrtFLYkNV55g==
+Received: from
+ p00-icloudmta-smtpin-us-west-2a-60-percent-10.p00-icloudmta-smtpin-vip.icloud-mail-production.svc.kube.us-west-2a.k8s.cloud.apple.com
+ (unknown [100.81.44.153])
+	by p00-icloudmta-asmtp-us-west-2a-100-percent-1 (Postfix) with ESMTP id
+ 08F2F1801747
+	for <owner@example.com>; Mon, 21 Sep 2026 17:06:10 +0000 (UTC)
+Received: from smtp03-e1.everbridge.net (smtp03-e1.everbridge.net
+ [3.216.57.69])
+	by p00-icloudmta-smtpin-us-west-2a-60-percent-10 (Postfix) with ESMTPS id
+ 49522C001D8
+	for <owner@example.com>; Mon, 21 Sep 2026 17:06:07 +0000 (UTC)
+X-ICL-Info: 
+ GAtbRVYDBVFFSlVFSgQEUVUKE0oWX1gHVQoPB0UDGFBET0hCTx4AW1UcAkoWX0QHBRUfNx1GUxAXCw8TH1UYDBANRhEcDVMUEAsEBRFUUQdbFwMDWEJVXxgMABERXhsRAAsKHh1CGFcYOQ8UFF9DBlsaCRpYWFMOGkQVGgxABlFYHFdZHUZTEBcLDxMfVRgMEA1GBwxCCxEYDRZHSx1TU1scEBIKUkQLER4DWRZVQkIRHVsSDlVEAAcQAhAdHlgHAVkLHhwNClNBTlNHSAAHW0RXV0RNAw5XQEFIRk8JBlJESVVBTgIHVzUXA0dKHVgBGhcIWh1dVwsZVBYFF1QbFwZUAhIIXFkbGBwIA1UGAFQTGgUTTAgPTxsKFRVODg==
+X-ICL-Score: 2.33303322423
+Authentication-Results: bimi.icloud.com; bimi=none
+X-ARC-Info: policy=fail; arc=none; r1=-20; r2=0
+Authentication-Results: arc.icloud.com; arc=none
+Authentication-Results: dmarc.icloud.com;
+ dmarc=pass header.from=everbridge.net
+X-DMARC-Policy: v=DMARC1; p=reject; sp=reject;
+ rua=mailto:8974f3f9@mxtoolbox.dmarc-report.com,mailto:k1acaveg@ag.dmarcian.com;
+ ruf=mailto:8974f3f9@forensics.dmarc-report.com; fo=1; rf=afrf; pct=100;
+ ri=86400
+X-DMARC-Info: pass=pass; dmarc-policy=reject; s=r1; d=r1;
+ pdomain=everbridge.net
+Authentication-Results: dkim-verifier.icloud.com;
+ dkim=pass header.d=everbridge.net header.i=@everbridge.net header.b=KaRSSUBw
+Received-SPF: pass (spf.icloud.com: domain of noreply@everbridge.net
+ designates 3.216.57.69 as permitted sender) receiver=spf.icloud.com;
+ client-ip=3.216.57.69; helo=smtp03-e1.everbridge.net;
+ envelope-from=noreply@everbridge.net
+Authentication-Results: spf.icloud.com;
+ spf=pass (spf.icloud.com: domain of noreply@everbridge.net designates
+ 3.216.57.69 as permitted sender) smtp.mailfrom=noreply@everbridge.net
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=everbridge.net;
+	s=20190507; t=1790010366;
+	bh=CWFdUreabyVDm8YiIgbkX5gkylDsHDfXNxyNASieg7w=;
+	h=Date:From:Reply-To:To:Subject:List-Unsubscribe-Post:
+	 List-Unsubscribe;
+	b=KaRSSUBwroEZCJouU23qrb08lx7JCGA+o6UAwuUUxNPzIeRTKFFoefNJbpU0JIC5m
+	 EHDymYwNayC3rMnBlsmhzOZdDOmvdDPgSyCSx+sMRHcZGR/uu9JDcNp56l5CyDHat7
+	 6fREkb1kRHGiDfGZKc6D7KIyFJ7zCGZYBnXqyiev0KbH141ZzyCSxDCGKCXGCbMxXX
+	 s6q4c83EpfMDvKZ0K/3N9nu43lDYLVaRerbZ0iAAKXMPZfKkanjkPApenucIxp+h6c
+	 3MDdZKLOHcnSNOMUgE/tQu6j+srNhxp8oLy12IDAxHMIh3yuH8F3YBd5fP9egtJgHC
+	 PBziwbowpq2eA==
+Received: from ne02-nconn-email-prod-us-deployment-666fccd489-nssb6
+ (ip-10-220-9-122.ec2.internal [10.220.9.122])
+	by smtp03-e1.everbridge.net (Postfix) with ESMTP id 33C6060DC3
+	for <subscriber@example.com>; Mon, 21 Sep 2026 17:06:06 +0000 (UTC)
+Date: Mon, 21 Sep 2026 17:06:06 +0000 (GMT)
+From: CountyofKauaiResident Alert
+ <subscriber@example.com>
+Reply-To: CountyofKauaiResident Alert
+ <subscriber@example.com>
+To: Hide My Email <subscriber@example.com>
+Message-ID: 
+ <1475000191.13538558.1790010366215@ne02-nconn-email-prod-us-deployment-666fccd489-nssb6>
+Subject: Kilauea Temp Green Waste Site Closed, Kapaa Open Until 4:30 p.m.
+ Sept. 21
+MIME-Version: 1.0
+Content-Type: multipart/mixed;
+	boundary="----=_Part_13538556_1413826017.1790010366208"
+X-Priority: 1
+Importance: High
+X-Authority-Info: v=2.4 cv=WKZyn3sR c=1 sm=1 tr=0 ts=6ab16401 b=1
+ cx=c_apl:c_pps a=Oddlai/xuH8oRbx3zLe2aQ==:117 a=Oddlai/xuH8oRbx3zLe2aQ==:17
+ a=VdqzKS8jKosA:10 a=N72U4rUfpO4A:10 a=g8TUdU_LZmEA:10 a=_un2NjF1AAAA:8
+ a=slVA_caau9QPEIhC6tMA:9 a=3BgoorKdS8hp6Xjg:21 a=_W_S_7VecoQA:10
+ a=QEXdDO2ut3YA:10 a=1dv7-sUhv4UGYWOijKA9:22 a=5yU3S35YU4bGjq-dph-N:22
+ a=Bho9c0fBagfJEIQBS7DQ:22 cc=ntf awl=host:62
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIxMDI1MCBTYWx0ZWRfX5lQhLkFw6MU5
+ TO8jvBHI4CbcmmRfAwDsMJjwA5yVv7W3ZsTxdsTy/tdYl8n7Fng9M22xd6AdgfXIQ/bc2N63irj
+ xrT5hIisL97/TUOYlBs2BA8ao2Mnn/1VvHGlu31FbGeT9Ao5VqeO416Ji4ePVWycKexzU8vZPKz
+ JDCxSIY/UqjizS0Wqk1CNd7XaNuC94NrBeix1+K6DhiptJGtDJ3Lc2qxYch5LS75X1ITXe0KfFD
+ 726oGOIioGNdRT5JpKvxw7/YpTnRSOjXROywihGT/uzhS9si2MeBdHU2U4BWbKHex/Khf2Glj90
+ kRmSKA97mKUvSAvqTRFIn7bgNr0221tnGSwI6suX4gZQEQI/H2nTnToam5fnks=
+X-Proofpoint-ORIG-GUID: urC1c-oiJBBPixsmZTO8L5m9vX8-ktZe
+X-Proofpoint-GUID: urC1c-oiJBBPixsmZTO8L5m9vX8-ktZe
+X-JNJ: 
+ AAAAAAABzFMtd1LPd+/ujuIclTIE9unvUpvETjyZIyxS+ZLi0jCagSC32+hwGJreRSj7gna09KWPA4oRFfgBQc+2K+zQyLXVZ7OU1h0DHyBn7wZ6yv9fAXM4F6Kk9MACdL+qP94xvp+ger5mJMMGWS0E8lUnH8oBLb+YfXoMIkzvVHQFlCHqzAbFKlA8LVmo+rsE3KmpyMEK/OxF0DexKULgROIT78l8M5c7Rw6CHourNU5ux3oR4qKBcgdBx/mDBLG1+k31mTl/rrbOsaYT7XaabeQIOToLqi5128FO6czjHMmthSYpzsE6Halxwyure1T7YQ91uY7EN2sCEZKpIgehvLJiDRfxA/S4LUOXvlZd0ro5eiSOHran+OYCiSI1xljmaw3S2gGdoBx/SfKMctQApXlsw31GRSEoQBzP8pZ7omcxCaT+nTbI/KJU+K1HQCvR/6M0geya1ZCCpEQr75132Hu9eJun/2ORIluWRbEA3b32v0u1Vj4FUnmMHsbXbeF0EjFKft9QEPQslCzl1YzvWv9Mi2Fr6w8fLlWnW9dC2kaAuPFEm9qMkWiml7RjQggZL6iacz6P+cLNOx/t3qHZVN0PWSWzEpxMof2XCtdv8OQDkSPhTJYLIe2OxNI/duLPiPdKNiwInnuH/X0Q8BDS30V/IP7mSsweiyg3rdFW0FQkexivPz1W0MlxQzoFh89rD9V7H1KK2te4io+Nd/ecS/YG+qM6R/yFGLc3L1ClY/m7xSCHnTm21FjdLkwxXkED+lNXCo4IFRcp6xh6Ri7/vpB1PILThcgy9+yBvixOL/IKq48U7g==
+X-ICLOUD-HME: p=subscriber@example.com; d=everbridge.net;
+ f=owner@example.com; r=to; s=noreply@everbridge.net
+X-Authority-Info-Out: v=2.4 cv=Rb2dyltv c=1 sm=1 tr=0 ts=6ab16403
+ cx=c_apl:c_pps:t_out a=VIBvfxVZLSH+SK6saaFYJA==:117
+ a=Oddlai/xuH8oRbx3zLe2aQ==:17 a=E8PYkrDNwM4A:10 a=VdqzKS8jKosA:10
+ a=WFvD4bZU1dUA:10 a=x7bEGLp0ZPQA:10 a=3HF1Atgr3DUA:10 a=N72U4rUfpO4A:10
+ a=g8TUdU_LZmEA:10 a=VkNPw1HP01LnGYTKEx00:22 a=_un2NjF1AAAA:8
+ a=slVA_caau9QPEIhC6tMA:9 a=3BgoorKdS8hp6Xjg:21 a=_W_S_7VecoQA:10
+ a=QEXdDO2ut3YA:10 a=1dv7-sUhv4UGYWOijKA9:22 a=5yU3S35YU4bGjq-dph-N:22
+ a=Bho9c0fBagfJEIQBS7DQ:22 cc=ntf
+X-JNJ: 
+ AAAAAAAB1E+6fKhzijBP3e6cdLXK2tN2L3RWspfe7WnagmkYLXrGLJ7/dpXh7+zwIGr+61fhXpwjCm4TQCjIyliE4g0HJR4LQ2ivRS4vMR7asOKTMtSIPHhQGlumXHeloGOSnG5hxVa7caDeg+gu9JCKqB89br8cCBkrUxtHbSBctUnagjPvnc6d09wN6bkzuKh6pFdRWMOi9eTGi3d5y+pNz9RDpWoFDE5DMP0D2WggZIBlLUJSc69H6ZrP9VXuL65hnQPpxa/j0JWB6vO8kSmieWIYs2YLsAn2UOoBbXJ0ob0+s4pag6hcxlcnYjIaSiaVxrFWlVewy/nyNj9ZuCksoBfWFo6S4oVmkF/XqmR6cSsGNGCQTCZLtWKsvpBMu1l6T+YGJsUPrbk8+kJkIWcXP1jaPIpgVVOFOkiF2vSRWu7pQkcifmq9WukJOKHUws6d4twg4yTYCkj+o+ndjZb608yYWMozWWK4j35ies7nXRR4cG0qXEUPZ4lG5gg6wlzTGDDoWc38MejU1XoCKL0E4A4HZnScgRP3kyLAFHAkjB/eUNesVczYxUeP3G2RzDGQlnTw8Ktp6lZliTrEdezW4OotvEkkRP1KM2RoqQoYw59VpagU7Fb/2tKr6aO6kVtRcARicmFgEO1SPM3650rQ3km1DMXZYZCdQ4tuOSS4WYW5AdMJJfSigmrIwEX6B00rRFMs8GuLvkNtBSB5qAOdCVhLKhrMdqJhaKEv4ObhcdlMywF9QIer8PrWrSpLFHwY/4h+nHmIJHgtGdc+O3P17yO4ajoinvI/Ztl4gxvkQHy+ioBYd+aXSVE3jXgsoay1mKxRlPbLM2suizUL65h3U9hFEHdQvhhLrq4gMg==
+
+------=_Part_13538556_1413826017.1790010366208
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+        <!doctype html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Kilauea Temp Green Waste Site Closed, Kapaa Open Until 4:30 p.m. Sept. 21</title>
+        </head>
+
+        <body style="font-family: Helvetica, Arial; line-height:1.5">
+        <!-- Header start-->
+        <div>
+            <div><p class="p1" style="text-align: center;"><span style="color: #7e8c8d;"><em>This is an urgent message from the County of Kaua'i through Everbridge, the County's mass notification system.</em></span></p>
+            </div>
+            <!-- Header end-->
+            <!-- Messages start-->
+            <div  style="margin-top:30px;" >
+                <p> The Kilauea Temporary Green Waste site is closed today, Monday, Sept. 21, due to muddy conditions.<br><br>The Kapaa Temporary Green Waste site is open until 4:30 p.m.<br><br>Mahalo for your patience.</p>
+                <div style="margin:30px 0px">
+                </div>
+            </div>
+            <!-- Messages end-->
+            <!-- Footer start-->
+            <div style="color:#777777; margin-top:20px">
+                <p class="p1" style="text-align: center;"><span style="color: #95a5a6; font-family: -apple-system;"><span style="font-size: 18.6667px;"><i>###</i></span></span></p> <hr/><p style="text-align:center;">To stop receiving future email notifications from this organization <a href=https://notifications.everbridge.net/unsubscription/email/_X3baFugEJ-CiK5vTdzXBLajzxwxj0M7IavFeQJ54gmec71_A10aswvTc0gsas4howY4yaRKEip4Xy2s2dlm6EoHksZaWhp2ykE2vleSzJFaEoQdaSLRpHfAWuWXg7yODebxOsBOwzW7o9sVelqirLUhd0f-MQI2Ws3hfxwObeDx_rn1qZI5ZFH1HNWPfLpxTbPry-CsT3N_vtp-tDpsygQ2krCuQIMGSYWnLIxWWWaDgzq_BwTxjFLxZrZQfx2O2gjg0kcylyWmONV4azg0Qi9AEX5Oo4y_PvBD0Z27vc_hELArDH8OFdI_h_5ddzMMhksetoJ0XUdIkEY7-KGmo-I8HEkfMIXyByCauwrzbODvQahWHNkW8el6Wxl7iw2n8lK7eCWnz0tnBXTRw4EyEwryfflOwygDul6C23OytPplHWmyHdzrBDWKIm_smqzI_crmdU5cT9hhyc3wjZUGvMRZmH-hWaoLdaOIHRIUgVwTUXjl6sKC1qrCyZ_T7wMfVPl7jBYwDdVS?language=en-US style="color:#0000EE;font-weight:bold;text-decoration:underline;">unsubscribe here</a>.</p></div>
+        </div>
+        <!-- Footer end-->
+        </body>
+        </html>
+
+------=_Part_13538556_1413826017.1790010366208--

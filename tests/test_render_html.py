@@ -37,3 +37,15 @@ def test_render_html_omits_stale_indicator_for_fresh_provider():
     assert 'class="module module--stale"' not in html
     assert "<p class=\"provider-status\">" not in html
     assert 'id="kiuc"' in html
+
+
+def test_render_html_event_banner_and_digest_hint():
+    html = render_html(
+        "Kauai",
+        [{"id": "kiuc", "label": "KIUC", "html": "<p>ok</p>", "stale": False}],
+        "2026-04-26T12:00:00-10:00",
+        event={"active": True, "reasons": ["KIUC: 5000 customers out"]},
+    )
+    assert "Event Mode" in html
+    assert "KIUC: 5000 customers out" in html
+    assert "digest.txt" in html

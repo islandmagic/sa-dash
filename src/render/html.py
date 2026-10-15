@@ -165,10 +165,24 @@ def _provider_status_note(provider: dict) -> tuple[str, list[str]]:
     return f'<p class="provider-status">{"".join(parts)}</p>', extra_classes
 
 
-def render_html(island_name: str, providers: list[dict], generated_at: str) -> str:
+def render_html(
+    island_name: str,
+    providers: list[dict],
+    generated_at: str,
+    event: dict | None = None,
+) -> str:
     sections = []
     toc_items = []
     banner_html = ""
+    event_banner = ""
+    if event and event.get("active"):
+        reasons = html_module.escape(", ".join(event.get("reasons") or []) or "active")
+        event_banner = (
+            '<div class="breaking-news-banner event-mode-banner" role="status">'
+            '<div class="breaking-news-label">Event Mode</div>'
+            f'<div class="breaking-news-body"><p>{reasons}</p></div>'
+            "</div>"
+        )
     for provider in providers:
         if provider.get("skip"):
             continue
@@ -549,9 +563,10 @@ def render_html(island_name: str, providers: list[dict], generated_at: str) -> s
     <p class="meta">{generated} | <a href="https://github.com/islandmagic/sa-dash/issues">Report issue</a></p>
     <p class="info">
       Get this page via email by sending a message to <code>query@saildocs.com</code> with <code>send http://kauai.islandmagic.co</code> in the body.
+      Low-bandwidth: <code>send http://kauai.islandmagic.co/digest.txt</code>
     </p>
   </header>
-  {banner_html}
+  {event_banner}{banner_html}
   <div class="modules">{toc_section}{"".join(sections)}</div>
   <footer class="footer">
     <p>This page aggregates publicly available data from multiple sources. Information may be delayed, incomplete, or contain errors. Always refer to official sources for confirmation.</p>

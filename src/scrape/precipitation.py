@@ -327,14 +327,37 @@ def _build_precip_table(today: date) -> str:
     )
 
 
-def scrape() -> dict:
+def build_rainfall_details() -> tuple[str, list[str]]:
+    """Return (html, source_urls) for CoCoRaHS + Mesonet rainfall tables.
+
+    Used by the Weather module as collapsible sections. Also used by the
+    standalone precipitation scraper for `--scraper precipitation`.
+    """
     today = datetime.now().date()
-    body = (
-        "<h3>Precipitation</h3>"
-        f"{_build_precip_table(today)}"
-        "<h3>Mesonet rainfall</h3>"
-        f"{_build_mesonet_rain_table()}"
+    cocorahs = _build_precip_table(today)
+    mesonet = _build_mesonet_rain_table()
+    html_block = (
+        f'<details class="precip-details">'
+        f'<summary>CoCoRaHS rainfall (<a href="{COCORAS_MAP_URL}">map</a>)</summary>'
+        f"<div>{cocorahs}</div>"
+        f"</details>"
+        f'<details class="precip-details">'
+        f'<summary>Mesonet rainfall (<a href="{HCDP_DOCS_URL}">HCDP</a>)</summary>'
+        f"<div>{mesonet}</div>"
+        f"</details>"
     )
+    sources = [
+        DEX_STATION_URL,
+        DEX_PRECIP_URL,
+        COCORAS_MAP_URL,
+        HCDP_BASE_URL + "/mesonet/db/measurements",
+        HCDP_DOCS_URL,
+    ]
+    return html_block, sources
+
+
+def scrape() -> dict:
+    body, sources = build_rainfall_details()
     return {
         "id": "precipitation",
         "label": (
@@ -342,12 +365,7 @@ def scrape() -> dict:
             f'<a href="{HCDP_DOCS_URL}">HCDP Mesonet</a>)'
         ),
         "retrieved_at": now_iso(),
-        "source_urls": [
-            DEX_STATION_URL,
-            DEX_PRECIP_URL,
-            HCDP_BASE_URL + "/mesonet/db/measurements",
-            HCDP_DOCS_URL,
-        ],
+        "source_urls": sources,
         "html": body,
         "error": None,
         "stale": False,

@@ -283,12 +283,16 @@ def scrape() -> dict:
         "</table>"
     )
 
+    text_parts = [f"{row['town']}: {row['status']}" for row in rows]
+    text = "Verizon: " + "; ".join(text_parts) if text_parts else "Verizon: no data"
+
     return {
         "id": "verizon_mobile",
         "label": f"Verizon Mobile (<a href=\"{VERIZON_CHECK_URL}\">Verizon</a>)",
         "retrieved_at": now_iso(),
         "source_urls": [VERIZON_URL, TOKEN_URL],
         "html": body,
+        "text": text,
         "error": None,
         "stale": False,
     }

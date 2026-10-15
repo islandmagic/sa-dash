@@ -99,12 +99,21 @@ def scrape() -> dict:
 
     block_html = "".join(parts)
 
+    text_lines = [f"Power outages: {total_out or 0} (served {total_served or '?'})"]
+    for zip_code, name, affected, served, pct_out in rows:
+        text_lines.append(f"- {name}: {affected}/{served} ({pct_out:.0f}%)")
+
     return {
         "id": "kiuc",
         "label": f"Power (<a href=\"{KIUC_URL}\">KIUC</a>)",
         "retrieved_at": last_update,
         "source_urls": [KIUC_URL, KIUC_SUMMARY_URL],
         "html": block_html,
+        "text": "\n".join(text_lines),
         "error": None,
         "stale": False,
+        "signals": {
+            "customers_out": int(total_out or 0),
+            "customers_served": int(total_served or 0) if total_served else 0,
+        },
     }

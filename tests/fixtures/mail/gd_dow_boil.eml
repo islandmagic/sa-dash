@@ -1,0 +1,1078 @@
+Return-Path: 
+ <subscriber@example.com>
+X-Original-To: owner@example.com
+Delivered-To: x21416063@pdx1-sub0-mail-mx206.dreamhost.com
+Received: from postfix-inbound-7.inbound.mailchannels.net
+ (inbound-egress-7.mailchannels.net [23.83.220.5])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest
+ SHA256)
+	(No client certificate requested)
+	by pdx1-sub0-mail-mx206.dreamhost.com (Postfix) with ESMTPS id
+ 4hjLMz4yPMz9MNT
+	for <owner@example.com>; Sun, 13 Sep 2026 01:01:51 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; d=mailchannels.net; s=arc-2022; cv=none;
+	t=1789286510;
+	b=d/kWSsUVwEh4oNsmPSv1CwUg64eaD4vQLIB1MnwYgZWPyDaEGyLHIX/3KS6qdiNssKxnSV
+	n5rbQDXpzLJnwz2Nz7LGu6flS4MPm7EfW1mApAR9wC1bs54bK45jkTIZbecL/pYFpTRxd0
+	V8urzvDC0zTnyWRow4ukJ7nRA4tpxw0Y0a56B/I30mntZYsVlj4IKdeMf88plN++rUk9YV
+	DjZ1NJbpYcdkD5jchUuTv6bqoA2H+ceWShCAdfHXVheV3Gybi2McThJaYVAKCRN6kg4dUs
+	DknYoIPmarOkhlR+igTgIgnXh3y7JMO6ppf/J7gLmgTFjkneN6a+VOuZtJhZ7A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net;
+	s=arc-2022; t=1789286510;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 dkim-signature; bh=j2yTIavBJtL1V4CcYll7+KWEoKbI38Cb4xGJj9AubHg=;
+	b=HpJ+yTuDL3VaL/DaL+kbt7w+mPf1351jGOfwbXtBNeammJRSf/hMl6JotK1IwqXqlOangq
+	OI2C5s2FsX6lYiaug10WV+5gCAmjpbgokC1GB2pbG4sH/A3Gj7OZbSeiCLmgLzz1+jVbeq
+	UZs7rwIPYdEW1TtZGFJvh4MptZtB7BbWbj06k5spFZmUrPYSHMMuyqMO35u0aq21ihFtg4
+	EgUTC/oKzA/VoY+lu1GEuDV5aWK5W+RJU8qKj7zt4ZIlx7eZC5hk+v0/laVf4r2E+SPzlL
+	WT80fioageKaUZoMX6mZAe0Tkyfd8sduoBLbtXz4ACjnp89TLajn6P/4mSRNdw==
+ARC-Authentication-Results: i=1;
+	inbound-rspamd-64698fd584-8t42l;
+	none
+X-Message-ID: pO8ZFPUuYY5ghEDxxyMPEPCi
+Received: from outbound.ci.icloud.com (ci-2007f-snip4-11.eps.apple.com
+ [57.103.88.63])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+	by 100.99.183.164 (trex/8.0.2);
+	Sun, 13 Sep 2026 08:01:51 +0000
+Authentication-Results: inbound.mailchannels.net;
+ spf=pass
+ smtp.mailfrom=subscriber@example.com;
+ dkim=pass header.d=icloud.com;
+ dmarc=pass (policy=quarantine; pct=100; status=pass);
+ arc=none
+Received-SPF: pass (dmarc-service-fbc5884c8-d997l: domain of icloud.com
+ designates 57.103.88.63 as permitted sender) client-ip=57.103.88.63;
+ envelope-from=subscriber@example.com;
+ helo=outbound.ci.icloud.com;
+Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
+	by p00-icloudmta-asmtp-us-central-1k-100-percent-1 (Postfix) with ESMTPS id
+ 373351800120
+	for <owner@example.com>; Sun, 13 Sep 2026 08:01:48 +0000 (UTC)
+X-ICL-RepId: 01a099c9-6693-746b-b6f1-f0b228cea064
+X-ICL-Out-Info: 
+ HUtFAUMEWwJACUgATUQeDx5WFlZNRAJCTUwWWANYHFxQXBwOXQZbA0AIGQNUDggLRQhKAUBSCFYWW0oKCRpcU0dYVQcLBV0fSQxOB0BUUwRFWxxVW1ZZB0cUSANdB1sCL1gMbA9YHlwTXCdDGFUHWxNmH1wbUw5eGU8dQRRoCF0dZkFYFwAbQBhLCUpZB1gELwpLAFpTDwdFeRFQAVgeVl5aF15NUQ8PGVoUXBhTRVEfVFhBDgpaEhhcFFxQWB5GElYNXQkZCFteUBtfAkIPHBNWFRMdQxkPKwhKBEMHRQJeCyUTCVNWWxNVF0YJGQhdHQIIRg9bAlFeXhdFCVIHWwZcCkpDVARfS1QdQB5WDFseXh5SD0UCUV5aF15NWgJWTQVIAl0GWwMRCUEKDg5eA0ILVVYOUw1QQgAcHlpWXFNdDR4BWxpSB0YNVVBVAV5QFF9OUl8CXB9ACUgDXQcrRwMUD1YeQ0YAXlQdQB5WDFseXh5SD0UCUV5aF15TFx9LAFxFWwBS
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com; s=1a1hai;
+ t=1789286509; x=1791878509; bh=j2yTIavBJtL1V4CcYll7+KWEoKbI38Cb4xGJj9AubHg=;
+ h=Content-Type:MIME-Version:From:To:Subject:Message-ID:Date:X-ICLOUD-HME:x-icloud-hme;
+ b=Y2zxqA9Wm4py7cAxpy5/EdeXgH1ppQPOrjgn7juTjaHP5uIAxgJyLjiYdAuFn90sOSlFcGnsTT7unAU4vSYPK73rIClFhtdLarUVrC6hVQcCKjjJZ+BMJahBZrg9950rZf9qGsMAeGID1PGZ4mPOiFfPYZIkpJ+i9wQJQjpzIr9n3HZkoKyliFtyZEjwnpopT9eg+LfeuYd2/SU3r7933DHa9+Mc+8c/XbsXw+QP1BSnmoOfyhG8+LR05AJJbnrCpAjl1DtOU/O2n8hGhHMla0ba3CqijpOwq+WEKavL1WacgniqC4R3vLWxtkQagPc8C5sVj6V65Usp1bxfuKXfNA==
+Received: from
+ p00-icloudmta-smtpin-us-central-1n-10-percent-7.p00-icloudmta-smtpin-vip.icloud-mail-production.svc.kube.us-central-1n.k8s.cloud.apple.com
+ (unknown [10.168.160.104])
+	by p00-icloudmta-asmtp-us-central-1k-100-percent-1 (Postfix) with ESMTP id
+ D4BE518001A9
+	for <owner@example.com>; Sun, 13 Sep 2026 08:01:47 +0000 (UTC)
+Received: from mailer018115.govd1.service.govdelivery.com
+ (mailer018115.govd1.service.govdelivery.com [66.179.18.115])
+	by p00-icloudmta-smtpin-us-central-1n-10-percent-7 (Postfix) with ESMTPS id
+ BAF9EC00112
+	for <owner@example.com>; Sun, 13 Sep 2026 08:01:44 +0000 (UTC)
+X-ICL-Info: 
+ GAtbRVYDBVFFSlVHSgQEUVUKE0oWX1gHVQoPB0UGAExETl9ZSQgYU0RMRhIcDQZTRUhWRhkAD1sWQFNGSgIbBxYdABVKCVJPQhhRFlUEUFBDVF9CTgQbAU1PUxUcVgADR0xRWkgABlJFSSYVF0VYARBXFgIaXF8BWx4JARxVWgsDHBQOVlNZD1UfAkoIRVQOHBpIEBdGUgcZEBASCkkYARoURgUbDUMMERYIElZZWBYQHgMFSkl2CxYVCQIcHlUNGFkOEhRfCw8UEAoSCgAHWkRIU1kfX0AGRFcVEgpGXwEQVwEYDlRTDhwPAwUBHlUNGFkWAwoNWwMcFQMFSAEOU0RMSBAXRlJTWwoDBQ5ZVQdbHgkBHFVaCwMcFA5WU1kPVR0CSghFVA4cGkgQF0ZSBxkQEBIKSRgBGhRdGh1DRQMSEAgQHlFUEBwaSBQXXRYPHB1bS0gBBlNFSAdHQQlVW0BIVEVVVVUGExtUThwdAQNCGEtDHgIAT0xMUENVUw5UQBsCEU5RBFdCVFZHSAAGUjUMFVoPVUUWWEtIGh1DRQMSEAgQHlFUEBwaSBQXXQg=
+X-ICL-Score: 2.33303302423
+Authentication-Results: bimi.icloud.com;
+ bimi=skipped reason="insufficient dmarc"
+X-ARC-Info: policy=fail; arc=none; r1=-20; r2=0
+Authentication-Results: arc.icloud.com; arc=none
+Authentication-Results: dmarc.icloud.com;
+ dmarc=pass header.from=public.govdelivery.com
+X-DMARC-Policy: 
+ v=DMARC1;p=none;pct=100;rua=mailto:client-dmarc-reports@granicus.com
+X-DMARC-Info: pass=pass; dmarc-policy=none; s=r1; d=r1;
+ pdomain=public.govdelivery.com
+Authentication-Results: dkim-verifier.icloud.com;
+ dkim=pass header.d=public.govdelivery.com header.i=@public.govdelivery.com
+ header.b=CmDWfjIq
+Authentication-Results: dkim-verifier.icloud.com;
+ dkim=pass header.d=messagingfabric.com header.i=@messagingfabric.com
+ header.b=dhIsBLeh
+Received-SPF: pass (spf.icloud.com: domain of
+ 010101a099c95122-ecdfb29d-7a7a-4f26-9564-c865bdf6a257-000000@bounce.public.govdelivery.com
+ designates 66.179.18.115 as permitted sender) receiver=spf.icloud.com;
+ client-ip=66.179.18.115; helo=mailer018115.govd1.service.govdelivery.com;
+ envelope-from=010101a099c95122-ecdfb29d-7a7a-4f26-9564-c865bdf6a257-000000@bounce.public.govdelivery.com
+Authentication-Results: spf.icloud.com;
+ spf=pass (spf.icloud.com: domain of 010101a099c95122-ecdfb29d-7a7a-4f26-9564-c865bdf6a257-000000@bounce.public.govdelivery.com
+ designates 66.179.18.115 as permitted sender)
+ smtp.mailfrom=010101a099c95122-ecdfb29d-7a7a-4f26-9564-c865bdf6a257-000000@bounce.public.govdelivery.com
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=bycwgb45wwj55sk7rdow3owdrgsfwlvx; d=public.govdelivery.com;
+	t=1789286502;
+	h=Content-Type:MIME-Version:From:To:List-Unsubscribe-Post:List-Unsubscribe:Subject:Message-ID:Date;
+	bh=Pqqm7EbiZGnF+bWh5uw3NOR+DHyxDX7AXm20X/N2h5g=;
+	b=CmDWfjIqUW9waepWaLrUOoIMsZbyrFxt5Tik5cJOnW2MPa8YlCDjziPeS8WABxPt
+	Lxab1pIiwer7RKa5dqs7gB89L7oCO4SH2JwnS7LbaYtWILiELLn9WscCNGwWStkr01Y
+	yMgMbNX/vTzIq5wM8/FOpAoZfIOIs3Vn5dwZ5qzbyAtBzCUbFaoPfaMcazKefm4pUGU
+	5v0/jNGLDJIQoj8w4tgvAonDlBJvmywnF5sLkz5bXuDeCq3CnaCrGrlAklD5EnvlarN
+	e3Ir6WILiD++ikcsbZXEJ4nPPio9xClr08CbygVq9i7tWFsy0krU8b5cQmhuX4oMZe7
+	/bmr7nf8NQ==
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=sdwquzu2a4io5lomurvncbcrpryr42dn; d=messagingfabric.com;
+	t=1789286502;
+	h=Content-Type:MIME-Version:From:To:List-Unsubscribe-Post:List-Unsubscribe:Subject:Message-ID:Date:Feedback-ID;
+	bh=Pqqm7EbiZGnF+bWh5uw3NOR+DHyxDX7AXm20X/N2h5g=;
+	b=dhIsBLehdiW8vpjfaXaxjwe1n3MvU6mH7MEoEnzYDRw+CRxGLoJLgCwRjlXFg6lr
+	Z678lB7CkKbDN+HsZBuv6sYPIkAyO0aE5Z1Smr95d4YXE4CUdTlGEK2e+Fr+Szm7ucL
+	zd6Y0QxNbAF8LgfpA9q+rByMYgdtTTY4omdDK2xM=
+Content-Type: multipart/mixed; boundary="===============1522106539268163397=="
+MIME-Version: 1.0
+From: Kaua'i Department of Water
+ <subscriber@example.com>
+To: Hide My Email <subscriber@example.com>
+X-Accountcode: HIKAUAICOUNTY
+open_flag: true
+Errors-To: messages@public.govdelivery.com
+bulletin_recipient_id: 298130855760
+x-subscriber: 
+ 3.HeCpalQvTO4sj1BQyr6EacSfyd76TBUWjnzJVo4IZmGrPOiRf/0KNg+tm/uPvG8Nw9HwD1VkaNFEMgsMeH2zBef94cnbxToHjK5pqXLY8A2xdXADApOKBi40HJLgYR7JwAiDQgdvjtlZ6sk9Qpvv3bNw2smN62jo/jNn8kK7biM=
+subscriber_id: 3266934028
+emailMessageID: 20260913.35013721::BP3
+Subject: =?US-ASCII?Q?DOW_NR_09-12-2026_(Boil_Water_Notic?=
+ =?US-ASCII?Q?e_canceled_for_Kilauea_on_Sept._12)?=
+Message-ID: 
+ <010101a099c95122-ecdfb29d-7a7a-4f26-9564-c865bdf6a257-000000@us-west-2.messagingfabric.com>
+Date: Sun, 13 Sep 2026 08:01:42 +0000
+Feedback-ID: 
+ ::1.us-west-2.p6s0dOSD/Bh2d1AskdlzeN80W4aso1ZElT3TVYD5Rrc=:AmazonSES
+X-SES-Outgoing: 2026.09.13-66.179.18.115
+X-Proofpoint-ORIG-GUID: w25Q9X8O9wgvUTjMHB-bw7B1k8naCAy3
+X-Authority-Info: v=2.4 cv=AOSzraLt c=1 sm=1 tr=0 ts=6aa65869 b=1
+ cx=c_apl:c_pps a=XKi1YzFSQVQpEA0MEvnxyQ==:117 a=XKi1YzFSQVQpEA0MEvnxyQ==:17
+ a=VdqzKS8jKosA:10 a=Hgn-wnRn1-cA:10 a=puQWGBksFvoA:10 a=dPXAZiqniPcA:10
+ a=vQc1MeNWzUAA:10 a=yxO3Op9WAAAA:8 a=UqCG9HQmAAAA:8 a=V6fVEiFnAAAA:8
+ a=zdCWCb4pAAAA:8 a=JluTUKjhAAAA:8 a=3j4BkbkPAAAA:8 a=iSr4k8VBAAAA:8
+ a=v3ZZPjhaAAAA:8 a=5SZLFJwZYgQ_Qhg1iLoA:9 a=QEXdDO2ut3YA:10 a=SSmOFEACAAAA:8
+ a=BDcfyaStSrNMoj71DhgA:9 a=iyxHZrQXM5LfkCuu:21 a=frz4AuCg-hUA:10
+ a=_W_S_7VecoQA:10 a=lqcHg5cX4UMA:10 a=n514xYrAxjDciwOpZk__:22
+ a=m_Mk2U-G7T1G6QG2CWW3:22 a=ql7eORDLPjU2_0RC1Tf0:22 a=3uTIV9BBxpjPo0-TrMRy:22
+ a=bqmSW5Txl8W153b-APYH:22 a=5yU3S35YU4bGjq-dph-N:22 a=Bho9c0fBagfJEIQBS7DQ:22
+ cc=ntf
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTEzMDExMiBTYWx0ZWRfXxYZJVi798sM6
+ hUcd5IX91HPhM1oRUZHeCoFVMtEsyEcRL58Jc3qTfCVi+u8RbH58kANDb3D1HakamGZsffbDIO6
+ ygeeXRQBiLPpPk9mbkxDyxZ3TO6CkCxg0QD/kuYnz+dEyYDco98hxmA2LdaTAAzEbrVRsjC0BIW
+ njgP4pP1V0N/TlHfgTzN0EmJYkFlC1nZrmDnKlID0Ut2PDTveuMDEiyL7HbGCr375VdnN1PrvNd
+ A+N9a8GpOoueYr2zyLjqDSUu3sF75BED5tsiY+hdDXX4vtcF4JKolQgQjFXkMfQLILXURC8Cc8d
+ stRTVmy9jKWY+JwBS7XIxKyWtCQnHq6DtPc6AsEq/nTpzWShLnhdNErvA76Nn0=
+X-Proofpoint-GUID: w25Q9X8O9wgvUTjMHB-bw7B1k8naCAy3
+X-JNJ: 
+ AAAAAAABVFvR/6nJFGGpXWOq2yY+Ovqxt33WZb/sTeITUdByUWcBrQLnbS2zuh3Jk0yy8hakKVDXHNTbPe6stQA8UOtAFsTs1GNL/MaSm2blRuuxfEY8Xi0rWZqS+FjqZsTO3jXSUw/cW2O1/GN+2masamWZFdIBA8PlYidOb9ek3MpHp31AcVMK+uziHxRbsytaESHKhWqSER44G4xBwH6qPZR0kWanDtLjRaVdsl+QaNAMn9vRur2Tx0KL/dbeSs0upWzFR6dGnMBLNFBLrDLi8fSRA0qJh6oCZKiDgAY8vAHfuGoZTIqxzyj9VUBWdfoZfwx6uIHxeenY0S60heFj/CLG4BcCBHh6A9im+N4JohdUlyKuTNtv33pDJyHNaZe5TeTcuT3V9vJG1cLC514+h31L1luI66T46AAb/LCvhjIKx8oaUmkZYqj1ltdvNU+peWrFYtBEQA5lWpH7F9lddX5kp8WZWji+IamneipDXbYPaZpy3RT/XS2WNg0x4yAImpF8ayv9+8iNoItcYN/nv5MfUHGfAEtg0w0SAzeh5207cSc+CbA2YcXSNr1BG4q8aXqLPfH9osHAWB8qIZ1Zy8aHsH2qbmp6DKLspow+tn96EO47V2/MMExVCRDEw8iCnSQFY4QGQ1ijtxCgPclpHATMHeGBCoAzzl67bLkrOg989Jwn5KChL7FUWeBBGIkhmuWBZQrfx5oFFjGI5Z2BycSCoU37Vm7HQFhH9rHqflgVPwoipSbiRffpNA5pmOiTD7BBeL0VZ6KKl5uM1k4w89ElclHAVLkf+yf7X114da5mQVYa
+X-ICLOUD-HME: p=subscriber@example.com; d=content.govdelivery.com;
+ f=owner@example.com; r=to; s=KauaiWater@public.govdelivery.com
+X-Authority-Info-Out: v=2.4 cv=UaRciaSN c=1 sm=1 tr=0 ts=6aa6586c
+ cx=c_apl:c_pps:t_out a=T0mU/zd77MEem+zjWCBf6Q==:117
+ a=XKi1YzFSQVQpEA0MEvnxyQ==:17 a=VdqzKS8jKosA:10 a=Hgn-wnRn1-cA:10
+ a=puQWGBksFvoA:10 a=WFvD4bZU1dUA:10 a=x7bEGLp0ZPQA:10 a=2gT7QPmI9zEA:10
+ a=dPXAZiqniPcA:10 a=vQc1MeNWzUAA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=yxO3Op9WAAAA:8 a=UqCG9HQmAAAA:8 a=V6fVEiFnAAAA:8 a=zdCWCb4pAAAA:8
+ a=JluTUKjhAAAA:8 a=3j4BkbkPAAAA:8 a=iSr4k8VBAAAA:8 a=v3ZZPjhaAAAA:8
+ a=5SZLFJwZYgQ_Qhg1iLoA:9 a=QEXdDO2ut3YA:10 a=SSmOFEACAAAA:8
+ a=BDcfyaStSrNMoj71DhgA:9 a=iyxHZrQXM5LfkCuu:21 a=frz4AuCg-hUA:10
+ a=_W_S_7VecoQA:10 a=lqcHg5cX4UMA:10 a=n514xYrAxjDciwOpZk__:22
+ a=m_Mk2U-G7T1G6QG2CWW3:22 a=ql7eORDLPjU2_0RC1Tf0:22 a=3uTIV9BBxpjPo0-TrMRy:22
+ a=bqmSW5Txl8W153b-APYH:22 a=5yU3S35YU4bGjq-dph-N:22 a=Bho9c0fBagfJEIQBS7DQ:22
+ cc=ntf
+X-JNJ: 
+ AAAAAAABZ3cjQ+LriIAWphfgeQ0+e1lALLa+n4bvtb/aP6ib5sf8zqVSqKClnK/dOmbr5p64h4beu75IXptD+h27+TWpZnnKuRRgSQ0sEwgd2bBhbtPooyfJTOpudW9fzfUMroaFzdE5+Jg2mPkS/ytEXoWLMEdQiy2Rzo4QytytWoX9X4+DROk9A1jG6IEQWEQuX/bklt+3RP4RNzoj9lBNg2CEXQgDqlJT8Xk/E25FpL4EOcvymdxoKoJVo4nh+en7QGx8sXRoVUP6cFXtJatSYTrh9o+y8yCJSGfkxO7p3xhFEdVXF75sCe9zhMlWeQsKXf3hOKDeLyk0YiDNXrMbgQ9tApkV03Vmo1MvrZJ33elbjAsXaEctn622ZeymC6Jzq5wII4k3lfYGVv4j7bLKfibHbdayhLlBSBPyJK/R3A08pZ5gpE/de/d++R/hFBJN3dKZY7nGQnTBBT2FuKhFcRXI2xZ2EMxriq13emoumb8XnVMtMHBQRSu2ifsZ1fF1cEa6tPHK/GU4FPG0xLlIaY8KYj79w0LkvaZDVGkMR6lma2sVOjgLIvwpRDYkJtqWs++MgM7MQrSiZdPOzR0lDqsJObiD01pVHcOruEjMobcLmuZjwzC+G3v4Y5nR7GHiUWK8tByaVRh+4qlML9UlEI1Wfvfgj+h8XBuhotFOpGD+hMZXpXz95EvCrAsCbJxKNmA2G4K+RQXeNqZe6SzijbHd0obkhnezcQxaM7Jyfr20LDysW72qmXOXvXk3GF2djbA/iA6D34BQaD+ZQ2y4OJabMqOC6Zgf5zW2W0shMQUhbUBqQR6FnOAeE/UQHpOYTianvqkokqvLYCELW/46Z5YNxJkYD3G9TH3bK7/jgrBUBsJot1jf5lILQhFfF1DXFV1hSJ8npSiXtQWCOqEO2bdwPjL4tcYeXklzeScI+HQN
+
+--===============1522106539268163397==
+Content-Type: multipart/alternative;
+ boundary="===============4200769259700752155=="
+MIME-Version: 1.0
+
+--===============4200769259700752155==
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+
+Having trouble viewing this email? View it as a Web page [ https://content.=
+govdelivery.com/accounts/HIKAUAICOUNTY/bulletins/42a4020 ]. [ https://nam10=
+.safelinks.protection.outlook.com/?data=3D05%7C01%7CJKaohelaulii%40kauaiwat=
+er.org%7Cf02aff7d0b894c67160d08db72c50433%7C84a085176b3442d0973cdf3cc04f0ae=
+9%7C0%7C0%7C638229962753164201%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAi=
+LCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000%7C%7C%7C&reserved=3D0=
+&sdata=3Dd3FXuOI5JS9mrI%2BXP3bDwMkGiitNe%2FAC4hnC4YyXeog%3D&url=3Dhttps%3A%=
+2F%2Fcontent.govdelivery.com%2Faccounts%2FHIKAUAICOUNTY%2Fbulletins%2F36153=
+54%3Futm_medium%3Demail%26utm_source%3Dgovdelivery&utm_medium=3Demail&utm_s=
+ource=3Dgovdelivery ]
+
+=20
+=20
+=20
+=20
+
+*News Release*
+
+For Immediate Release: September 12, 2026
+
+=20
+=20
+=20
+=20
+
+________________________________________________________________________
+
+
+=20
+
+Department of Water County of Kaua`i=20
+
+=C2=A0
+
+=C2=A0
+
+DEPARTMENT OF WATER, COUNTY OF KAUA`I
+
+4398 PUA LOKE STREET, LIHUE, HI, 96766
+
+(808) 245-5455
+
+=C2=A0
+
+=20
+
+________________________________________________________________________
+
+
+=20
+=20
+=20
+=20
+=20
+
+Boil Water Notice canceled for Kilauea on Sept. 12
+
+L=C4=AAHU=CA=BBE =E2=80=93 The Department of Water (DOW) has canceled the p=
+recautionary Boil Water Notice for the Kilauea Water System, effective imme=
+diately.
+
+Date: September 12, 2026
+
+To: Consumers of the Kilauea Water System
+
+Boil Water Notice canceled for Kilauea.
+
+Laboratory results on the samples collected on September 11, 2026, indicate=
+ the water is safe for consumption. No further customer action is required =
+at this time and customers in the Kilauea area may now resume normal water =
+use.
+
+The Boil Water Notice was issued as a precautionary measure following the a=
+ftermath of Hurricane Lowell.
+
+For more information or to view updates, please visit www.kauaiwater.org.
+
+###
+
+=20
+=20
+=20
+=20
+
+*Media Contact:*
+
+If you are a member of the media with an inquiry for the Department of Wate=
+r, please email=C2=A0publicrelations@kauaiwater.org. Mahalo.
+
+*Visit Our Website [ https://www.kauaiwater.org/?utm_medium=3Demail&utm_sou=
+rce=3Dgovdelivery ] =E2=80=A2 Pay Your Bill [ https://www.kauaiwater.kouwai=
+.org/login?utm_medium=3Demail&utm_source=3Dgovdelivery ] =E2=80=A2=C2=A0Con=
+tact Us [ https://www.kauaiwater.org/contact-us/?utm_medium=3Demail&utm_sou=
+rce=3Dgovdelivery ]*
+
+=20
+=20
+=20
+=20
+
+DOW wave=20
+=20
+=20
+=20
+ =20
+=20
+
+Department of Water County of Kaua`i [ http://www.kauai.gov/?utm_medium=3De=
+mail&utm_source=3Dgovdelivery ]
+
+Stay Connected with=C2=A0the Kaua=E2=80=98i Department of Water:
+
+  Facebook [ http://www.facebook.com/pages/KauaiWater/187286144664429?utm_m=
+edium=3Demail&utm_source=3Dgovdelivery ] =C2=A0 =C2=A0 =C2=A0Govdelivery [ =
+https://public.govdelivery.com/accounts/HIKAUAICOUNTY/subscriber/new ]  SUB=
+SCRIBER SERVICES:
+Manage Subscriptions [ https://public.govdelivery.com/accounts/HIKAUAICOUNT=
+Y/subscriber/edit?preferences=3Dtrue#tab1 ] =C2=A0|=C2=A0=C2=A0Help [ https=
+://subscriberhelp.govdelivery.com/ ] =20
+=20
+=20
+body .abe-section-table {max-width:601px !important;} body .abe-column-bloc=
+k {min-height: 5px;}=20
+
+________________________________________________________________________
+
+
+ This email was sent to subscriber@example.com using Granicus Communic=
+ations Cloud on behalf of: County of Kaua'i, Hawai'i =C2=B7 4444 Rice Stree=
+t =C2=B7 Lihu=CA=BBe, Kaua=CA=BBi, Hawai=CA=BBi 96766 Granicus Communicatio=
+ns logo  [ https://granicus.com/solution/digital-communication-engagement/?=
+utm_medium=3Demail&utm_source=3Dgovdelivery ]
+
+--===============4200769259700752155==
+Content-Type: text/html; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns=3D"http://www.w3.org/1999/xhtml" xml:lang=3D"en" lang=3D"en">
+<head>
+<title>    DOW NR 09-12-2026 (Boil Water Notice canceled for Kilauea on Sep=
+t. 12)
+</title>
+    <meta name=3D"viewport" content=3D"initial-scale=3D1.0">
+<meta name=3D"format-detection" content=3D"telephone=3Dno">
+<!--[if (gte mso 9)|(IE)]>
+  <style type=3D"text/css">
+      table {border-collapse: collapse;}
+  </style>
+  <![endif]-->
+<style type=3D"text/css">
+  /* Make columns expand to 100% on small screens */
+  @media only screen and (max-width: 480px) {
+    .abe-column-block {
+      min-width: 100%;
+    }
+  }
+  .abe-section-label {
+    display: none;
+  }
+  /* Disables Apple clients adding blue color and underline to links and ot=
+her text */
+  a[x-apple-data-detectors] {
+    color: inherit !important;
+    text-decoration: none !important;
+    font-size: inherit !important;
+    font-family: inherit !important;
+    font-weight: inherit !important;
+    line-height: inherit !important;
+  }
+</style>
+
+
+</head>
+<body style=3D"margin:0;padding:0;margin:0;padding:0;width:100% !important;=
+">
+
+
+<!--[if (gte mso 9)|(IE)]>
+  <table style=3D"display:none"><tr><td><a name=3D"gd_top" id=3D"gd_top"></=
+a></td></tr></table>
+<![endif]-->
+<a name=3D"gd_top" id=3D"gd_top"></a>
+
+ =20
+
+
+
+ =20
+  <table width=3D"100%" cellpadding=3D"0" cellspacing=3D"0" border=3D"0" al=
+ign=3D"center" class=3D"gd_tbl_wrap"><tr><td style=3D"margin: 0; padding: 0=
+; width: 100% !important">
+<table id=3D"flexible-abe-main-table" width=3D"100%" align=3D"center" borde=
+r=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"-webkit-text-size-adju=
+st: 100%; -ms-text-size-adjust: 100%; border-spacing: 0; mso-table-lspace: =
+0pt; mso-table-rspace: 0pt; padding-top: 30px; padding-bottom: 20px;">
+  <tr>
+    <td style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%=
+; mso-table-lspace: 0pt; mso-table-rspace: 0pt;"></td>
+    <!-- centered column -->
+    <td style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%=
+; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+<!--[if (gte mso 9)|(IE)]>
+  <table width=3D"600" align=3D"center" border=3D"0" cellpadding=3D"0" cell=
+spacing=3D"0">
+    <tr>
+      <td>
+<![endif]-->
+<div class=3D"abe-section-block" data-block-type=3D"FancyBlockSection" data=
+-test=3D"test" data-block-id=3D"175084730">
+  <table class=3D"abe-section-table" width=3D"100%" align=3D"center" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"m=
+ax-width: 600px; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%=
+; border-spacing: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+    <tr id=3D"abe-section-row-0de4ae8c-5523-4ae5-9c0b-9b0195db4312" class=
+=3D"abe-section-row" style=3D"background-color: #FFFFFF;" bgcolor=3D"#FFFFF=
+F">
+      <td style=3D"text-align: center; vertical-align: top; font-size: 0; -=
+webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace=
+: 0pt; mso-table-rspace: 0pt;" align=3D"center" valign=3D"top">
+        <!--[if (gte mso 9)|(IE)]>
+  <table width=3D"100%" align=3D"center" border=3D"0" cellpadding=3D"0" cel=
+lspacing=3D"0" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjus=
+t: 100%; border-spacing: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+    <tr>
+<![endif]-->
+<!--[if (gte mso 9)|(IE)]>
+  <td width=3D"600" valign=3D"top" id=3D"abe-column-block-4f7258bf-bf81-4a6=
+1-a123-c5a16feba373-outlook-only" class=3D"abe-column-block-outlook-only" s=
+tyle=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-tab=
+le-lspace: 0pt; mso-table-rspace: 0pt;">
+<![endif]-->
+<div id=3D"abe-column-block-4f7258bf-bf81-4a61-a123-c5a16feba373" class=3D"=
+abe-column-block" data-block-type=3D"FancyBlockColumn" data-block-id=3D"175=
+084731" style=3D"width: 100%; box-sizing: border-box; display: inline-block=
+; font-size: 16px; vertical-align: top;">
+  <table width=3D"100%" align=3D"center" border=3D"0" cellpadding=3D"0" cel=
+lspacing=3D"0" role=3D"presentation" style=3D"table-layout: fixed; overflow=
+-wrap: break-word; word-wrap: break-word; text-align: left; -webkit-text-si=
+ze-adjust: 100%; -ms-text-size-adjust: 100%; border-spacing: 0; mso-table-l=
+space: 0pt; mso-table-rspace: 0pt;">
+    <tr>
+      <td class=3D"abe-column-block-padding" id=3D"abe-column-block-4f7258b=
+f-bf81-4a61-a123-c5a16feba373-padding" style=3D"-webkit-text-size-adjust: 1=
+00%; -ms-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0=
+pt; padding: 15px;"><p style=3D"text-align: center; -webkit-text-size-adjus=
+t: 100%; -ms-text-size-adjust: 100%; line-height: 1.4; font-family: calibri=
+, candara, segoe, optima, arial, sans-serif; font-size: 14px; color: #00000=
+0; margin: 0 0 10px;" align=3D"center">Having trouble viewing this email? <=
+a href=3D"https://links-2.govdelivery.com/CL0/https:%2F%2Fcontent.govdelive=
+ry.com%2Faccounts%2FHIKAUAICOUNTY%2Fbulletins%2F42a4020/1/010101a099c95122-=
+ecdfb29d-7a7a-4f26-9564-c865bdf6a257-000000/boTAXiiHIfgsKOeJ5nHH_4J7YqGsx1M=
+wn-xKWEqY2Is=3D452">View it as a Web page</a>.<a href=3D"https://links-2.go=
+vdelivery.com/CL0/https:%2F%2Fnam10.safelinks.protection.outlook.com%2F%3Fd=
+ata=3D05%257C01%257CJKaohelaulii%2540kauaiwater.org%257Cf02aff7d0b894c67160=
+d08db72c50433%257C84a085176b3442d0973cdf3cc04f0ae9%257C0%257C0%257C63822996=
+2753164201%257CUnknown%257CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIi=
+LCJBTiI6Ik1haWwiLCJXVCI6Mn0%253D%257C3000%257C%257C%257C%26reserved=3D0%26s=
+data=3Dd3FXuOI5JS9mrI%252BXP3bDwMkGiitNe%252FAC4hnC4YyXeog%253D%26url=3Dhtt=
+ps%253A%252F%252Fcontent.govdelivery.com%252Faccounts%252FHIKAUAICOUNTY%252=
+Fbulletins%252F3615354%253Futm_medium%253Demail%2526utm_source%253Dgovdeliv=
+ery%26utm_medium=3Demail%26utm_source=3Dgovdelivery/1/010101a099c95122-ecdf=
+b29d-7a7a-4f26-9564-c865bdf6a257-000000/Vlhpqk8u5iDAk461GGMUfLHTrDxgMPc2cT1=
+dLTdvevU=3D452" target=3D"_blank" rel=3D"noopener" style=3D"-webkit-text-si=
+ze-adjust: 100%; -ms-text-size-adjust: 100%; color: #54c8e8;"></a></p></td>
+    </tr>
+  </table>
+</div>
+<!--[if (gte mso 9)|(IE)]>
+  </td>
+<![endif]-->
+<!--[if (gte mso 9)|(IE)]>
+  </tr>
+  </table>
+<![endif]-->
+      </td>
+    </tr>
+  </table>
+</div>
+<!--[if (gte mso 9)|(IE)]>
+      </td>
+    </tr>
+  </table>
+<![endif]-->
+<!--[if (gte mso 9)|(IE)]>
+  <table width=3D"600" align=3D"center" border=3D"0" cellpadding=3D"0" cell=
+spacing=3D"0">
+    <tr>
+      <td>
+<![endif]-->
+<div class=3D"abe-section-block" data-block-type=3D"FancyBlockSection" data=
+-test=3D"test" data-block-id=3D"175084733">
+  <table class=3D"abe-section-table" width=3D"100%" align=3D"center" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"m=
+ax-width: 600px; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%=
+; border-spacing: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+    <tr id=3D"abe-section-row-d38c0301-2410-46e4-9113-6ff68437b435" class=
+=3D"abe-section-row" style=3D"background-color: #003B8F;" bgcolor=3D"#003B8=
+F">
+      <td style=3D"text-align: center; vertical-align: top; font-size: 0; -=
+webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace=
+: 0pt; mso-table-rspace: 0pt;" align=3D"center" valign=3D"top">
+        <!--[if (gte mso 9)|(IE)]>
+  <table width=3D"100%" align=3D"center" border=3D"0" cellpadding=3D"0" cel=
+lspacing=3D"0" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjus=
+t: 100%; border-spacing: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+    <tr>
+<![endif]-->
+<!--[if (gte mso 9)|(IE)]>
+  <td width=3D"600" valign=3D"top" id=3D"abe-column-block-d40277bd-7de2-412=
+8-a3b4-797205383e04-outlook-only" class=3D"abe-column-block-outlook-only" s=
+tyle=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-tab=
+le-lspace: 0pt; mso-table-rspace: 0pt;">
+<![endif]-->
+<div id=3D"abe-column-block-d40277bd-7de2-4128-a3b4-797205383e04" class=3D"=
+abe-column-block" data-block-type=3D"FancyBlockColumn" data-block-id=3D"175=
+084734" style=3D"width: 100%; box-sizing: border-box; display: inline-block=
+; font-size: 16px; vertical-align: top;">
+  <table width=3D"100%" align=3D"center" border=3D"0" cellpadding=3D"0" cel=
+lspacing=3D"0" role=3D"presentation" style=3D"table-layout: fixed; overflow=
+-wrap: break-word; word-wrap: break-word; text-align: left; -webkit-text-si=
+ze-adjust: 100%; -ms-text-size-adjust: 100%; border-spacing: 0; mso-table-l=
+space: 0pt; mso-table-rspace: 0pt;">
+    <tr>
+      <td class=3D"abe-column-block-padding" id=3D"abe-column-block-d40277b=
+d-7de2-4128-a3b4-797205383e04-padding" style=3D"-webkit-text-size-adjust: 1=
+00%; -ms-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0=
+pt; padding: 15px;">
+<h2 style=3D"line-height: 1.2; color: #FFFFFF; font-family: calibri, candar=
+a, segoe, optima, arial, sans-serif; font-size: 22px; margin: 0 0 0px;"><st=
+rong>News Release</strong></h2>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; color: #ffffff; font-size: 15px; font-family: calibri, canda=
+ra, segoe, optima, arial, sans-serif; margin: 0 0 0px;">For Immediate Relea=
+se: September 12, 2026</p>
+</td>
+    </tr>
+  </table>
+</div>
+<!--[if (gte mso 9)|(IE)]>
+  </td>
+<![endif]-->
+<!--[if (gte mso 9)|(IE)]>
+  </tr>
+  </table>
+<![endif]-->
+      </td>
+    </tr>
+  </table>
+</div>
+<!--[if (gte mso 9)|(IE)]>
+      </td>
+    </tr>
+  </table>
+<![endif]-->
+<!--[if (gte mso 9)|(IE)]>
+  <table width=3D"600" align=3D"center" border=3D"0" cellpadding=3D"0" cell=
+spacing=3D"0">
+    <tr>
+      <td>
+<![endif]-->
+<div class=3D"abe-section-block" data-block-type=3D"FancyBlockSection" data=
+-test=3D"test" data-block-id=3D"175084736">
+  <table class=3D"abe-section-table" width=3D"100%" align=3D"center" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"m=
+ax-width: 600px; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%=
+; border-spacing: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+    <tr id=3D"abe-section-row-9959e65b-86c0-46a4-981e-cd7ba9cade96" class=
+=3D"abe-section-row" style=3D"background-color: #FFFFFF;" bgcolor=3D"#FFFFF=
+F">
+      <td style=3D"text-align: center; vertical-align: top; font-size: 0; -=
+webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace=
+: 0pt; mso-table-rspace: 0pt;" align=3D"center" valign=3D"top">
+        <!--[if (gte mso 9)|(IE)]>
+  <table width=3D"100%" align=3D"center" border=3D"0" cellpadding=3D"0" cel=
+lspacing=3D"0" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjus=
+t: 100%; border-spacing: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+    <tr>
+<![endif]-->
+<!--[if (gte mso 9)|(IE)]>
+  <td width=3D"600" valign=3D"top" id=3D"abe-column-block-8987a8df-2d81-49c=
+9-a831-806fc9989bfa-outlook-only" class=3D"abe-column-block-outlook-only" s=
+tyle=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-tab=
+le-lspace: 0pt; mso-table-rspace: 0pt;">
+<![endif]-->
+<div id=3D"abe-column-block-8987a8df-2d81-49c9-a831-806fc9989bfa" class=3D"=
+abe-column-block" data-block-type=3D"FancyBlockColumn" data-block-id=3D"175=
+084737" style=3D"width: 100%; box-sizing: border-box; display: inline-block=
+; font-size: 16px; vertical-align: top;">
+  <table width=3D"100%" align=3D"center" border=3D"0" cellpadding=3D"0" cel=
+lspacing=3D"0" role=3D"presentation" style=3D"table-layout: fixed; overflow=
+-wrap: break-word; word-wrap: break-word; text-align: left; -webkit-text-si=
+ze-adjust: 100%; -ms-text-size-adjust: 100%; border-spacing: 0; mso-table-l=
+space: 0pt; mso-table-rspace: 0pt;">
+    <tr>
+      <td class=3D"abe-column-block-padding" id=3D"abe-column-block-8987a8d=
+f-2d81-49c9-a831-806fc9989bfa-padding" style=3D"-webkit-text-size-adjust: 1=
+00%; -ms-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0=
+pt; padding: 15px;">
+<table class=3D"govd_hr" cellspacing=3D"0" border=3D"0" align=3D"center" wi=
+dth=3D"100%" cellpadding=3D"0" style=3D"-webkit-text-size-adjust: 100%; -ms=
+-text-size-adjust: 100%; border-spacing: 0; mso-table-lspace: 0pt; mso-tabl=
+e-rspace: 0pt; padding: 0px;"><tr class=3D"govd_hr_inner"><td width=3D"100%=
+" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-=
+table-lspace: 0pt; mso-table-rspace: 0pt;"><hr></td></tr></table>
+<table class=3D"gd_combo_table" width=3D"100%" border=3D"0" cellpadding=3D"=
+0" cellspacing=3D"0" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; border-spacing: 0; mso-table-lspace: 0pt; mso-table-rspace: =
+0pt; table-layout: fixed; overflow-wrap: break-word;">
+  <tr style=3D"vertical-align: top;">
+    <td style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%=
+; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+      <img class=3D"govd_template_image" src=3D"https://content.govdelivery=
+.com/attachments/fancy_images/HIKAUAICOUNTY/2023/03/7331894/4814858/dow-log=
+o-bk_crop.png" style=3D"width: 183px; height: auto; float: left; -ms-interp=
+olation-mode: bicubic; line-height: 1; outline: none; text-decoration: none=
+; max-width: 100%; border: none;" alt=3D"Department of Water County of Kaua=
+`i" width=3D"183" height=3D"151" align=3D"left" hspace=3D"7">
+      <p style=3D"text-align: right; -webkit-text-size-adjust: 100%; -ms-te=
+xt-size-adjust: 100%; line-height: 1.4; font-family: calibri, candara, sego=
+e, optima, arial, sans-serif; font-size: 14px; color: #000000; margin: 0 0 =
+0px;" align=3D"right">=C2=A0</p>
+<p style=3D"text-align: right; -webkit-text-size-adjust: 100%; -ms-text-siz=
+e-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opt=
+ima, arial, sans-serif; font-size: 14px; color: #000000; margin: 0 0 0px;" =
+align=3D"right">=C2=A0</p>
+<p style=3D"text-align: right; -webkit-text-size-adjust: 100%; -ms-text-siz=
+e-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opt=
+ima, arial, sans-serif; font-size: 14px; color: #000000; margin: 0 0 0px;" =
+align=3D"right">DEPARTMENT OF WATER, COUNTY OF KAUA`I</p>
+<p style=3D"text-align: right; -webkit-text-size-adjust: 100%; -ms-text-siz=
+e-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opt=
+ima, arial, sans-serif; font-size: 14px; color: #000000; margin: 0 0 0px;" =
+align=3D"right">4398 PUA LOKE STREET, LIHUE, HI, 96766</p>
+<p style=3D"text-align: right; -webkit-text-size-adjust: 100%; -ms-text-siz=
+e-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opt=
+ima, arial, sans-serif; font-size: 14px; color: #000000; margin: 0 0 0px;" =
+align=3D"right">(808) 245-5455</p>
+<p style=3D"text-align: right; -webkit-text-size-adjust: 100%; -ms-text-siz=
+e-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opt=
+ima, arial, sans-serif; font-size: 14px; color: #000000; margin: 0 0 0px;" =
+align=3D"right">=C2=A0</p>
+    </td>
+  </tr>
+</table>
+<table class=3D"govd_hr" cellspacing=3D"0" border=3D"0" align=3D"center" wi=
+dth=3D"100%" cellpadding=3D"0" style=3D"-webkit-text-size-adjust: 100%; -ms=
+-text-size-adjust: 100%; border-spacing: 0; mso-table-lspace: 0pt; mso-tabl=
+e-rspace: 0pt; padding: 0px;"><tr class=3D"govd_hr_inner"><td width=3D"100%=
+" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-=
+table-lspace: 0pt; mso-table-rspace: 0pt;"><hr></td></tr></table>
+</td>
+    </tr>
+  </table>
+</div>
+<!--[if (gte mso 9)|(IE)]>
+  </td>
+<![endif]-->
+<!--[if (gte mso 9)|(IE)]>
+  </tr>
+  </table>
+<![endif]-->
+      </td>
+    </tr>
+  </table>
+</div>
+<!--[if (gte mso 9)|(IE)]>
+      </td>
+    </tr>
+  </table>
+<![endif]-->
+<!--[if (gte mso 9)|(IE)]>
+  <table width=3D"600" align=3D"center" border=3D"0" cellpadding=3D"0" cell=
+spacing=3D"0">
+    <tr>
+      <td>
+<![endif]-->
+<div class=3D"abe-section-block" data-block-type=3D"FancyBlockSection" data=
+-test=3D"test" data-block-id=3D"175084741">
+  <table class=3D"abe-section-table" width=3D"100%" align=3D"center" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"m=
+ax-width: 600px; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%=
+; border-spacing: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+    <tr id=3D"abe-section-row-939b3437-609c-4978-918f-d4976a5cd4ba" class=
+=3D"abe-section-row" style=3D"background-color: #FFFFFF;" bgcolor=3D"#FFFFF=
+F">
+      <td style=3D"text-align: center; vertical-align: top; font-size: 0; -=
+webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace=
+: 0pt; mso-table-rspace: 0pt;" align=3D"center" valign=3D"top">
+        <!--[if (gte mso 9)|(IE)]>
+  <table width=3D"100%" align=3D"center" border=3D"0" cellpadding=3D"0" cel=
+lspacing=3D"0" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjus=
+t: 100%; border-spacing: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+    <tr>
+<![endif]-->
+<!--[if (gte mso 9)|(IE)]>
+  <td width=3D"600" valign=3D"top" id=3D"abe-column-block-939c4a77-9b6b-49b=
+d-a406-fac426bed222-outlook-only" class=3D"abe-column-block-outlook-only" s=
+tyle=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-tab=
+le-lspace: 0pt; mso-table-rspace: 0pt;">
+<![endif]-->
+<div id=3D"abe-column-block-939c4a77-9b6b-49bd-a406-fac426bed222" class=3D"=
+abe-column-block" data-block-type=3D"FancyBlockColumn" data-block-id=3D"175=
+084742" style=3D"width: 100%; box-sizing: border-box; display: inline-block=
+; font-size: 16px; vertical-align: top;">
+  <table width=3D"100%" align=3D"center" border=3D"0" cellpadding=3D"0" cel=
+lspacing=3D"0" role=3D"presentation" style=3D"table-layout: fixed; overflow=
+-wrap: break-word; word-wrap: break-word; text-align: left; -webkit-text-si=
+ze-adjust: 100%; -ms-text-size-adjust: 100%; border-spacing: 0; mso-table-l=
+space: 0pt; mso-table-rspace: 0pt;">
+    <tr>
+      <td class=3D"abe-column-block-padding" id=3D"abe-column-block-939c4a7=
+7-9b6b-49bd-a406-fac426bed222-padding" style=3D"-webkit-text-size-adjust: 1=
+00%; -ms-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0=
+pt; padding: 15px;">
+<h2 style=3D"text-align: center; line-height: 1.2; font-size: 18px; font-fa=
+mily: calibri, candara, segoe, optima, arial, sans-serif; color: #000000; m=
+argin: 0 0 10px;" align=3D"center">Boil Water Notice canceled for Kilauea o=
+n Sept. 12</h2>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">L=C4=AAHU=CA=BBE =
+=E2=80=93 The Department of Water (DOW) has canceled the precautionary Boil=
+ Water Notice for the Kilauea Water System, effective immediately.</p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">Date: September 12=
+, 2026</p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">To: Consumers of t=
+he Kilauea Water System</p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">Boil Water Notice =
+canceled for Kilauea.</p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">Laboratory results=
+ on the samples collected on September 11, 2026, indicate the water is safe=
+ for consumption. No further customer action is required at this time and c=
+ustomers in the Kilauea area may now resume normal water use.</p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">The Boil Water Not=
+ice was issued as a precautionary measure following the aftermath of Hurric=
+ane Lowell.</p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">For more informati=
+on or to view updates, please visit www.kauaiwater.org.</p>
+<p style=3D"text-align: center; -webkit-text-size-adjust: 100%; -ms-text-si=
+ze-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, op=
+tima, arial, sans-serif; font-size: 14px; color: #000000; margin: 0 0 10px;=
+" align=3D"center">###</p>
+</td>
+    </tr>
+  </table>
+</div>
+<!--[if (gte mso 9)|(IE)]>
+  </td>
+<![endif]-->
+<!--[if (gte mso 9)|(IE)]>
+  </tr>
+  </table>
+<![endif]-->
+      </td>
+    </tr>
+  </table>
+</div>
+<!--[if (gte mso 9)|(IE)]>
+      </td>
+    </tr>
+  </table>
+<![endif]-->
+<!--[if (gte mso 9)|(IE)]>
+  <table width=3D"600" align=3D"center" border=3D"0" cellpadding=3D"0" cell=
+spacing=3D"0">
+    <tr>
+      <td>
+<![endif]-->
+<div class=3D"abe-section-block" data-block-type=3D"FancyBlockSection" data=
+-test=3D"test" data-block-id=3D"175084745">
+  <table class=3D"abe-section-table" width=3D"100%" align=3D"center" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"m=
+ax-width: 600px; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%=
+; border-spacing: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+    <tr id=3D"abe-section-row-3230a443-5a40-4f7c-abf2-c159d3105dd8" class=
+=3D"abe-section-row" style=3D"background-color: #003B8F;" bgcolor=3D"#003B8=
+F">
+      <td style=3D"text-align: center; vertical-align: top; font-size: 0; -=
+webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace=
+: 0pt; mso-table-rspace: 0pt;" align=3D"center" valign=3D"top">
+        <!--[if (gte mso 9)|(IE)]>
+  <table width=3D"100%" align=3D"center" border=3D"0" cellpadding=3D"0" cel=
+lspacing=3D"0" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjus=
+t: 100%; border-spacing: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+    <tr>
+<![endif]-->
+<!--[if (gte mso 9)|(IE)]>
+  <td width=3D"600" valign=3D"top" id=3D"abe-column-block-ad0586b4-1186-443=
+2-9916-04357bbeaac7-outlook-only" class=3D"abe-column-block-outlook-only" s=
+tyle=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-tab=
+le-lspace: 0pt; mso-table-rspace: 0pt;">
+<![endif]-->
+<div id=3D"abe-column-block-ad0586b4-1186-4432-9916-04357bbeaac7" class=3D"=
+abe-column-block" data-block-type=3D"FancyBlockColumn" data-block-id=3D"175=
+084746" style=3D"width: 100%; box-sizing: border-box; display: inline-block=
+; font-size: 16px; vertical-align: top;">
+  <table width=3D"100%" align=3D"center" border=3D"0" cellpadding=3D"0" cel=
+lspacing=3D"0" role=3D"presentation" style=3D"table-layout: fixed; overflow=
+-wrap: break-word; word-wrap: break-word; text-align: left; -webkit-text-si=
+ze-adjust: 100%; -ms-text-size-adjust: 100%; border-spacing: 0; mso-table-l=
+space: 0pt; mso-table-rspace: 0pt;">
+    <tr>
+      <td class=3D"abe-column-block-padding" id=3D"abe-column-block-ad0586b=
+4-1186-4432-9916-04357bbeaac7-padding" style=3D"-webkit-text-size-adjust: 1=
+00%; -ms-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0=
+pt; padding: 15px;">
+<p style=3D"text-align: center; -webkit-text-size-adjust: 100%; -ms-text-si=
+ze-adjust: 100%; line-height: 1.4; color: #FFFFFF; font-family: calibri, ca=
+ndara, segoe, optima, arial, sans-serif; font-size: 14px; margin: 0 0 10px;=
+" align=3D"center"><span style=3D"text-decoration: underline; line-height: =
+1.4;"><strong>Media Contact:</strong></span></p>
+<p style=3D"text-align: center; -webkit-text-size-adjust: 100%; -ms-text-si=
+ze-adjust: 100%; line-height: 1.4; color: #FFFFFF; font-family: calibri, ca=
+ndara, segoe, optima, arial, sans-serif; font-size: 14px; margin: 0 0 10px;=
+" align=3D"center">If you are a member of the media with an inquiry for the=
+ Department of Water, please email=C2=A0<a href=3D"mailto:publicrelations@k=
+auaiwater.org" target=3D"_blank" rel=3D"noopener" style=3D"-webkit-text-siz=
+e-adjust: 100%; -ms-text-size-adjust: 100%; color: #FFFFFF;">publicrelation=
+s@kauaiwater.org</a>. Mahalo.</p>
+<p style=3D"text-align: center; -webkit-text-size-adjust: 100%; -ms-text-si=
+ze-adjust: 100%; line-height: 1.4; color: #FFFFFF; font-family: calibri, ca=
+ndara, segoe, optima, arial, sans-serif; font-size: 14px; margin: 0 0 10px;=
+" align=3D"center"><strong><a href=3D"https://links-2.govdelivery.com/CL0/h=
+ttps:%2F%2Fwww.kauaiwater.org%2F%3Futm_medium=3Demail%26utm_source=3Dgovdel=
+ivery/1/010101a099c95122-ecdfb29d-7a7a-4f26-9564-c865bdf6a257-000000/h2J05t=
+XyyCKqYTBe5aHu9Zgl4l1lsLPf_ZfPj5JCUSA=3D452" target=3D"_blank" rel=3D"noope=
+ner" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; c=
+olor: #FFFFFF;">Visit Our Website</a> =E2=80=A2 <a href=3D"https://links-2.=
+govdelivery.com/CL0/https:%2F%2Fwww.kauaiwater.kouwai.org%2Flogin%3Futm_med=
+ium=3Demail%26utm_source=3Dgovdelivery/1/010101a099c95122-ecdfb29d-7a7a-4f2=
+6-9564-c865bdf6a257-000000/muD4BjPN-NPCwE7JtIAQ8oNaTcfeNdwbxlh9c7OU7XE=3D45=
+2" target=3D"_blank" rel=3D"noopener" style=3D"-webkit-text-size-adjust: 10=
+0%; -ms-text-size-adjust: 100%; color: #FFFFFF;">Pay Your Bill</a> =E2=80=
+=A2=C2=A0<a href=3D"https://links-2.govdelivery.com/CL0/https:%2F%2Fwww.kau=
+aiwater.org%2Fcontact-us%2F%3Futm_medium=3Demail%26utm_source=3Dgovdelivery=
+/1/010101a099c95122-ecdfb29d-7a7a-4f26-9564-c865bdf6a257-000000/drTkbyJDY75=
+ueZeaM7kVSgY2c8thwKzyoL5hblhqQHY=3D452" target=3D"_blank" rel=3D"noopener" =
+style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; color:=
+ #FFFFFF;">Contact Us</a></strong></p>
+</td>
+    </tr>
+  </table>
+</div>
+<!--[if (gte mso 9)|(IE)]>
+  </td>
+<![endif]-->
+<!--[if (gte mso 9)|(IE)]>
+  </tr>
+  </table>
+<![endif]-->
+      </td>
+    </tr>
+  </table>
+</div>
+<!--[if (gte mso 9)|(IE)]>
+      </td>
+    </tr>
+  </table>
+<![endif]-->
+<!--[if (gte mso 9)|(IE)]>
+  <table width=3D"600" align=3D"center" border=3D"0" cellpadding=3D"0" cell=
+spacing=3D"0">
+    <tr>
+      <td>
+<![endif]-->
+<div class=3D"abe-section-block" data-block-type=3D"FancyBlockSection" data=
+-test=3D"test" data-block-id=3D"175084748">
+  <table class=3D"abe-section-table" width=3D"100%" align=3D"center" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"m=
+ax-width: 600px; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%=
+; border-spacing: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+    <tr id=3D"abe-section-row-b8f371e6-7dbc-49ce-b567-090adc267b5f" class=
+=3D"abe-section-row" style=3D"background-color: #FFFFFF;" bgcolor=3D"#FFFFF=
+F">
+      <td style=3D"text-align: center; vertical-align: top; font-size: 0; -=
+webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace=
+: 0pt; mso-table-rspace: 0pt;" align=3D"center" valign=3D"top">
+        <!--[if (gte mso 9)|(IE)]>
+  <table width=3D"100%" align=3D"center" border=3D"0" cellpadding=3D"0" cel=
+lspacing=3D"0" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjus=
+t: 100%; border-spacing: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+    <tr>
+<![endif]-->
+<!--[if (gte mso 9)|(IE)]>
+  <td width=3D"600" valign=3D"top" id=3D"abe-column-block-2308d983-f0fa-4f9=
+8-9464-1c85601fc5df-outlook-only" class=3D"abe-column-block-outlook-only" s=
+tyle=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-tab=
+le-lspace: 0pt; mso-table-rspace: 0pt;">
+<![endif]-->
+<div id=3D"abe-column-block-2308d983-f0fa-4f98-9464-1c85601fc5df" class=3D"=
+abe-column-block" data-block-type=3D"FancyBlockColumn" data-block-id=3D"175=
+084749" style=3D"width: 100%; box-sizing: border-box; display: inline-block=
+; font-size: 16px; vertical-align: top;">
+  <table width=3D"100%" align=3D"center" border=3D"0" cellpadding=3D"0" cel=
+lspacing=3D"0" role=3D"presentation" style=3D"table-layout: fixed; overflow=
+-wrap: break-word; word-wrap: break-word; text-align: left; -webkit-text-si=
+ze-adjust: 100%; -ms-text-size-adjust: 100%; border-spacing: 0; mso-table-l=
+space: 0pt; mso-table-rspace: 0pt;">
+    <tr>
+      <td class=3D"abe-column-block-padding" id=3D"abe-column-block-2308d98=
+3-f0fa-4f98-9464-1c85601fc5df-padding" style=3D"-webkit-text-size-adjust: 1=
+00%; -ms-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0=
+pt; padding: 15px;"><img class=3D"govd_template_image" src=3D"https://conte=
+nt.govdelivery.com/attachments/fancy_images/HIKAUAICOUNTY/2023/06/7805773/4=
+814859/k2czefev_crop.png" style=3D"width: 571px; height: auto; -ms-interpol=
+ation-mode: bicubic; line-height: 1; outline: none; text-decoration: none; =
+max-width: 100%; border: none;" alt=3D"DOW wave" width=3D"571" height=3D"80=
+"></td>
+    </tr>
+  </table>
+</div>
+<!--[if (gte mso 9)|(IE)]>
+  </td>
+<![endif]-->
+<!--[if (gte mso 9)|(IE)]>
+  </tr>
+  </table>
+<![endif]-->
+      </td>
+    </tr>
+  </table>
+</div>
+<!--[if (gte mso 9)|(IE)]>
+      </td>
+    </tr>
+  </table>
+<![endif]-->
+</td>
+    <td style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%=
+; mso-table-lspace: 0pt; mso-table-rspace: 0pt;"></td>
+  </tr>
+</table>
+</td></tr></table>
+ =20
+
+
+<div id=3D"mail_footer">
+    <table width=3D"100%" cellspacing=3D"0" cellpadding=3D"0" align=3D"cent=
+er">
+<tbody>
+<tr>
+<td align=3D"center" width=3D"100%">
+<!--[if mso]>
+<table width=3D"600" align=3D"center" cellpadding=3D"0" cellspacing=3D"0" s=
+tyle=3D"width:600px;">
+<tr>
+<td>
+<![endif]-->
+<div style=3D"margin: 0 auto; max-width: 600px; width: 100%;">
+<table style=3D"border-collapse: collapse;" width=3D"100%" cellspacing=3D"0=
+" cellpadding=3D"0" align=3D"center">
+<tbody>
+<tr>
+<td style=3D"font-family: arial, helvetica, sans-serif !important; font-siz=
+e: 13px; text-align: center; padding: 10px 20px 5px 20px;" align=3D"center"=
+>
+<p><font face=3D"arial,helvetica,sans-serif"><a href=3D"https://links-2.gov=
+delivery.com/CL0/http:%2F%2Fwww.kauai.gov%2F%3Futm_medium=3Demail%26utm_sou=
+rce=3Dgovdelivery/1/010101a099c95122-ecdfb29d-7a7a-4f26-9564-c865bdf6a257-0=
+00000/Q18--eWqS5lO6zP-CZAgAxe496MeoTV7ocv-qMhkjq8=3D452" target=3D"_blank" =
+title=3D"Homepage for the County of Kaua'i" rel=3D"noopener"><img src=3D"ht=
+tps://content.govdelivery.com/attachments/fancy_images/HIKAUAICOUNTY/2023/0=
+3/7331894/dow-logo-bk_original.png" alt=3D"Department of Water County of Ka=
+ua`i" width=3D"125" height=3D"104"></a></font></p>
+<p><font face=3D"arial,helvetica,sans-serif">Stay Connected with=C2=A0</fon=
+t><font face=3D"arial,helvetica,sans-serif"><span>the Kaua=E2=80=98i Depart=
+ment of Water:</span></font></p>
+</td>
+</tr>
+<tr>
+<td><img src=3D"https://content.govdelivery.com/attachments/fancy_images/HI=
+KAUAICOUNTY/2022/10/6585480/border_original.png" alt=3D"" width=3D"600" hei=
+ght=3D"30"></td>
+</tr>
+<tr>
+<td style=3D"padding: 10px 20px;" align=3D"center"><font face=3D"arial,helv=
+etica,sans-serif"><a href=3D"https://links-2.govdelivery.com/CL0/http:%2F%2=
+Fwww.facebook.com%2Fpages%2FKauaiWater%2F187286144664429%3Futm_medium=3Dema=
+il%26utm_source=3Dgovdelivery/1/010101a099c95122-ecdfb29d-7a7a-4f26-9564-c8=
+65bdf6a257-000000/ZNMR4HSkKzaxU964HOMrf0UCH1XY6_JIhZwdX0qhNME=3D452" target=
+=3D"_blank" rel=3D"noopener"><img src=3D"https://content.govdelivery.com/at=
+tachments/fancy_images/implementation/2016/02/754187/facebook_original.png"=
+ alt=3D"Facebook" width=3D"32"></a> =C2=A0 =C2=A0 =C2=A0<a href=3D"https://=
+links-2.govdelivery.com/CL0/https:%2F%2Fpublic.govdelivery.com%2Faccounts%2=
+FHIKAUAICOUNTY%2Fsubscriber%2Fnew/1/010101a099c95122-ecdfb29d-7a7a-4f26-956=
+4-c865bdf6a257-000000/2isiiqF6iq1RTIaIA3mIobdfFn2RXSLjg0uROpSbHYg=3D452" ta=
+rget=3D"_blank" rel=3D"noopener"><img src=3D"https://content.govdelivery.co=
+m/attachments/fancy_images/implementation/2016/02/754150/govdelivery_origin=
+al.jpg" alt=3D"Govdelivery" width=3D"32" style=3D"width: 32px; height: auto=
+;"></a></font></td>
+</tr>
+<tr>
+<td><img src=3D"https://content.govdelivery.com/attachments/fancy_images/HI=
+KAUAICOUNTY/2022/10/6585480/border_original.png" alt=3D"" width=3D"600" hei=
+ght=3D"30"></td>
+</tr>
+<tr>
+<td style=3D"text-align: center; font-family: arial, helvetica, sans-serif;=
+ font-size: 13px; padding: 10px 20px 20px 20px;">
+<font face=3D"arial,helvetica,sans-serif">SUBSCRIBER SERVICES:</font><br><f=
+ont face=3D"arial,helvetica,sans-serif"><a href=3D"https://links-2.govdeliv=
+ery.com/CL0/https:%2F%2Fpublic.govdelivery.com%2Faccounts%2FHIKAUAICOUNTY%2=
+Fsubscriber%2Fedit%3Fpreferences=3Dtrue%23tab1/1/010101a099c95122-ecdfb29d-=
+7a7a-4f26-9564-c865bdf6a257-000000/auN_DPPCCFOxVOqG5V3kjQMKhU6yY31PBLc_qHlX=
+2LY=3D452" title=3D"Manage Subscriptions">Manage Subscriptions</a> =C2=A0|=
+=C2=A0=C2=A0<a href=3D"https://links-2.govdelivery.com/CL0/https:%2F%2Fsubs=
+criberhelp.govdelivery.com%2F/1/010101a099c95122-ecdfb29d-7a7a-4f26-9564-c8=
+65bdf6a257-000000/T9bApCmTvWTPNC3-xfoE56NM5WqUn8z4Cj5QAORmMN0=3D452">Help</=
+a></font>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!--[if mso]>
+</td>
+</tr>
+</table>
+<![endif]-->
+</td>
+</tr>
+</tbody>
+</table>
+<style type=3D"text/css">body .abe-section-table {max-width:601px !importan=
+t;} body .abe-column-block {min-height: 5px;}</style>
+
+</div>
+<div id=3D"tagline">
+    <table style=3D"border-collapse: collapse; margin: 0px auto; width: 100=
+%;" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">
+<tbody>
+<tr>
+<td style=3D"padding: 0 10px 0 10px;" valign=3D"top">
+<table class=3D"mobile-tagline" style=3D"border-collapse: collapse; margin:=
+ 0px auto; width: 100%;" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" a=
+lign=3D"right">
+<tbody>
+<tr>
+<td style=3D"padding: 10px 0 0 0;" colspan=3D"2" valign=3D"top"><hr></td>
+</tr>
+<tr>
+<td style=3D"padding: 10px 5px 10px 0;" align=3D"left" valign=3D"top"><span=
+ style=3D"color: #757575; font-size: 10px; font-family: arial, helvetica, s=
+ans-serif;">This email was sent to subscriber@example.com using Granic=
+us Communications Cloud on behalf of: County of Kaua'i, Hawai'i =C2=B7 4444=
+ Rice Street =C2=B7 Lihu=CA=BBe, Kaua=CA=BBi, Hawai=CA=BBi 96766</span></td=
+>
+<td style=3D"width: 95px; padding-top: 10px;" align=3D"right" valign=3D"top=
+" width=3D"95"><a href=3D"https://links-2.govdelivery.com/CL0/https:%2F%2Fg=
+ranicus.com%2Fsolution%2Fdigital-communication-engagement%2F%3Futm_medium=
+=3Demail%26utm_source=3Dgovdelivery/1/010101a099c95122-ecdfb29d-7a7a-4f26-9=
+564-c865bdf6a257-000000/AD55xoVJQ9KJ5JGPvmyM6ZzXysGEbocmIaxA7NnM6PI=3D452" =
+target=3D"_blank" rel=3D"noopener"> <img src=3D"https://content.govdelivery=
+.com/images/govd-logo-dark.png" border=3D"0" alt=3D"Granicus Communications=
+ logo" width=3D"95" height=3D"27" align=3D"right"> </a></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+
+<img alt=3D"" src=3D"https://links-2.govdelivery.com/CI0/010101a099c95122-e=
+cdfb29d-7a7a-4f26-9564-c865bdf6a257-000000/8A4O18WbexHEOYohdzn_sUBPE-se2xQh=
+85dwiubDyQs=3D452" style=3D"display: none; width: 1px; height: 1px;">
+</body>
+</html>
+
+--===============4200769259700752155==--
+
+--===============1522106539268163397==--

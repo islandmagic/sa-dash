@@ -1,0 +1,2409 @@
+Return-Path: 
+ <subscriber@example.com>
+X-Original-To: owner@example.com
+Delivered-To: x21416063@pdx1-sub0-mail-mx213.dreamhost.com
+Received: from postfix-inbound-5.inbound.mailchannels.net
+ (inbound-egress-10.mailchannels.net [23.83.212.2])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest
+ SHA256)
+	(No client certificate requested)
+	by pdx1-sub0-mail-mx213.dreamhost.com (Postfix) with ESMTPS id
+ 4hkSWG3bClz3SR5
+	for <owner@example.com>; Mon, 14 Sep 2026 20:42:02 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; d=mailchannels.net; s=arc-2022; cv=none;
+	t=1789443722;
+	b=NUnD9fEhwyotw4dGqrWOV7bNcr+1ea+ZvsI+sfdTj7ePMbpZltyQoW3Xw+tTbglKNXim2j
+	o0UrkGI2giabK6dTO12YtNfvaCcMt/3Wb9YUCHDfsIqXtGDS3U7PobSLa6o5NdNb/spIhy
+	f3AOzQPT2sQZZdE3nqbZJtMCnWshTl7BGPyZrvXAbBawNuHmtTG31guuiOFCrAETVOvv/E
+	cd1W36WWY6nWCPIQhEEPqIjrpdTEeWG50rXnl3o80Te3BL9jYTqz4T1qXg7uQjC+IwRLib
+	8oPgFWPx0sASxpNEXJZO/SMAYtnru3vluDYs68YnURWkP7JhCC6CQ7mU0hNu6Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net;
+	s=arc-2022; t=1789443722;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 dkim-signature; bh=YmAiwwTCOxNR4sRrhVjUFvN6y8d+Q6XKr1a3vA3kp8I=;
+	b=Hbvg/ONgTj27O/7QylCKtMLNeMRQB1HC/Y9L6yz6QrnNXkuX60zhbM0RCzw/1WMYVOVO5w
+	uWxqhO6TAdz1msDpaYEIJ2WUf7sv/ZAXdjZCtoFFqesy08fgDoAId0pshMZx0Auv3pfrQ7
+	/OMU0AyhNG0tw1Cv+AZu8Jb0CasZwZn5eTskvyV8LiF1xhn48pcYu7V+fUKqiZ7Cn/21WK
+	ZqEgOe7eVIQLIsvAvHqM1TBsngrrOHgwQ2wBXz79VcoovAVkjA5CaPjdgcVeG3+Lqk1t1T
+	LhN1gRaj1ZCAaEC4f+sHPSnOMky4rWR/mhlaFXI5q1DjvayfTJBMf7JRE4ea1g==
+ARC-Authentication-Results: i=1;
+	inbound-rspamd-64698fd584-2q6dd;
+	none
+X-Spam-Reason: confirmed_spam
+X-VR-STATUS: SPAM
+X-Message-ID: vwuUuxsGThrrze74wlwNpRxT
+Received: from outbound.st.icloud.com (st-2003e-snip4-3.eps.apple.com
+ [57.103.77.194])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+	by 100.100.221.224 (trex/8.0.2);
+	Tue, 15 Sep 2026 03:42:02 +0000
+Authentication-Results: inbound.mailchannels.net;
+ spf=pass
+ smtp.mailfrom=subscriber@example.com;
+ dkim=pass header.d=icloud.com;
+ dmarc=pass (policy=quarantine; pct=100; status=pass);
+ arc=none
+Received-SPF: pass (dmarc-service-fbc5884c8-t8sdj: domain of icloud.com
+ designates 57.103.77.194 as permitted sender) client-ip=57.103.77.194;
+ envelope-from=subscriber@example.com;
+ helo=outbound.st.icloud.com;
+Received: from outbound.st.icloud.com (unknown [127.0.0.2])
+	by p00-icloudmta-asmtp-us-east-1a-20-percent-2 (Postfix) with ESMTPS id
+ 06DFA1800096
+	for <owner@example.com>; Tue, 15 Sep 2026 03:41:56 +0000 (UTC)
+X-ICL-RepId: 01a0a328-3724-7604-b139-636ba090831b
+X-ICL-Out-Info: 
+ HUtFAUMEWwJACUgATUQeDx5WFlZNRAJCTUwWWANYHFxQXBwOXQZbA0AIGQMMBFkKQg5PUUBSUwUSXU5SWhpTUUQIVQcIBV8fSAhAA0APWQtBD0EKWQVbCkIUSANdB1sCL1gMbA9YHlwTXCdDGFUHWxNmH1wbUw5eGU8dQRRoCF0dZkFYFwAbQBhLCUpZB1gELwwdAV0BWlATeRFQAVgeVl5aF15NUQ8PGVoUXBhTRVEfVFhBDgpaEhhcFFxQWB5GElYNXQkZGEZeUBtfAkIPHBNWFRMdQxkPKwhKBEMHRQJeCyUTCVNWWxNVF0YJGQhdHQIIRg9bAlFeXhdFCVIHWwZcCkpDVARfS1QdQB5WDFseXh5SD0UCUV5aF15NWgJWTQVIAl0GWwMRCRkAXw9ZBUdbVVZVAAlWRlhPHlVUXwNdDR0BWRpTA0gJVQtfDloESQBMAV0PWR9ACUgDXQcrRwMUD1YeQ0YAXlQdQB5WDFseXh5SD0UCUV5aF15TFx9LAFxFWwBS
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com; s=1a1hai;
+ t=1789443720; x=1792035720; bh=YmAiwwTCOxNR4sRrhVjUFvN6y8d+Q6XKr1a3vA3kp8I=;
+ h=Content-Type:MIME-Version:From:To:Subject:Message-ID:Date:X-ICLOUD-HME:x-icloud-hme;
+ b=TdUZXCOEqYhDDn6sJUKMzkWPSFU8iHqliK6NHeTFIwcASL+isAvZFQDKFWqogh/xCcTje8pUsak+D5ikZgnP3Klh6R1fGRKB/ErhN7DqstPuEz9pKnUZMLwi10tKSbkKXiurZlcNqGlmBwIJf6eFs88kHY3h+SGMSDWvC1ljBYksQzlm+KWTqRBV2CLFWnmQeE7mlx5WpexMM0uBVk8pL4lTpO1DKnzXEeuE0cMURgW1ngWBNGJKl/9SdzLXmT0e9RBbTYmCCR1jM+EpMDpHFwhmKPVJ+5F51yydQ0MONOabhwq2CK8b5VA03ecrDj+MZVx1acv3NftbMmLGA0BBig==
+Received: from
+ p00-icloudmta-smtpin-us-east-1a-100-percent-13.p00-icloudmta-smtpin-vip.icloud-mail-production.svc.kube.us-east-1a.k8s.cloud.apple.com
+ (unknown [100.81.28.104])
+	by p00-icloudmta-asmtp-us-east-1a-20-percent-2 (Postfix) with ESMTP id
+ 3100F1800210
+	for <owner@example.com>; Tue, 15 Sep 2026 03:41:56 +0000 (UTC)
+Received: from mailer018136.govd2.service.govdelivery.com
+ (mailer018136.govd2.service.govdelivery.com [66.179.18.136])
+	by p00-icloudmta-smtpin-us-east-1a-100-percent-13 (Postfix) with ESMTPS id
+ D9BE8C000CA
+	for <owner@example.com>; Tue, 15 Sep 2026 03:41:54 +0000 (UTC)
+X-ICL-Info: 
+ GAtbRVYDBVFFSlVHSgQEUVUKE0oWX1gHVQoPB0UGAExETl9ZSQgYU0ZPRhIcDQZTRUhWRhkAV1FHQVRAT1IbB01OBBNOUQFPTRpSRlUEU1BBVF5GQAAbWkdAV0FBCQJQRUFUWkgABlJFSSYVF0VYARBXFgIaXF8BWx4JARxVWgsDHBQOVlNZD1UfAkoIRVQOHBpIEBdGUgcZEBASCkkYARoURgUbDUMMERYIElZZWBYQHgMFSkl2CxYVCQIcHlUNGFkOEhRfCw8UEAoSCgAHWkRKUFkfX0AGR1cVEgpGXwEQVwEYDlRTDhwPAwUBHlUNGFkWAwoNWwMcFQMFSAEOU0ZPSBAXRlJQWwoDBQ5ZVQdbHgkBHFVaCwMcFA5WU1kPVR0CSghFVA4cGkgQF0ZSBxkQEBIKSRgBGhRdGh1DRQMSEAgQHlFUEBwaSBQXXRYPHB1bS0gBBlNFSAdHGQMEWkdOURVVVQ5VFx1QFk8dDgFBSEtDHQICT01IXkdVCARbRE9fTkwCBlpHVFZHSAAGUjUMFVoPVUUWWEtIGh1DRQMSEAgQHlFUEBwaSBQXXQg=
+X-ICL-Score: 2.33303302423
+Authentication-Results: bimi.icloud.com;
+ bimi=skipped reason="insufficient dmarc"
+X-ARC-Info: policy=fail; arc=none; r1=-20; r2=0
+Authentication-Results: arc.icloud.com; arc=none
+Authentication-Results: dmarc.icloud.com;
+ dmarc=pass header.from=public.govdelivery.com
+X-DMARC-Policy: 
+ v=DMARC1;p=none;pct=100;rua=mailto:client-dmarc-reports@granicus.com
+X-DMARC-Info: pass=pass; dmarc-policy=none; s=r1; d=r1;
+ pdomain=public.govdelivery.com
+Authentication-Results: dkim-verifier.icloud.com;
+ dkim=pass header.d=public.govdelivery.com header.i=@public.govdelivery.com
+ header.b=rRx3UV+z
+Authentication-Results: dkim-verifier.icloud.com;
+ dkim=pass header.d=messagingfabric.com header.i=@messagingfabric.com
+ header.b=EgddkzcM
+Received-SPF: pass (spf.icloud.com: domain of
+ 010101a0a328277b-e87bd6a7-8c41-4e24-8180-829169942082-000000@bounce.public.govdelivery.com
+ designates 66.179.18.136 as permitted sender) receiver=spf.icloud.com;
+ client-ip=66.179.18.136; helo=mailer018136.govd2.service.govdelivery.com;
+ envelope-from=010101a0a328277b-e87bd6a7-8c41-4e24-8180-829169942082-000000@bounce.public.govdelivery.com
+Authentication-Results: spf.icloud.com;
+ spf=pass (spf.icloud.com: domain of 010101a0a328277b-e87bd6a7-8c41-4e24-8180-829169942082-000000@bounce.public.govdelivery.com
+ designates 66.179.18.136 as permitted sender)
+ smtp.mailfrom=010101a0a328277b-e87bd6a7-8c41-4e24-8180-829169942082-000000@bounce.public.govdelivery.com
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=bycwgb45wwj55sk7rdow3owdrgsfwlvx; d=public.govdelivery.com;
+	t=1789443713;
+	h=Content-Type:MIME-Version:From:To:List-Unsubscribe-Post:List-Unsubscribe:Subject:Message-ID:Date;
+	bh=F/2wkrP6uRYkIqkNLbL4gcZp7obns7pJJTZmnTa2pO8=;
+	b=rRx3UV+z0IBmcE4kE3Jc/2NkM8OEy4kmtbj2LWb/1u9oUtq8Czbb/HkzapZYXfld
+	6WQf22qjkEjzXX6qAIdNno+pvz2KjwWAJFAUjBEScNKypiKpvat7qFQ7GDkTKhhQiQ7
+	9DRfi7lko3gNlewTaRLg/XWqcqH6uTTiFonCN+vHuJyCOQcLTuEpk7tl3iFmRsEvlxN
+	tgZhOBemcGg+IRkGhaZ5k5Z56OIkeslcI63FFkKpv01NV/uQHvw/RleSX8luIhZPdjb
+	hmhiXGD6x5qH8Y7WAA03SUMWqrsf0BkNievkCOuux8PrCuHGklU6O6HdHTIJ9HekqJw
+	EzHOOwi8pQ==
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=sdwquzu2a4io5lomurvncbcrpryr42dn; d=messagingfabric.com;
+	t=1789443713;
+	h=Content-Type:MIME-Version:From:To:List-Unsubscribe-Post:List-Unsubscribe:Subject:Message-ID:Date:Feedback-ID;
+	bh=F/2wkrP6uRYkIqkNLbL4gcZp7obns7pJJTZmnTa2pO8=;
+	b=EgddkzcM7gh/SEQ02XrfUhWwulXBFSn6ES0eRrfGQxFU7ppbDllHTui009c/eLC6
+	CM9rfp+hqRiQFKxJPkulZQ/DHxsSy6gOOW3OeO9qLJI/JBE0t5bmo7Qzj+9NkFx6yMe
+	SvtgQZNdUknIKk4lOSZ/qRaFNYezXiWznAvM6jQo=
+Content-Type: multipart/mixed; boundary="===============2176458299630799074=="
+MIME-Version: 1.0
+From: County of Kaua'i Public Information Officer
+ <subscriber@example.com>
+To: Hide My Email <subscriber@example.com>
+X-Accountcode: HIKAUAICOUNTY
+open_flag: true
+Errors-To: messages@public.govdelivery.com
+bulletin_recipient_id: 298194799352
+x-subscriber: 
+ 3.HeCpalQvTO4sj1BQyr6EacSfyd76TBUWjnzJVo4IZmGrPOiRf/0KNg+tm/uPvG8N58ehJacK+2vXl2dqtN0fGE8meDWaHDxoDtMIXfadT6exdXADApOKBi40HJLgYR7JwAiDQgdvjtlZ6sk9Qpvv3bNw2smN62jo/jNn8kK7biM=
+subscriber_id: 3266934028
+emailMessageID: 20260915.35086511::BP3
+Subject: =?UTF-8?Q?NR_09-14-26_(Sept._14,_5:40_p.m.,_County_o?=
+ =?UTF-8?Q?f_Kaua=CA=BBi,_Hurricane_Lowell_Recovery_Update)?=
+Message-ID: 
+ <010101a0a328277b-e87bd6a7-8c41-4e24-8180-829169942082-000000@us-west-2.messagingfabric.com>
+Date: Tue, 15 Sep 2026 03:41:52 +0000
+Feedback-ID: 
+ ::1.us-west-2.p6s0dOSD/Bh2d1AskdlzeN80W4aso1ZElT3TVYD5Rrc=:AmazonSES
+X-SES-Outgoing: 2026.09.15-66.179.18.136
+X-Authority-Info: v=2.4 cv=aP/9aL9m c=1 sm=1 tr=0 ts=6aa8be83 b=1
+ cx=c_apl:c_pps a=B8SzppU2YHLjQ3UITHxLyg==:117 a=B8SzppU2YHLjQ3UITHxLyg==:17
+ a=VdqzKS8jKosA:10 a=Hgn-wnRn1-cA:10 a=5KLPUuaC_9wA:10 a=dPXAZiqniPcA:10
+ a=vQc1MeNWzUAA:10 a=yxO3Op9WAAAA:8 a=XnoCedKuAAAA:8 a=NtHhroY1AAAA:8
+ a=9UIfGfqDAAAA:8 a=JluTUKjhAAAA:8 a=V6fVEiFnAAAA:8 a=q2D0g6YMAAAA:8
+ a=aL8G184JAAAA:8 a=_ryhgWulAAAA:8 a=3j4BkbkPAAAA:8 a=iSr4k8VBAAAA:8
+ a=ntbQbcm-AAAA:8 a=swhdZ-9hAAAA:20 a=mBzfr2SRAAAA:20 a=lsjAoYQ1AAAA:20
+ a=v3ZZPjhaAAAA:8 a=GJfCBtTwrpg8JEvVPpEA:9 a=QEXdDO2ut3YA:10 a=SSmOFEACAAAA:8
+ a=peOEGmqhPSwlZQX48t8A:9 a=wbM4Mg9k-2sgLwvm:21 a=frz4AuCg-hUA:10
+ a=_W_S_7VecoQA:10 a=lqcHg5cX4UMA:10 a=st593PRPTKxbPFxVl_yk:22
+ a=aqnkehlsbvi4rMOTyzZG:22 a=PhLQAhmWWhz9ywNXUJO8:22 a=ql7eORDLPjU2_0RC1Tf0:22
+ a=n514xYrAxjDciwOpZk__:22 a=ZRotOSCIFzmfarpGsZhZ:22 a=3uTIV9BBxpjPo0-TrMRy:22
+ a=3atw5OWOkEyUYxWXRIe3:22 a=YTyRf_RLSPtcKS1z__Xa:22 a=y8pJV2o37YGaVF6cmC4P:22
+ a=ZT_8zCgGubuJgGonBfBE:22 a=5yU3S35YU4bGjq-dph-N:22 a=Bho9c0fBagfJEIQBS7DQ:22
+ cc=ntf
+X-Proofpoint-GUID: LkS7M83PDsOoIk9lfGHKoG_9XMPw17hK
+X-Proofpoint-ORIG-GUID: LkS7M83PDsOoIk9lfGHKoG_9XMPw17hK
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE1MDA0OSBTYWx0ZWRfX8gFt6ppXVTSi
+ RuaJTJX9mvDdlSZYDBm/2dD143VvUUPfcgf6Uo65ei1l2nn6GeKIHa3IFfmlq91cWfHx4jot7dY
+ 4lcErJcu7dyX9+6IWvyK2yUTTWukr3iARlKQVka3+sy2hTmlxef2QNjyhr28URqdx+XWncWucj/
+ H1mBTuM5naRoJsqxxkMAC5eAwBG29s+l0VDPvP/9BtD1Kc/Qt/beXo2KDIfDHdgsqmNortlW6lJ
+ FSR7ANCLTmRFcJyFbg4VG67ai8ttYHTk0iFjRiEkc7rMKPmxUeAFjEno5XRmuZHG5CCTdNovuYV
+ erfXVFwv6UfN4ijeciZWLEvOUJtcbyetZCnSFY3qAaiuiK3jEIgjLn1M9awRGc=
+X-JNJ: 
+ AAAAAAABTuVpTO26m+ML2ViFLiFEEBNRczfnROEnnas114+nQ1eGCw+XxhbRSmVn5HSfcpM8MpYt6XMJZO0AwEZJGvnQyButF0o9Isy8TCFt5uZFIetHvJueN2mFGKr78oP1tFrUXe9+kfO5RFQMibZdwLczZZz1yFni41COq5SMIL86L0SiXGqQvlXq4ZGm72gCsrm49/gW/r1+p4hzYIp5n0AAvLXV2mrRbDOl09nQiPUr/0OCkhDK8D7dMsCDErTv5GqxWfj1/vPQMhtYKeTFFFNTq/xaArZtFpnesIsM7iIMUp/9rRSu/csGpkKUqxFjrXx72W513HeBsBdDyMOYWsI54s5miNonrOIDD14HoHwk3a3k2g9ElPLVgf6m3L1KWT3lbzNQroxyY2f+73zQ02X60dE1BKwrKX9Xh1MovhZVN54k74lm6ATJLg/92VH7AI+/01ppJeLkh6PRMgCj1GVEXR2FON5q4oDRlUl/WiC79/CCUrRi0RvbzOYyF5DeAYDGn+joRyJvoKwbm6PJ/nb42z3mBEgzhOwY+d/3/o3E8hPlfCVAf7vRycE5QZM1+FcCp//ZOfjzyQzwkO3LGoNLDbM4CF+FOEt3AtkYLJQV775uEz6+gkCnbCJ/BoWD8XWSxhSKm1F4zY7r7m2NpTTi6IskNSrUaCfQQJw99QXdxFeR5l2a9N0oTJ1upnL1/iBEXA0ZuSceKBWDT3jmi7cE5sRe7TgqhWhEFv2oaDahMca5dbJbiMoLLzhbd9Z3TX87UzatkOfVc2y12JBRaI2LRjvVAsUy8Xm8FRIKt3eP2MQ6nWFfPuwkdsV3+kLz6kXb4H1CrZP4MjsfLP7wJ8TrU8voZiuv3Q==
+X-ICLOUD-HME: p=subscriber@example.com; d=content.govdelivery.com;
+ f=owner@example.com; r=to; s=CountyofKauaiPIO@public.govdelivery.com
+X-Authority-Info-Out: v=2.4 cv=LIhrgZW9 c=1 sm=1 tr=0 ts=6aa8be85
+ cx=c_apl:c_pps:t_out a=5Riet6wZK7K2T4M952qk+w==:117
+ a=B8SzppU2YHLjQ3UITHxLyg==:17 a=VdqzKS8jKosA:10 a=Hgn-wnRn1-cA:10
+ a=5KLPUuaC_9wA:10 a=WFvD4bZU1dUA:10 a=x7bEGLp0ZPQA:10 a=TV_7lOxdCeAA:10
+ a=dPXAZiqniPcA:10 a=vQc1MeNWzUAA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=yxO3Op9WAAAA:8 a=XnoCedKuAAAA:8 a=NtHhroY1AAAA:8 a=9UIfGfqDAAAA:8
+ a=JluTUKjhAAAA:8 a=V6fVEiFnAAAA:8 a=q2D0g6YMAAAA:8 a=aL8G184JAAAA:8
+ a=_ryhgWulAAAA:8 a=3j4BkbkPAAAA:8 a=iSr4k8VBAAAA:8 a=ntbQbcm-AAAA:8
+ a=swhdZ-9hAAAA:20 a=mBzfr2SRAAAA:20 a=lsjAoYQ1AAAA:20 a=v3ZZPjhaAAAA:8
+ a=GJfCBtTwrpg8JEvVPpEA:9 a=QEXdDO2ut3YA:10 a=SSmOFEACAAAA:8
+ a=peOEGmqhPSwlZQX48t8A:9 a=wbM4Mg9k-2sgLwvm:21 a=frz4AuCg-hUA:10
+ a=_W_S_7VecoQA:10 a=lqcHg5cX4UMA:10 a=st593PRPTKxbPFxVl_yk:22
+ a=aqnkehlsbvi4rMOTyzZG:22 a=PhLQAhmWWhz9ywNXUJO8:22 a=ql7eORDLPjU2_0RC1Tf0:22
+ a=n514xYrAxjDciwOpZk__:22 a=ZRotOSCIFzmfarpGsZhZ:22 a=3uTIV9BBxpjPo0-TrMRy:22
+ a=3atw5OWOkEyUYxWXRIe3:22 a=YTyRf_RLSPtcKS1z__Xa:22 a=y8pJV2o37YGaVF6cmC4P:22
+ a=ZT_8zCgGubuJgGonBfBE:22 a=5yU3S35YU4bGjq-dph-N:22 a=Bho9c0fBagfJEIQBS7DQ:22
+ cc=ntf
+X-JNJ: 
+ AAAAAAABKe+uIt8hn+ORVMskQFOQv8U0qFIgUqaX3pfYOdcsxRnAPytYDOpQ8eDk6AJTS4rac9p3X4rN+Wu0Qjk3YiixTdswuDZKvzYE1DZG5wysiWTtC+/ABV1zr/aRULfOfnDlUM0Bu2KuZ8ndM7rmBTd8bUbnRQicw09/4rwmqh7SHmImCBilpFgGVtun6Qpcagc3l+gZOwJcJlJaasFdTGx5mGC57FtrvQTk6wteiJvalLqnxADSflHHa7dwW5eLpYg/SaNKNcniiJ6gxGQSkZKkqaBHZTStvV87GaQBHmAsfOrOszcAgIqGF4eBtb/E+6kkYuqVvBuLk+Ny7b/1AXZSxzchRjd/hOSXbW9qh4n1yoqYgfehi0oG8ydhizKjn3E9DS2KzxigXTK/aJajRBzBDRIcb3/g4G8kqVVBCz7MVjcxiyofiVvt+TAlqLulAmH71K80NE+si/vtEVO/JZkIcddbYrYVpPwDcuT4XB/7C3QD1nQtsmteiLB0WNa7mLIbADYHlju4rTvqaSWnZFxavmOo9A7wDBjND0qNs6u2xRK9+SfoCiFFmWgrBvVMENh0v2R9KDuO1rVXYwFH+Ea7/1+qoLIx0Ygf5899/v0xostnNR22fw/7jYQa7F5HxsWefqNr/Wjr0+dXd12cEyq9jJcVOJfTNx5U9ugGZg2TWd5y67ALK5dm9YS/U6LDU2e0rfwYbSkniR+DTL5UjTpSgoDBKAs9BU6E/ojGlP4HfnKkiXUj4N9sFiJ2V1EVlubPhtgAsUSTHa6e2GYkDv71cEsuoR240PAJAJXiy4NX7KnaPdnh8uYrNpr2VlN4SPrll2iRhQg0KK79YO1jC92dW1kv5sP5WwYsD/Rpc6Ad1vqv8tl2yMx1AMFmIsWCHrr32I4j8gQgQDVkYMEnasiVJdTICcdZmGa0qgMzXQ75ZiO5fSSDUkxWiSjIwdvzYj/sGUySm8GMnl98WDNHyuM=
+
+--===============2176458299630799074==
+Content-Type: multipart/alternative;
+ boundary="===============9139840317557587237=="
+MIME-Version: 1.0
+
+--===============9139840317557587237==
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+
+Having trouble viewing this email?=C2=A0 [ https://content.govdelivery.com/=
+accounts/HIKAUAICOUNTY/bulletins/0 ]View it as a Web page [ https://content=
+.govdelivery.com/accounts/HIKAUAICOUNTY/bulletins/42ab2f5 ].
+
+=20
+=20
+=20
+=20
+
+County of Kaua'i, State of Hawaii=20
+
+*DEREK S.K. KAWAKAMI,=C2=A0*MAYOR
+*REIKO MATSUYAMA*, MANAGING DIRECTOR
+
+=20
+=20
+=20
+=20
+
+*News Release*
+
+For Immediate Release: September 14, 2026
+
+=20
+=20
+=20
+=20
+
+________________________________________________________________________
+
+
+=20
+
+RISE Logo (transparent background)=20
+
+COUNTY OF KAUA=E2=80=98I
+
+KAUA=E2=80=98I EMERGENCY MANAGEMENT AGENCY
+
+ELTON USHIO, ADMINISTRATOR
+
+=C2=A0(808) 241-1800
+
+=20
+
+________________________________________________________________________
+
+
+=20
+=20
+=20
+=20
+=20
+
+Sept. 14, 5:40 p.m., County of Kaua=CA=BBi, Hurricane Lowell Recovery Update
+
+L=C4=AAHU=CA=BBE =E2=80=93 A week after Hurricane Lowell caused wreckage ac=
+ross Kaua=E2=80=99i, communities are moving into the next phase of recovery.
+
+The County is preparing to open two disaster recovery resource centers for =
+storm victims to provide vital information on how to rebuild. Meanwhile, as=
+ critical infrastructure is restored, the County will be closing two more o=
+f its Hurricane Refuge Areas.
+
+The county has also launched a new website where storm victims can find for=
+ms necessary to submit damage assessments and file for disaster tax relief.
+
+New assessment numbers show 10 homes have been destroyed and 64 suffered ma=
+jor damage.
+
+The total number of resident-submitted damage assessments has surpassed 620.
+
+For recovery help, resources and updates, visit www.kauairecovers.org [ htt=
+ps://www.kauairecovers.org/?utm_medium=3Demail&utm_source=3Dgovdelivery ].
+
+For any non-emergency information, call Aloha United Way at 211.
+
+=C2=A0
+
+*Evening update - at a glance*
+
+
+  * Tropical Storm Norbert weakening with no severe impacts expected at thi=
+s time=20
+  * Disaster recovery resource centers opening tomorrow=20
+  * Two Hurricane Refuge Areas closing Wednesday=20
+  * K=C4=ABlauea and Hanalei Elementary schools prepare to reopen=20
+  * New website launched to submit damage assessments and file for tax reli=
+ef=20
+  * Traffic delays continue as transmission line repairs push forward on th=
+e North Shore=20
+  * Regular bus and paratransit service resumed today=20
+  * Normal weekday islandwide refuse collection resumes in accessible areas=
+=20
+  * Power is restored for 81% of the island=20
+  * Island-wide water conservation notice remains in effect=20
+
+=C2=A0
+
+*Resource Centers Opening Tomorrow (NEW UPDATE)*
+
+The County is set to open two disaster recovery resource centers tomorrow, =
+Sept. 15; one on the North Shore at the Hanalei Neighborhood Center, the ot=
+her on the south shore at the K=C5=8Dloa Neighborhood Center.=C2=A0
+
+
+Both centers will operate from 9 a.m. to 6 p.m. Residents can meet with non=
+profit and agency staff in-person for assistance with recovery needs.
+
+
+The Hanalei initiative will operate an hourly shuttle starting 9 a.m. from =
+The Hanalei Colony resort in Wainiha to the Hanalei Resource Center.
+
+
+=C2=A0
+
+*Refuge areas closing (NEW UPDATE)*
+
+With power restoration efforts progressing across Kaua=E2=80=98i, one Refug=
+e Area will remain open while two others will close on Wednesday, Sept. 16,=
+ at 10 a.m.
+
+
+  * Closing: Kal=C4=81heo and L=C4=ABhu=CA=BBe neighborhood centers=20
+  * Remaining open: K=C4=ABlauea Neighborhood Center, 2460 Keneke St.=20
+
+
+Individuals utilizing refuge areas have the opportunity to connect with cas=
+e management and other wraparound services and support.=C2=A0
+
+=C2=A0
+
+*More support incoming for power restoration (NEW UPDATE)*
+
+Nearly 200 utility workers from Kaua=CA=BBi, O=CA=BBahu, Big Island, Maui a=
+nd the mainland are deployed across the island enhancing restoration effort=
+s, and more are on the way.
+
+With KIUC receiving support from Hawaiian Electric, Southern California Edi=
+son, and HMS, this week about 250 workers are expected to be on assignment =
+focused on restoring electricity.
+
+Teams have isolated a section of a transmission line from Princeville to Wa=
+iniha, allowing crews to safely complete repairs in the affected area while=
+ simultaneously reenergizing surrounding areas where power can be safely re=
+stored.
+
+This work is part of restoration work prompting a lane closure on the Hanal=
+ei side of the Hanalei Bridge.
+
+No timeline is available on when repairs will be complete or when the lane =
+closure will be lifted. Drivers should be prepared for extended delays.
+
+Flaggers will be on site for traffic control, but please use extra caution =
+around coned work areas.
+
+We appreciate everyone=E2=80=99s patience, support, and cooperation while t=
+his important work is completed. Please slow down, stay alert, and be safe.=
+=C2=A0
+
+Power is now restored for about 81% of the island as of Monday afternoon. R=
+oughly 6.7K members are still without power. Peak outages impacted about 33=
+,000 customers. KIUC has 13 of 16 transmission lines back up.
+
+Stay away from downed utility lines and call 911 if a line is an immediate =
+danger. Update your contact information with KIUC at 808-246-4300 to get al=
+erts. Outage map: kiuc.outagemap.coop [ https://kiuc.outagemap.coop/?utm_me=
+dium=3Demail&utm_source=3Dgovdelivery#/ ]
+
+=C2=A0
+
+*Most schools reopen across the island (NEW UPDATE)*
+
+Most Kaua=CA=BBi public schools reopened Monday, Sept. 14; K=C4=ABlauea and=
+ Hanalei elementary schools remained closed amid power restoration but now =
+have set reopening dates and contingency plans to operate without electrici=
+ty.
+
+Reopening schedule:
+
+
+  * Tuesday, Sept. 15: K=C4=ABlauea Elementary reopening to students and st=
+aff=20
+  * Friday, Sept. 18 Hanalei Elementary reopening to employees only=20
+  * Monday, Sept. 21: Hanalei Elementary reopening to students=20
+
+While Hanalei Elementary remains closed, the school is working to provide i=
+nstructional packets and shelf-stable meal boxes for families to pick up th=
+is week. Details will be provided as information becomes available.
+
+
+(Chiefess Kamakahelei Middle School reopening Sept. 15 after pre-Lowell sch=
+eduled closure on Monday, Sept. 14)=C2=A0
+
+All Kaua=CA=BBi public schools will provide nonperishable, shelf-stable mea=
+ls.
+
+Transportation: Special education curb-to-curb service will continue. Some =
+regular education bus routes remain unavailable or may operate with modifie=
+d service due to road conditions and detours. Affected families have been c=
+ontacted by schools.
+
+Information: Hawai=CA=BBi Department of Education school and transportation=
+ updates at https://hawaiipublicschools.org/2026-kauai-reopen-hurricane-low=
+ell/ [ https://hawaiipublicschools.org/2026-kauai-reopen-hurricane-lowell/?=
+utm_medium=3Demail&utm_source=3Dgovdelivery ] andhttps://hawaiipublicschool=
+s.org/2026-kauai-school-bus-route-information/ [ https://hawaiipublicschool=
+s.org/2026-kauai-school-bus-route-information/?utm_medium=3Demail&utm_sourc=
+e=3Dgovdelivery ].
+
+=C2=A0
+
+*Tax relief and damage assessments (NEW UPDATE)*
+
+To help make it easier for storm victims to submit damage assessments and f=
+ile for disaster tax relief, the County has launched a new website with lin=
+ks to necessary forms and documents.
+
+Visit kauai.gov/lowellrealproperty [ http://kauai.gov/lowellrealproperty?ut=
+m_medium=3Demail&utm_source=3Dgovdelivery ] if your home, business, farm, o=
+r ranch suffered damage from Hurricane Lowell.
+
+To submit a tax remission form:
+
+
+  * Email: rpassessment@kauai.gov=20
+
+  * Mail: L=C4=ABhu=CA=BBe Civic Center, 4444 Rice Street, Suite 454, L=C4=
+=ABhu=CA=BBe, HI 96766=20
+  * In-person drop box: L=C4=ABhu=CA=BBe Civic Center Mo=E2=80=98ikeha Rotu=
+nda=C2=A0=20
+
+The deadline to submit for a tax remission is June 30, 2027.
+
+=C2=A0
+
+*Mold warning*
+
+After severe flooding, health officials are urging residents to address any=
+ mold growth in their homes and on their personal items.
+
+Exposure can elicit serious health risks including breathing problems, alle=
+rgic reactions, and infections.=C2=A0
+
+If you plan to clean any areas growing mold, remember the following tips:
+
+
+  * Wear protective gear such as gloves, N-95 masks, boots and eye protecti=
+on during cleanup.=20
+  * Before cleaning, lightly spray moldy surfaces with a soapy solution to =
+reduce airborne particles.=20
+  * Clean with soap and water, then disinfect using a bleach solution (1 cu=
+p bleach to 1 gallon of water). Open windows and doors first and air out ro=
+oms after cleaning. Never mix bleach with other cleaning products containin=
+g ammonia. Use as directed on the label.=20
+  * Allow at least 15 minutes of contact time, then rinse and dry thoroughl=
+y.=20
+  * Discard materials that cannot be safely cleaned, including carpets, mat=
+tresses, upholstery and other porous items wet for more than 24=E2=80=9348 =
+hours, or items that cannot be laundered or disinfected.=C2=A0=20
+
+=C2=A0
+
+*Household waste and recycling (NEW UPDATE)*
+
+Normal weekday islandwide refuse collection will continue throughout the we=
+ek to accessible areas. Residents should only place their carts out for col=
+lection on their designated pickup day.
+
+The County is now operating seven sites to dispose of storm debris and refu=
+se.
+
+Please check which materials are accepted at your intended disposal site be=
+fore making the trip. Each site will only accept specific materials, so the=
+ public is advised to appropriately separate their waste items before makin=
+g any drop-offs.
+
+Site hours, locations, and accepted materials are as follows:
+
+
+  * Hanalei Transfer Station | 7:15 a.m. - 3:15 p.m. | K=C5=ABhi=C5=8D High=
+way | Debris=20
+  * K=C4=ABlauea Temporary Site | 7:15 a.m. - 3:15 p.m. | K=C5=ABhi=C5=8D H=
+ighway | Green Waste (located past the K=C4=ABlauea roundabout and across t=
+he street from Anaina Hou Community Park)=20
+  * Kapa=CA=BBa Temporary Site | 7:15 a.m. - 3:15 p.m. | Kapa=CA=BBa Bypass=
+ Road | Green Waste (accessed via the southbound (one-way) lane of Kapa=CA=
+=BBa Bypass Road adjacent to theBryan J. Baptiste Sports Complex)=20
+  * Kapa=CA=BBa Transfer Station | 7:15 a.m. - 3:15 p.m. | Kahau Road | Deb=
+ris=20
+  * L=C4=ABhu=CA=BBe Transfer Station | 7:15 a.m. - 3:15 p.m. | Ahukini Roa=
+d | Debris & Green Waste=C2=A0=20
+  * Hanap=C4=93p=C4=93 Transfer Station | 8:00 a.m. - 3:15 p.m. | Lele Road=
+ | Debris & Green Waste=20
+  * Kekaha Landfill | Residential: 8 a.m. - 4 p.m./Commercial 8 a.m. - 3:30=
+ p.m. | Kaumuali'i Highway - Debris & Green Waste=20
+
+The public is reminded that all debris (not including green waste) must not=
+ be longer than 3 feet.
+
+HI-5 redemption in L=C4=ABhu=CA=BBe has reopened at the Kaua=CA=BBi Resourc=
+e Center and is open Monday through Saturday from 9 a.m. to 5 p.m. (closed =
+from Noon to 1:30 p.m.). Other locations will remain closed until equipment=
+ is repaired.
+
+=C2=A0
+
+*The Kaua=CA=BBi Bus*
+
+Regular bus and paratransit service resumed today and will continue through=
+ the week.
+
+The 900 and 950 Anahola-Waimea express routes will not run this week.=C2=A0
+
+For bus route information, call 808-246-8110 or visit www.kauai.gov/transpo=
+rtation [ https://www.kauai.gov/Government/Departments-Agencies/Transportat=
+ion?utm_medium=3Demail&utm_source=3Dgovdelivery ].
+
+=C2=A0
+
+*Neighborhood Centers closed*
+
+All Neighborhood Centers are closed until further notice. The Department of=
+ Parks and Recreation is temporarily suspending recreational use of these f=
+acilities to support the County=E2=80=99s hurricane response and recovery e=
+fforts.=C2=A0
+
+=C2=A0
+
+*Food distribution:*
+
+Food distributions will continue at the following locations:
+
+
+  * Tuesday, Sept. 15 - Anahola Clubhouse, 3900 Kawelo Street, Anahola | 4 =
+to 6 p.m.=20
+  * Tuesday, Sept. 15 - K=C5=8Dloa Ball Park, Maluhia Road, K=C5=8Dloa | 3 =
+to 5 p.m.=C2=A0=20
+  * Thursday, Sept. 17 - St. Raphael=E2=80=99s Church, 3011 Hapa Road, K=C5=
+=8Dloa | 4:30 to 6 pm=C2=A0=20
+  * Thursday, Sept. 17 - Westside Christian Center, 8041 Kekaha Road, Kekah=
+a | 10 a.m. - 12 p.m.=20
+
+=C2=A0
+
+*County closures:*
+
+
+  * All County parks, campgrounds, and the Wailua Golf Course are closed.=20
+  * The Waimea and Kapa=CA=BBa pools are closed.=20
+  * County board and commission meetings are suspended.=C2=A0=20
+  * The Sept. 16 County Council meeting is canceled.=20
+  * All in-person and counter services at the L=C4=ABhu=CA=BBe Civic Center=
+ are closed through Friday, Sept. 18 following a fire at the K=C4=81pule Bu=
+ilding. Impacted services include Real Property, Planning, building and zon=
+ing, Wastewater, sewer billing, and the DMV, including driver=E2=80=99s lic=
+enses and vehicle registration.=20
+
+=C2=A0
+
+*State road closures (NEW UPDATE)*=C2=A0
+
+
+  * Kaumuali=CA=BBi Highway (Vicinity of Halfway Bridge): Tree/debris remov=
+al ongoing; crews will use the shoulder to minimize traffic impacts.=C2=A0 =
+
+  * K=C5=ABhi=C5=8D Highway (Vicinity of Princeville Transfer Station to Ka=
+paka Street): Tree/Debris removal and one lane shifting. (Tomorrow =E2=80=
+=93 8:30 a.m. - 3:00 p.m.).=20
+  * K=C5=ABhi=C5=8D Highway (Vicinity of Kalihiwai Bridge): Tree/Debris rem=
+oval ongoing and one lane shifting. (Tomorrow =E2=80=93 8:30 a.m. - 3:00 p.=
+m.).=20
+  * Wainiha Bridge #3 (Double bridge on H=C4=81=CA=BBena Side): Repair work=
+ ongoing. Bridge open to local traffic only. 5-ton weight limit.=20
+  * Crews will resume debris clearing under the mauka Wailua River Bridge S=
+ept. 20.=20
+  * K=C5=8Dke=CA=BBe and Waimea Canyon roads are still being cleared.=20
+
+  * Halewili Road is open from the =CA=BBEle=CA=BBele side of Kaumuali=CA=
+=BBi Highway but remains closed from the Kal=C4=81heo side of the highway t=
+o Kaua=CA=BBi Coffee due to downed utility poles.=20
+  * K=C5=ABhi=C5=8D Highway: Princeville to Ke=CA=BBe Beach open to local t=
+raffic only.=20
+
+=C2=A0
+
+*Airport and harbors:*
+
+
+  * L=C4=ABhu=CA=BBe Airport is open and fully operational. Arrive 90 minut=
+es early for interisland flights and two hours early for flights to the con=
+tinent.=20
+  * N=C4=81wiliwili Harbor is open to cargo ships. No cruise ships are comi=
+ng in.=20
+  * Port Allen is open for operations.=C2=A0=20
+
+=C2=A0
+
+*Other closures and advisories:*
+
+
+  * State parks and forest reserves are closed.=20
+  * The Pacific Missile Range Facility has closed its recreation sites and =
+guest pass program.=20
+  * A brown water advisory remains in effect islandwide. Stay out of floodw=
+ater and out of the ocean near stream mouths, drains and harbors. The water=
+ may carry sewage, animal waste, chemicals and debris.=20
+
+More closures are possible as crews continue clearing roads.
+
+=C2=A0
+
+*Department of Water*
+
+An island-wide water conservation notice remains in effect and will be lift=
+ed when KIUC is able to fully restore power islandwide. A timeline is unava=
+ilable at this time.
+
+Please only use water for essential needs.
+
+
+  * Outages can affect pumps and wells, so water may cut out or lose pressu=
+re even if your home is fine.=20
+  * Do not use water if you believe it has been contaminated by flooding.=20
+
+  * To report a water service outage, or leak, call 808-245-5444. Updates a=
+re posted at kauaiwater.org [ https://www.kauaiwater.org/?utm_medium=3Demai=
+l&utm_source=3Dgovdelivery ].=20
+
+=C2=A0
+
+*Post-storm scam warning*
+
+The Kaua=CA=BBi Police Department is reminding residents to remain vigilant=
+ for scams during ongoing recovery from Hurricane Lowell. Be wary of unsoli=
+cited calls, texts, emails, social media messages, or other communications =
+offering assistance or requesting information.=C2=A0
+
+
+  * For verified information regarding Hurricane Lowell recovery, visit the=
+ County of Kaua=CA=BBi=E2=80=99s official channels and KauaiRecovers.org. [=
+ https://www.kauairecovers.org/?utm_medium=3Demail&utm_source=3Dgovdelivery=
+ ]=20
+
+=C2=A0
+
+*Driving*
+
+Police are urging the public to travel only if necessary. Officers are esco=
+rting work crews, and extra traffic is slowing debris removal, power restor=
+ation, and road repairs.
+
+
+  * Skip non-essential travel. This includes general sightseeing and drivin=
+g to view storm damage.=20
+  * Pull to the right and stop when an emergency vehicle approaches.=20
+  * Never follow a police escort or use one to get into a closed area.=20
+
+  * Obey closures, barricades, and directions from officers and flaggers.=20
+  * Treat every dark traffic light as a four-way stop. Lights are out islan=
+dwide.=20
+  * Report hazards like downed lines or blocked roads. Do not stop to take =
+photos.=20
+
+=C2=A0
+
+*Next storm*
+
+State officials are monitoring Tropical Storm Norbert, which is weakening a=
+nd is not expected to bring severe impacts to the Hawaiian Islands at this =
+time. Residents should continue to monitor official forecasts and take the =
+opportunity to review their emergency supplies. For preparedness informatio=
+n, visit ready.hawaii.gov [ https://dod.hawaii.gov/hiema/?utm_medium=3Demai=
+l&utm_source=3Dgovdelivery ].
+
+=C2=A0
+
+*Visitors*
+
+Hawai=CA=BBi is still welcoming visitors but is also urging anyone with upc=
+oming trips to the islands to monitor conditions. The state is also encoura=
+ging travelers with upcoming trips to Kaua=CA=BBi to consider visiting anot=
+her island to allow Kaua=CA=BBi time to heal and recover from Hurricane Low=
+ell.
+
+=C2=A0
+
+*Numbers and resources*
+
+
+  * Kaua=CA=BBi Emergency Management Agency =E2=80=93 kauai.gov/KEMA [ http=
+s://www.kauai.gov/Government/Departments-Agencies/Emergency-Management-Agen=
+cy?utm_medium=3Demail&utm_source=3Dgovdelivery ]=20
+  * National Weather Service =E2=80=93 weather.gov/hfo [ https://www.weathe=
+r.gov/hfo?utm_medium=3Demail&utm_source=3Dgovdelivery ] or 808-245-6001=20
+  * Department of Water =E2=80=93 808-245-5444 or kauaiwater.org [ https://=
+www.kauaiwater.org/?utm_medium=3Demail&utm_source=3Dgovdelivery ]=20
+  * Aloha United Way 211 =E2=80=93 808-275-2000 or AUW211.org=20
+
+Use 911 only for life-threatening emergencies. Calls about weather or road =
+conditions tie up the line and delay help for others. For non-emergencies, =
+call KPD Dispatch at 808-755-8516 or 808-652-7837. KPD=E2=80=99s usual non-=
+emergency line, 808-241-1711, is still down.
+
+To sign up for Everbridge, the County=E2=80=99s emergency notification serv=
+ice, please visit www.kauai.gov/KEMA [ https://www.kauai.gov/Government/Dep=
+artments-Agencies/Emergency-Management-Agency?utm_medium=3Demail&utm_source=
+=3Dgovdelivery ] and click on =E2=80=9CNotification Services.=E2=80=9D You =
+may also text =E2=80=9CKAUAIEMA=E2=80=9D to 888777, or call the Kaua=CA=BBi=
+ Emergency Management Agency=E2=80=99s alternate numbers at 808-726-0702 or=
+ 808-347-9833. The KEMA non-emergency line, 808-241-1800, remains unavailab=
+le due to ongoing outages.
+
+For recovery help, resources, and updates, visit www.kauairecovers.org [ ht=
+tps://www.kauairecovers.org/?utm_medium=3Demail&utm_source=3Dgovdelivery ].
+
+=C2=A0
+
+*Report your damage*
+
+Take photos, write down what was damaged, and file a report at bit.ly/kauai=
+damage [ https://survey123.arcgis.com/share/54d0b90fb9a74a1094e89d9f26b5d75=
+9?utm_medium=3Demail&utm_source=3Dgovdelivery ]. These reports show how muc=
+h of the island was hit and may help Kaua=CA=BBi qualify for state and fede=
+ral aid. The state has asked for a fast-tracked presidential disaster decla=
+ration. You still need to file a claim with your insurance company.
+
+Report roadway and public space hazards at bit.ly/kauaihazard [ https://sur=
+vey123.arcgis.com/share/060659e0fd7344d59ccb2056dcbe53f9?utm_medium=3Demail=
+&utm_source=3Dgovdelivery ]. Businesses can report damage at bit.ly/lowelld=
+amage [ https://survey123.arcgis.com/share/f828eb79bd884e6bbc54535007ba9bf9=
+?utm_medium=3Demail&utm_source=3Dgovdelivery ].
+
+###
+
+=20
+=20
+=20
+=20
+
+*Media Contact:
+*
+
+If you are a member of the media with an inquiry for the County of Kaua=E2=
+=80=98i, its departments or representatives, please email the County of Kau=
+a=E2=80=98i's Communications Team at CountyPIO@kauai.gov to ensure a timely=
+ response to your request. Mahalo!
+
+=20
+=20
+=20
+=20
+ =20
+=20
+
+County of Kaua'i, State of Hawaii [ http://www.kauai.gov/?utm_medium=3Demai=
+l&utm_source=3Dgovdelivery ]
+
+Stay Connected with County of Kaua'i, Hawai'i:
+
+  Facebook [ http://www.facebook.com/countyofkauai?utm_medium=3Demail&utm_s=
+ource=3Dgovdelivery ] =C2=A0 =C2=A0 =C2=A0Govdelivery [ https://public.govd=
+elivery.com/accounts/HIKAUAICOUNTY/subscriber/new ]  SUBSCRIBER SERVICES:
+Manage Subscriptions [ https://public.govdelivery.com/accounts/HIKAUAICOUNT=
+Y/subscriber/edit?preferences=3Dtrue#tab1 ] =C2=A0|=C2=A0=C2=A0Help [ https=
+://subscriberhelp.govdelivery.com/ ] =20
+=20
+=20
+body .abe-section-table {max-width:601px !important;} body .abe-column-bloc=
+k {min-height: 5px;}=20
+
+________________________________________________________________________
+
+
+ This email was sent to subscriber@example.com using Granicus Communic=
+ations Cloud on behalf of: County of Kaua'i, Hawai'i =C2=B7 4444 Rice Stree=
+t =C2=B7 Lihu=CA=BBe, Kaua=CA=BBi, Hawai=CA=BBi 96766 Granicus Communicatio=
+ns logo  [ https://granicus.com/solution/digital-communication-engagement/?=
+utm_medium=3Demail&utm_source=3Dgovdelivery ]
+
+--===============9139840317557587237==
+Content-Type: text/html; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns=3D"http://www.w3.org/1999/xhtml" xml:lang=3D"en" lang=3D"en">
+<head>
+<title>    NR 09-14-26 (Sept. 14, 5:40 p.m., County of Kaua=CA=BBi, Hurrica=
+ne Lowell Recovery Update)
+</title>
+    <meta name=3D"viewport" content=3D"initial-scale=3D1.0">
+<meta name=3D"format-detection" content=3D"telephone=3Dno">
+<!--[if (gte mso 9)|(IE)]>
+  <style type=3D"text/css">
+      table {border-collapse: collapse;}
+  </style>
+  <![endif]-->
+<style type=3D"text/css">
+  /* Make columns expand to 100% on small screens */
+  @media only screen and (max-width: 480px) {
+    .abe-column-block {
+      min-width: 100%;
+    }
+  }
+  .abe-section-label {
+    display: none;
+  }
+  /* Disables Apple clients adding blue color and underline to links and ot=
+her text */
+  a[x-apple-data-detectors] {
+    color: inherit !important;
+    text-decoration: none !important;
+    font-size: inherit !important;
+    font-family: inherit !important;
+    font-weight: inherit !important;
+    line-height: inherit !important;
+  }
+</style>
+
+
+</head>
+<body style=3D"margin:0;padding:0;margin:0;padding:0;width:100% !important;=
+">
+
+
+<!--[if (gte mso 9)|(IE)]>
+  <table style=3D"display:none"><tr><td><a name=3D"gd_top" id=3D"gd_top"></=
+a></td></tr></table>
+<![endif]-->
+<a name=3D"gd_top" id=3D"gd_top"></a>
+
+ =20
+
+
+
+ =20
+  <table width=3D"100%" cellpadding=3D"0" cellspacing=3D"0" border=3D"0" al=
+ign=3D"center" class=3D"gd_tbl_wrap"><tr><td style=3D"background-color: #FF=
+FFFF; margin: 0; padding: 0; width: 100% !important" bgcolor=3D"#FFFFFF">
+<table id=3D"flexible-abe-main-table" width=3D"100%" align=3D"center" borde=
+r=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"-webkit-text-size-adju=
+st: 100%; -ms-text-size-adjust: 100%; border-spacing: 0; mso-table-lspace: =
+0pt; mso-table-rspace: 0pt; padding-top: 30px; padding-bottom: 20px;">
+  <tr>
+    <td style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%=
+; mso-table-lspace: 0pt; mso-table-rspace: 0pt;"></td>
+    <!-- centered column -->
+    <td style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%=
+; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+<!--[if (gte mso 9)|(IE)]>
+  <table width=3D"600" align=3D"center" border=3D"0" cellpadding=3D"0" cell=
+spacing=3D"0">
+    <tr>
+      <td>
+<![endif]-->
+<div class=3D"abe-section-block" data-block-type=3D"FancyBlockSection" data=
+-test=3D"test" data-block-id=3D"175183974">
+  <table class=3D"abe-section-table" width=3D"100%" align=3D"center" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"m=
+ax-width: 600px; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%=
+; border-spacing: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+    <tr id=3D"abe-section-row-87c3da46-8617-4ea6-81d1-3cd234a95727" class=
+=3D"abe-section-row" style=3D"background-color: #EEEEEE;" bgcolor=3D"#EEEEE=
+E">
+      <td style=3D"text-align: center; vertical-align: top; font-size: 0; -=
+webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace=
+: 0pt; mso-table-rspace: 0pt;" align=3D"center" valign=3D"top">
+        <!--[if (gte mso 9)|(IE)]>
+  <table width=3D"100%" align=3D"center" border=3D"0" cellpadding=3D"0" cel=
+lspacing=3D"0" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjus=
+t: 100%; border-spacing: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+    <tr>
+<![endif]-->
+<!--[if (gte mso 9)|(IE)]>
+  <td width=3D"600" valign=3D"top" id=3D"abe-column-block-ce60a91d-c979-47d=
+f-9cb9-34afa4d3f45e-outlook-only" class=3D"abe-column-block-outlook-only" s=
+tyle=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-tab=
+le-lspace: 0pt; mso-table-rspace: 0pt;">
+<![endif]-->
+<div id=3D"abe-column-block-ce60a91d-c979-47df-9cb9-34afa4d3f45e" class=3D"=
+abe-column-block" data-block-type=3D"FancyBlockColumn" data-block-id=3D"175=
+183975" style=3D"width: 100%; box-sizing: border-box; display: inline-block=
+; font-size: 16px; vertical-align: top;">
+  <table width=3D"100%" align=3D"center" border=3D"0" cellpadding=3D"0" cel=
+lspacing=3D"0" role=3D"presentation" style=3D"table-layout: fixed; overflow=
+-wrap: break-word; word-wrap: break-word; text-align: left; -webkit-text-si=
+ze-adjust: 100%; -ms-text-size-adjust: 100%; border-spacing: 0; mso-table-l=
+space: 0pt; mso-table-rspace: 0pt;">
+    <tr>
+      <td class=3D"abe-column-block-padding" id=3D"abe-column-block-ce60a91=
+d-c979-47df-9cb9-34afa4d3f45e-padding" style=3D"-webkit-text-size-adjust: 1=
+00%; -ms-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0=
+pt; padding: 15px;"><p style=3D"text-align: center; -webkit-text-size-adjus=
+t: 100%; -ms-text-size-adjust: 100%; line-height: 1.4; color: #666666; font=
+-size: 12px; font-family: calibri, candara, segoe, optima, arial, sans-seri=
+f; margin: 0 0 0px;" align=3D"center">Having trouble viewing this email?=C2=
+=A0<a href=3D"https://links-2.govdelivery.com/CL0/https:%2F%2Fcontent.govde=
+livery.com%2Faccounts%2FHIKAUAICOUNTY%2Fbulletins%2F0/1/010101a0a328277b-e8=
+7bd6a7-8c41-4e24-8180-829169942082-000000/cY4hBjwAxb1RlrirvyYfjvULCeJ0cTpk0=
+ib215aO9gY=3D452" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-ad=
+just: 100%; color: #666666;"></a><a href=3D"https://links-2.govdelivery.com=
+/CL0/https:%2F%2Fcontent.govdelivery.com%2Faccounts%2FHIKAUAICOUNTY%2Fbulle=
+tins%2F42ab2f5/1/010101a0a328277b-e87bd6a7-8c41-4e24-8180-829169942082-0000=
+00/07wZxDCKSdVTy0_-vGq9Xl_gyNaea-M8prSjmfx542E=3D452" target=3D"_blank" rel=
+=3D"noopener" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust=
+: 100%; color: #666666;">View it as a Web page</a>.</p></td>
+    </tr>
+  </table>
+</div>
+<!--[if (gte mso 9)|(IE)]>
+  </td>
+<![endif]-->
+<!--[if (gte mso 9)|(IE)]>
+  </tr>
+  </table>
+<![endif]-->
+      </td>
+    </tr>
+  </table>
+</div>
+<!--[if (gte mso 9)|(IE)]>
+      </td>
+    </tr>
+  </table>
+<![endif]-->
+<!--[if (gte mso 9)|(IE)]>
+  <table width=3D"600" align=3D"center" border=3D"0" cellpadding=3D"0" cell=
+spacing=3D"0">
+    <tr>
+      <td>
+<![endif]-->
+<div class=3D"abe-section-block" data-block-type=3D"FancyBlockSection" data=
+-test=3D"test" data-block-id=3D"175183977">
+  <table class=3D"abe-section-table" width=3D"100%" align=3D"center" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"m=
+ax-width: 600px; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%=
+; border-spacing: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+    <tr id=3D"abe-section-row-beb63454-6906-40a9-a1ed-63148f4a28d3" class=
+=3D"abe-section-row" style=3D"background-color: #FFFFFF;" bgcolor=3D"#FFFFF=
+F">
+      <td style=3D"text-align: center; vertical-align: top; font-size: 0; -=
+webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace=
+: 0pt; mso-table-rspace: 0pt;" align=3D"center" valign=3D"top">
+        <!--[if (gte mso 9)|(IE)]>
+  <table width=3D"100%" align=3D"center" border=3D"0" cellpadding=3D"0" cel=
+lspacing=3D"0" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjus=
+t: 100%; border-spacing: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+    <tr>
+<![endif]-->
+<!--[if (gte mso 9)|(IE)]>
+  <td width=3D"600" valign=3D"top" id=3D"abe-column-block-9d9a1e05-e8ad-49b=
+8-ac99-962485ef4a51-outlook-only" class=3D"abe-column-block-outlook-only" s=
+tyle=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-tab=
+le-lspace: 0pt; mso-table-rspace: 0pt;">
+<![endif]-->
+<div id=3D"abe-column-block-9d9a1e05-e8ad-49b8-ac99-962485ef4a51" class=3D"=
+abe-column-block" data-block-type=3D"FancyBlockColumn" data-block-id=3D"175=
+183978" style=3D"width: 100%; box-sizing: border-box; display: inline-block=
+; font-size: 16px; vertical-align: top;">
+  <table width=3D"100%" align=3D"center" border=3D"0" cellpadding=3D"0" cel=
+lspacing=3D"0" role=3D"presentation" style=3D"table-layout: fixed; overflow=
+-wrap: break-word; word-wrap: break-word; text-align: left; -webkit-text-si=
+ze-adjust: 100%; -ms-text-size-adjust: 100%; border-spacing: 0; mso-table-l=
+space: 0pt; mso-table-rspace: 0pt;">
+    <tr>
+      <td class=3D"abe-column-block-padding" id=3D"abe-column-block-9d9a1e0=
+5-e8ad-49b8-ac99-962485ef4a51-padding" style=3D"-webkit-text-size-adjust: 1=
+00%; -ms-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0=
+pt; padding: 15px;">
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" styl=
+e=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; border-spa=
+cing: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;"><tr><td align=3D"ce=
+nter" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; =
+mso-table-lspace: 0pt; mso-table-rspace: 0pt;"><img class=3D"govd_template_=
+image" src=3D"https://content.govdelivery.com/attachments/fancy_images/HIKA=
+UAICOUNTY/2022/10/6585467/4377169/county-of-kauai-seal-color_crop.png" styl=
+e=3D"width: 134px; height: auto; -ms-interpolation-mode: bicubic; line-heig=
+ht: 1; outline: none; text-decoration: none; max-width: 100%; border: none;=
+" alt=3D"County of Kaua'i, State of Hawaii" width=3D"134" height=3D"134"></=
+td></tr></table>
+<p style=3D"text-align: center; -webkit-text-size-adjust: 100%; -ms-text-si=
+ze-adjust: 100%; line-height: 1.4; font-size: 11px; font-family: calibri, c=
+andara, segoe, optima, arial, sans-serif; color: #000000; margin: 1em 0 10p=
+x;" align=3D"center"><strong>DEREK S.K. KAWAKAMI,=C2=A0</strong>MAYOR<br><s=
+trong>REIKO MATSUYAMA</strong>, MANAGING DIRECTOR</p>
+</td>
+    </tr>
+  </table>
+</div>
+<!--[if (gte mso 9)|(IE)]>
+  </td>
+<![endif]-->
+<!--[if (gte mso 9)|(IE)]>
+  </tr>
+  </table>
+<![endif]-->
+      </td>
+    </tr>
+  </table>
+</div>
+<!--[if (gte mso 9)|(IE)]>
+      </td>
+    </tr>
+  </table>
+<![endif]-->
+<!--[if (gte mso 9)|(IE)]>
+  <table width=3D"600" align=3D"center" border=3D"0" cellpadding=3D"0" cell=
+spacing=3D"0">
+    <tr>
+      <td>
+<![endif]-->
+<div class=3D"abe-section-block" data-block-type=3D"FancyBlockSection" data=
+-test=3D"test" data-block-id=3D"175183981">
+  <table class=3D"abe-section-table" width=3D"100%" align=3D"center" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"m=
+ax-width: 600px; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%=
+; border-spacing: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+    <tr id=3D"abe-section-row-d38c0301-2410-46e4-9113-6ff68437b435" class=
+=3D"abe-section-row" style=3D"background-color: #FFFFFF;" bgcolor=3D"#FFFFF=
+F">
+      <td style=3D"text-align: center; vertical-align: top; font-size: 0; -=
+webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace=
+: 0pt; mso-table-rspace: 0pt;" align=3D"center" valign=3D"top">
+        <!--[if (gte mso 9)|(IE)]>
+  <table width=3D"100%" align=3D"center" border=3D"0" cellpadding=3D"0" cel=
+lspacing=3D"0" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjus=
+t: 100%; border-spacing: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+    <tr>
+<![endif]-->
+<!--[if (gte mso 9)|(IE)]>
+  <td width=3D"600" valign=3D"top" id=3D"abe-column-block-d40277bd-7de2-412=
+8-a3b4-797205383e04-outlook-only" class=3D"abe-column-block-outlook-only" s=
+tyle=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-tab=
+le-lspace: 0pt; mso-table-rspace: 0pt;">
+<![endif]-->
+<div id=3D"abe-column-block-d40277bd-7de2-4128-a3b4-797205383e04" class=3D"=
+abe-column-block" data-block-type=3D"FancyBlockColumn" data-block-id=3D"175=
+183982" style=3D"width: 100%; box-sizing: border-box; display: inline-block=
+; font-size: 16px; vertical-align: top;">
+  <table width=3D"100%" align=3D"center" border=3D"0" cellpadding=3D"0" cel=
+lspacing=3D"0" role=3D"presentation" style=3D"table-layout: fixed; overflow=
+-wrap: break-word; word-wrap: break-word; text-align: left; -webkit-text-si=
+ze-adjust: 100%; -ms-text-size-adjust: 100%; border-spacing: 0; mso-table-l=
+space: 0pt; mso-table-rspace: 0pt;">
+    <tr>
+      <td class=3D"abe-column-block-padding" id=3D"abe-column-block-d40277b=
+d-7de2-4128-a3b4-797205383e04-padding" style=3D"-webkit-text-size-adjust: 1=
+00%; -ms-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0=
+pt; padding: 15px;">
+<h2 style=3D"line-height: 1.2; font-family: calibri, candara, segoe, optima=
+, arial, sans-serif; font-size: 22px; color: #000000; margin: 0 0 0px;"><st=
+rong>News Release</strong></h2>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-size: 15px; font-family: calibri, candara, segoe, optim=
+a, arial, sans-serif; color: #000000; margin: 0 0 0px;">For Immediate Relea=
+se: September 14, 2026</p>
+</td>
+    </tr>
+  </table>
+</div>
+<!--[if (gte mso 9)|(IE)]>
+  </td>
+<![endif]-->
+<!--[if (gte mso 9)|(IE)]>
+  </tr>
+  </table>
+<![endif]-->
+      </td>
+    </tr>
+  </table>
+</div>
+<!--[if (gte mso 9)|(IE)]>
+      </td>
+    </tr>
+  </table>
+<![endif]-->
+<!--[if (gte mso 9)|(IE)]>
+  <table width=3D"600" align=3D"center" border=3D"0" cellpadding=3D"0" cell=
+spacing=3D"0">
+    <tr>
+      <td>
+<![endif]-->
+<div class=3D"abe-section-block" data-block-type=3D"FancyBlockSection" data=
+-test=3D"test" data-block-id=3D"175183984">
+  <table class=3D"abe-section-table" width=3D"100%" align=3D"center" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"m=
+ax-width: 600px; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%=
+; border-spacing: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+    <tr id=3D"abe-section-row-9959e65b-86c0-46a4-981e-cd7ba9cade96" class=
+=3D"abe-section-row" style=3D"background-color: #FFFFFF;" bgcolor=3D"#FFFFF=
+F">
+      <td style=3D"text-align: center; vertical-align: top; font-size: 0; -=
+webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace=
+: 0pt; mso-table-rspace: 0pt;" align=3D"center" valign=3D"top">
+        <!--[if (gte mso 9)|(IE)]>
+  <table width=3D"100%" align=3D"center" border=3D"0" cellpadding=3D"0" cel=
+lspacing=3D"0" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjus=
+t: 100%; border-spacing: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+    <tr>
+<![endif]-->
+<!--[if (gte mso 9)|(IE)]>
+  <td width=3D"600" valign=3D"top" id=3D"abe-column-block-8987a8df-2d81-49c=
+9-a831-806fc9989bfa-outlook-only" class=3D"abe-column-block-outlook-only" s=
+tyle=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-tab=
+le-lspace: 0pt; mso-table-rspace: 0pt;">
+<![endif]-->
+<div id=3D"abe-column-block-8987a8df-2d81-49c9-a831-806fc9989bfa" class=3D"=
+abe-column-block" data-block-type=3D"FancyBlockColumn" data-block-id=3D"175=
+183985" style=3D"width: 100%; box-sizing: border-box; display: inline-block=
+; font-size: 16px; vertical-align: top;">
+  <table width=3D"100%" align=3D"center" border=3D"0" cellpadding=3D"0" cel=
+lspacing=3D"0" role=3D"presentation" style=3D"table-layout: fixed; overflow=
+-wrap: break-word; word-wrap: break-word; text-align: left; -webkit-text-si=
+ze-adjust: 100%; -ms-text-size-adjust: 100%; border-spacing: 0; mso-table-l=
+space: 0pt; mso-table-rspace: 0pt;">
+    <tr>
+      <td class=3D"abe-column-block-padding" id=3D"abe-column-block-8987a8d=
+f-2d81-49c9-a831-806fc9989bfa-padding" style=3D"-webkit-text-size-adjust: 1=
+00%; -ms-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0=
+pt; padding: 15px;">
+<table class=3D"govd_hr" cellspacing=3D"0" border=3D"0" align=3D"center" wi=
+dth=3D"100%" cellpadding=3D"0" style=3D"-webkit-text-size-adjust: 100%; -ms=
+-text-size-adjust: 100%; border-spacing: 0; mso-table-lspace: 0pt; mso-tabl=
+e-rspace: 0pt; padding: 0px;"><tr class=3D"govd_hr_inner"><td width=3D"100%=
+" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-=
+table-lspace: 0pt; mso-table-rspace: 0pt;"><hr></td></tr></table>
+<table class=3D"gd_combo_table" width=3D"100%" border=3D"0" cellpadding=3D"=
+0" cellspacing=3D"0" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; border-spacing: 0; mso-table-lspace: 0pt; mso-table-rspace: =
+0pt; table-layout: fixed; overflow-wrap: break-word;">
+  <tr style=3D"vertical-align: top;">
+    <td style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%=
+; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+      <img class=3D"govd_template_image" src=3D"https://content.govdelivery=
+.com/attachments/fancy_images/HIKAUAICOUNTY/2023/05/7625580/4749061/rise-lo=
+go-no-white-background_crop.png" style=3D"width: 82px; height: auto; float:=
+ left; -ms-interpolation-mode: bicubic; line-height: 1; outline: none; text=
+-decoration: none; max-width: 100%; border: none;" alt=3D"RISE Logo (transp=
+arent background)" width=3D"82" height=3D"82" align=3D"left" hspace=3D"7">
+      <p style=3D"text-align: right; -webkit-text-size-adjust: 100%; -ms-te=
+xt-size-adjust: 100%; line-height: 1.4; font-family: calibri, candara, sego=
+e, optima, arial, sans-serif; font-size: 14px; color: #000000; margin: 0 0 =
+0px;" align=3D"right">COUNTY OF KAUA=E2=80=98I</p>
+<p style=3D"text-align: right; -webkit-text-size-adjust: 100%; -ms-text-siz=
+e-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opt=
+ima, arial, sans-serif; font-size: 14px; color: #000000; margin: 0 0 0px;" =
+align=3D"right">KAUA=E2=80=98I EMERGENCY MANAGEMENT AGENCY</p>
+<p style=3D"text-align: right; -webkit-text-size-adjust: 100%; -ms-text-siz=
+e-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opt=
+ima, arial, sans-serif; font-size: 14px; color: #000000; margin: 0 0 0px;" =
+align=3D"right">ELTON USHIO, ADMINISTRATOR</p>
+<p style=3D"text-align: right; -webkit-text-size-adjust: 100%; -ms-text-siz=
+e-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opt=
+ima, arial, sans-serif; font-size: 14px; color: #000000; margin: 0 0 0px;" =
+align=3D"right">=C2=A0(808) 241-1800</p>
+    </td>
+  </tr>
+</table>
+<table class=3D"govd_hr" cellspacing=3D"0" border=3D"0" align=3D"center" wi=
+dth=3D"100%" cellpadding=3D"0" style=3D"-webkit-text-size-adjust: 100%; -ms=
+-text-size-adjust: 100%; border-spacing: 0; mso-table-lspace: 0pt; mso-tabl=
+e-rspace: 0pt; padding: 0px;"><tr class=3D"govd_hr_inner"><td width=3D"100%=
+" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-=
+table-lspace: 0pt; mso-table-rspace: 0pt;"><hr></td></tr></table>
+</td>
+    </tr>
+  </table>
+</div>
+<!--[if (gte mso 9)|(IE)]>
+  </td>
+<![endif]-->
+<!--[if (gte mso 9)|(IE)]>
+  </tr>
+  </table>
+<![endif]-->
+      </td>
+    </tr>
+  </table>
+</div>
+<!--[if (gte mso 9)|(IE)]>
+      </td>
+    </tr>
+  </table>
+<![endif]-->
+<!--[if (gte mso 9)|(IE)]>
+  <table width=3D"600" align=3D"center" border=3D"0" cellpadding=3D"0" cell=
+spacing=3D"0">
+    <tr>
+      <td>
+<![endif]-->
+<div class=3D"abe-section-block" data-block-type=3D"FancyBlockSection" data=
+-test=3D"test" data-block-id=3D"175183989">
+  <table class=3D"abe-section-table" width=3D"100%" align=3D"center" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"m=
+ax-width: 600px; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%=
+; border-spacing: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+    <tr id=3D"abe-section-row-939b3437-609c-4978-918f-d4976a5cd4ba" class=
+=3D"abe-section-row" style=3D"background-color: #FFFFFF;" bgcolor=3D"#FFFFF=
+F">
+      <td style=3D"text-align: center; vertical-align: top; font-size: 0; -=
+webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace=
+: 0pt; mso-table-rspace: 0pt;" align=3D"center" valign=3D"top">
+        <!--[if (gte mso 9)|(IE)]>
+  <table width=3D"100%" align=3D"center" border=3D"0" cellpadding=3D"0" cel=
+lspacing=3D"0" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjus=
+t: 100%; border-spacing: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+    <tr>
+<![endif]-->
+<!--[if (gte mso 9)|(IE)]>
+  <td width=3D"600" valign=3D"top" id=3D"abe-column-block-939c4a77-9b6b-49b=
+d-a406-fac426bed222-outlook-only" class=3D"abe-column-block-outlook-only" s=
+tyle=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-tab=
+le-lspace: 0pt; mso-table-rspace: 0pt;">
+<![endif]-->
+<div id=3D"abe-column-block-939c4a77-9b6b-49bd-a406-fac426bed222" class=3D"=
+abe-column-block" data-block-type=3D"FancyBlockColumn" data-block-id=3D"175=
+183990" style=3D"width: 100%; box-sizing: border-box; display: inline-block=
+; font-size: 16px; vertical-align: top;">
+  <table width=3D"100%" align=3D"center" border=3D"0" cellpadding=3D"0" cel=
+lspacing=3D"0" role=3D"presentation" style=3D"table-layout: fixed; overflow=
+-wrap: break-word; word-wrap: break-word; text-align: left; -webkit-text-si=
+ze-adjust: 100%; -ms-text-size-adjust: 100%; border-spacing: 0; mso-table-l=
+space: 0pt; mso-table-rspace: 0pt;">
+    <tr>
+      <td class=3D"abe-column-block-padding" id=3D"abe-column-block-939c4a7=
+7-9b6b-49bd-a406-fac426bed222-padding" style=3D"-webkit-text-size-adjust: 1=
+00%; -ms-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0=
+pt; padding: 15px;">
+<h2 class=3D"bulletin_subject" style=3D"text-align: center; line-height: 1.=
+2; font-size: 18px; font-family: calibri, candara, segoe, optima, arial, sa=
+ns-serif; color: #000000; margin: 0 0 10px;" align=3D"center">Sept. 14, 5:4=
+0 p.m., County of Kaua=CA=BBi, Hurricane Lowell Recovery Update</h2>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">L=C4=AAHU=CA=BBE =
+=E2=80=93 A week after Hurricane Lowell caused wreckage across Kaua=E2=80=
+=99i, communities are moving into the next phase of recovery.</p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">The County is prep=
+aring to open two disaster recovery resource centers for storm victims to p=
+rovide vital information on how to rebuild. Meanwhile, as critical infrastr=
+ucture is restored, the County will be closing two more of its Hurricane Re=
+fuge Areas.</p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">The county has als=
+o launched a new website where storm victims can find forms necessary to su=
+bmit damage assessments and file for disaster tax relief.</p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">New assessment num=
+bers show 10 homes have been destroyed and 64 suffered major damage.</p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">The total number o=
+f resident-submitted damage assessments has surpassed 620.</p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">For recovery help,=
+ resources and updates, visit <a href=3D"https://links-2.govdelivery.com/CL=
+0/https:%2F%2Fwww.kauairecovers.org%2F%3Futm_medium=3Demail%26utm_source=3D=
+govdelivery/1/010101a0a328277b-e87bd6a7-8c41-4e24-8180-829169942082-000000/=
+gHjaHMiALC32NWjsxWJxevbgwj2TGyV0LvgkLp02Fwc=3D452" style=3D"-webkit-text-si=
+ze-adjust: 100%; -ms-text-size-adjust: 100%; color: #54c8e8;">www.kauaireco=
+vers.org</a>.</p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">For any non-emerge=
+ncy information, call Aloha United Way at 211.</p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">=C2=A0</p>
+
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;"><strong>Evening up=
+date - at a glance</strong></p>
+<ul style=3D"margin-top: 0px; margin-bottom: 10px;">
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000; margin-top: 0px;">T=
+ropical Storm Norbert weakening with no severe impacts expected at this tim=
+e</li>
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000;">Disaster recovery =
+resource centers opening tomorrow</li>
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000;">Two Hurricane Refu=
+ge Areas closing Wednesday</li>
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000;">K=C4=ABlauea and H=
+analei Elementary schools prepare to reopen</li>
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000;">New website launch=
+ed to submit damage assessments and file for tax relief</li>
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000;">Traffic delays con=
+tinue as transmission line repairs push forward on the North Shore</li>
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000;">Regular bus and pa=
+ratransit service resumed today</li>
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000;">Normal weekday isl=
+andwide refuse collection resumes in accessible areas</li>
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000;">Power is restored =
+for 81% of the island</li>
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000; margin-bottom: 10px=
+;">Island-wide water conservation notice remains in effect</li>
+</ul>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">=C2=A0</p>
+
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;"><strong>Resource C=
+enters Opening Tomorrow (NEW UPDATE)</strong></p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">The County is set =
+to open two disaster recovery resource centers tomorrow, Sept. 15; one on t=
+he North Shore at the Hanalei Neighborhood Center, the other on the south s=
+hore at the K=C5=8Dloa Neighborhood Center.=C2=A0</p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">Both centers will =
+operate from 9 a.m. to 6 p.m. Residents can meet with nonprofit and agency =
+staff in-person for assistance with recovery needs.</p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">The Hanalei initia=
+tive will operate an hourly shuttle starting 9 a.m. from The Hanalei Colony=
+ resort in Wainiha to the Hanalei Resource Center.</p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">=C2=A0</p>
+
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;"><strong>Refuge are=
+as closing (NEW UPDATE)</strong></p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">With power restora=
+tion efforts progressing across Kaua=E2=80=98i, one Refuge Area will remain=
+ open while two others will close on Wednesday, Sept. 16, at 10 a.m.</p>
+<ul style=3D"margin-top: 0px; margin-bottom: 10px;">
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000; margin-top: 0px;">C=
+losing: Kal=C4=81heo and L=C4=ABhu=CA=BBe neighborhood centers</li>
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000; margin-bottom: 10px=
+;">Remaining open: K=C4=ABlauea Neighborhood Center, 2460 Keneke St.</li>
+</ul>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">Individuals utiliz=
+ing refuge areas have the opportunity to connect with case management and o=
+ther wraparound services and support.=C2=A0</p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">=C2=A0</p>
+
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;"><strong>More suppo=
+rt incoming for power restoration (NEW UPDATE)</strong></p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">Nearly 200 utility=
+ workers from Kaua=CA=BBi, O=CA=BBahu, Big Island, Maui and the mainland ar=
+e deployed across the island enhancing restoration efforts, and more are on=
+ the way.</p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">With KIUC receivin=
+g support from Hawaiian Electric, Southern California Edison, and HMS, this=
+ week about 250 workers are expected to be on assignment focused on restori=
+ng electricity.</p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">Teams have isolate=
+d a section of a transmission line from Princeville to Wainiha, allowing cr=
+ews to safely complete repairs in the affected area while simultaneously re=
+energizing surrounding areas where power can be safely restored.</p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">This work is part =
+of restoration work prompting a lane closure on the Hanalei side of the Han=
+alei Bridge.</p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">No timeline is ava=
+ilable on when repairs will be complete or when the lane closure will be li=
+fted. Drivers should be prepared for extended delays.</p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">Flaggers will be o=
+n site for traffic control, but please use extra caution around coned work =
+areas.</p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">We appreciate ever=
+yone=E2=80=99s patience, support, and cooperation while this important work=
+ is completed. Please slow down, stay alert, and be safe.=C2=A0</p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">Power is now resto=
+red for about 81% of the island as of Monday afternoon. Roughly 6.7K member=
+s are still without power. Peak outages impacted about 33,000 customers. KI=
+UC has 13 of 16 transmission lines back up.</p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">Stay away from dow=
+ned utility lines and call 911 if a line is an immediate danger. Update you=
+r contact information with KIUC at 808-246-4300 to get alerts. Outage map: =
+<a href=3D"https://links-2.govdelivery.com/CL0/https:%2F%2Fkiuc.outagemap.c=
+oop%2F%3Futm_medium=3Demail%26utm_source=3Dgovdelivery%23%2F/1/010101a0a328=
+277b-e87bd6a7-8c41-4e24-8180-829169942082-000000/p-FR667PhRdXthzmMU-Xmn529W=
+bIqLdXpTnyqtRkO0k=3D452" target=3D"_blank" rel=3D"noopener" style=3D"-webki=
+t-text-size-adjust: 100%; -ms-text-size-adjust: 100%; color: #54c8e8;">kiuc=
+.outagemap.coop</a></p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">=C2=A0</p>
+
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;"><strong>Most schoo=
+ls reopen across the island (NEW UPDATE)</strong></p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">Most Kaua=CA=BBi p=
+ublic schools reopened Monday, Sept. 14; K=C4=ABlauea and Hanalei elementar=
+y schools remained closed amid power restoration but now have set reopening=
+ dates and contingency plans to operate without electricity.</p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">Reopening schedule=
+:</p>
+<ul style=3D"margin-top: 0px; margin-bottom: 10px;">
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000; margin-top: 0px;">T=
+uesday, Sept. 15: K=C4=ABlauea Elementary reopening to students and staff</=
+li>
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000;">Friday, Sept. 18 H=
+analei Elementary reopening to employees only</li>
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000; margin-bottom: 10px=
+;">Monday, Sept. 21: Hanalei Elementary reopening to students</li>
+
+</ul>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">While Hanalei Elem=
+entary remains closed, the school is working to provide instructional packe=
+ts and shelf-stable meal boxes for families to pick up this week. Details w=
+ill be provided as information becomes available.</p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">(Chiefess Kamakahe=
+lei Middle School reopening Sept. 15 after pre-Lowell scheduled closure on =
+Monday, Sept. 14)=C2=A0</p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">All Kaua=CA=BBi pu=
+blic schools will provide nonperishable, shelf-stable meals.</p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">Transportation: Sp=
+ecial education curb-to-curb service will continue. Some regular education =
+bus routes remain unavailable or may operate with modified service due to r=
+oad conditions and detours. Affected families have been contacted by school=
+s.</p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">Information: Hawai=
+=CA=BBi Department of Education school and transportation updates at <a hre=
+f=3D"https://links-2.govdelivery.com/CL0/https:%2F%2Fhawaiipublicschools.or=
+g%2F2026-kauai-reopen-hurricane-lowell%2F%3Futm_medium=3Demail%26utm_source=
+=3Dgovdelivery/1/010101a0a328277b-e87bd6a7-8c41-4e24-8180-829169942082-0000=
+00/IrQKThClwaBxZlOH0eUiCso5wqA4IMJqWVUqkb4b-Lk=3D452" style=3D"-webkit-text=
+-size-adjust: 100%; -ms-text-size-adjust: 100%; color: #54c8e8;">https://ha=
+waiipublicschools.org/2026-kauai-reopen-hurricane-lowell/</a> and<a href=3D=
+"https://links-2.govdelivery.com/CL0/https:%2F%2Fhawaiipublicschools.org%2F=
+2026-kauai-school-bus-route-information%2F%3Futm_medium=3Demail%26utm_sourc=
+e=3Dgovdelivery/1/010101a0a328277b-e87bd6a7-8c41-4e24-8180-829169942082-000=
+000/XPNrA9d28oeIvUFt8wNe-Fh62VEV6UXkH-GfOjpQLKc=3D452" style=3D"-webkit-tex=
+t-size-adjust: 100%; -ms-text-size-adjust: 100%; color: #54c8e8;">https://h=
+awaiipublicschools.org/2026-kauai-school-bus-route-information/</a>.</p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">=C2=A0</p>
+
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;"><strong>Tax relief=
+ and damage assessments (NEW UPDATE)</strong></p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">To help make it ea=
+sier for storm victims to submit damage assessments and file for disaster t=
+ax relief, the County has launched a new website with links to necessary fo=
+rms and documents.</p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">Visit <a href=3D"h=
+ttps://links-2.govdelivery.com/CL0/http:%2F%2Fkauai.gov%2Flowellrealpropert=
+y%3Futm_medium=3Demail%26utm_source=3Dgovdelivery/1/010101a0a328277b-e87bd6=
+a7-8c41-4e24-8180-829169942082-000000/E83lNVxpQgMFv_UFCvUQy1GfJI2TUdAiT7eqT=
+ag4sTQ=3D452" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust=
+: 100%; color: #54c8e8;">kauai.gov/lowellrealproperty</a> if your home, bus=
+iness, farm, or ranch suffered damage from Hurricane Lowell.</p>
+
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">To submit a tax re=
+mission form:</p>
+<ul style=3D"margin-top: 0px; margin-bottom: 10px;">
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000; margin-bottom: 10px=
+; margin-top: 0px;">Email: <a href=3D"mailto:rpassessment@kauai.gov" style=
+=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; color: #54c=
+8e8;">rpassessment@kauai.gov</a>
+</li>
+</ul>
+<ul style=3D"margin-top: 0px; margin-bottom: 10px;">
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000; margin-top: 0px;">M=
+ail: L=C4=ABhu=CA=BBe Civic Center, 4444 Rice Street, Suite 454, L=C4=ABhu=
+=CA=BBe, HI 96766</li>
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000; margin-bottom: 10px=
+;">In-person drop box: L=C4=ABhu=CA=BBe Civic Center Mo=E2=80=98ikeha Rotun=
+da=C2=A0</li>
+</ul>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">The deadline to su=
+bmit for a tax remission is June 30, 2027.</p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">=C2=A0</p>
+
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;"><strong>Mold warni=
+ng</strong></p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">After severe flood=
+ing, health officials are urging residents to address any mold growth in th=
+eir homes and on their personal items.</p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">Exposure can elici=
+t serious health risks including breathing problems, allergic reactions, an=
+d infections.=C2=A0</p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">If you plan to cle=
+an any areas growing mold, remember the following tips:</p>
+<ul style=3D"margin-top: 0px; margin-bottom: 10px;">
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000; margin-top: 0px;">W=
+ear protective gear such as gloves, N-95 masks, boots and eye protection du=
+ring cleanup.</li>
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000;">Before cleaning, l=
+ightly spray moldy surfaces with a soapy solution to reduce airborne partic=
+les.</li>
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000;">Clean with soap an=
+d water, then disinfect using a bleach solution (1 cup bleach to 1 gallon o=
+f water). Open windows and doors first and air out rooms after cleaning. Ne=
+ver mix bleach with other cleaning products containing ammonia. Use as dire=
+cted on the label.</li>
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000;">Allow at least 15 =
+minutes of contact time, then rinse and dry thoroughly.</li>
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000; margin-bottom: 10px=
+;">Discard materials that cannot be safely cleaned, including carpets, matt=
+resses, upholstery and other porous items wet for more than 24=E2=80=9348 h=
+ours, or items that cannot be laundered or disinfected.=C2=A0</li>
+</ul>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">=C2=A0</p>
+
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;"><strong>Household =
+waste and recycling (NEW UPDATE)</strong></p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">Normal weekday isl=
+andwide refuse collection will continue throughout the week to accessible a=
+reas. Residents should only place their carts out for collection on their d=
+esignated pickup day.</p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">The County is now =
+operating seven sites to dispose of storm debris and refuse.</p>
+
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">Please check which=
+ materials are accepted at your intended disposal site before making the tr=
+ip. Each site will only accept specific materials, so the public is advised=
+ to appropriately separate their waste items before making any drop-offs.</=
+p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">Site hours, locati=
+ons, and accepted materials are as follows:</p>
+<ul style=3D"margin-top: 0px; margin-bottom: 10px;">
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000; margin-top: 0px;">H=
+analei Transfer Station | 7:15 a.m. - 3:15 p.m. | K=C5=ABhi=C5=8D Highway |=
+ Debris</li>
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000;">K=C4=ABlauea Tempo=
+rary Site | 7:15 a.m. - 3:15 p.m. | K=C5=ABhi=C5=8D Highway | Green Waste (=
+located past the K=C4=ABlauea roundabout and across the street from Anaina =
+Hou Community Park)</li>
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000;">Kapa=CA=BBa Tempor=
+ary Site | 7:15 a.m. - 3:15 p.m. | Kapa=CA=BBa Bypass Road | Green Waste (a=
+ccessed via the southbound (one-way) lane of Kapa=CA=BBa Bypass Road adjace=
+nt to theBryan J. Baptiste Sports Complex)</li>
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000;">Kapa=CA=BBa Transf=
+er Station | 7:15 a.m. - 3:15 p.m. | Kahau Road | Debris</li>
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000;">L=C4=ABhu=CA=BBe T=
+ransfer Station | 7:15 a.m. - 3:15 p.m. | Ahukini Road | Debris &amp; Green=
+ Waste=C2=A0</li>
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000;">Hanap=C4=93p=C4=93=
+ Transfer Station | 8:00 a.m. - 3:15 p.m. | Lele Road | Debris &amp; Green =
+Waste</li>
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000; margin-bottom: 10px=
+;">Kekaha Landfill | Residential: 8 a.m. - 4 p.m./Commercial 8 a.m. - 3:30 =
+p.m. | Kaumuali'i Highway - Debris &amp; Green Waste</li>
+</ul>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">The public is remi=
+nded that all debris (not including green waste) must not be longer than 3 =
+feet.</p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">HI-5 redemption in=
+ L=C4=ABhu=CA=BBe has reopened at the Kaua=CA=BBi Resource Center and is op=
+en Monday through Saturday from 9 a.m. to 5 p.m. (closed from Noon to 1:30 =
+p.m.). Other locations will remain closed until equipment is repaired.</p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">=C2=A0</p>
+
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;"><strong>The Kaua=
+=CA=BBi Bus</strong></p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">Regular bus and pa=
+ratransit service resumed today and will continue through the week.</p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">The 900 and 950 An=
+ahola-Waimea express routes will not run this week.=C2=A0</p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">For bus route info=
+rmation, call 808-246-8110 or visit <a href=3D"https://links-2.govdelivery.=
+com/CL0/https:%2F%2Fwww.kauai.gov%2FGovernment%2FDepartments-Agencies%2FTra=
+nsportation%3Futm_medium=3Demail%26utm_source=3Dgovdelivery/1/010101a0a3282=
+77b-e87bd6a7-8c41-4e24-8180-829169942082-000000/jIblASFYnQakjoQvhxCnbP-BYJI=
+K7RRqU7kwKe4Bjjs=3D452" style=3D"-webkit-text-size-adjust: 100%; -ms-text-s=
+ize-adjust: 100%; color: #54c8e8;">www.kauai.gov/transportation</a>.</p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">=C2=A0</p>
+
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;"><strong>Neighborho=
+od Centers closed</strong></p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">All Neighborhood C=
+enters are closed until further notice. The Department of Parks and Recreat=
+ion is temporarily suspending recreational use of these facilities to suppo=
+rt the County=E2=80=99s hurricane response and recovery efforts.=C2=A0</p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">=C2=A0</p>
+
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;"><strong>Food distr=
+ibution:</strong></p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">Food distributions=
+ will continue at the following locations:</p>
+<ul style=3D"margin-top: 0px; margin-bottom: 10px;">
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000; margin-top: 0px;">T=
+uesday, Sept. 15 - Anahola Clubhouse, 3900 Kawelo Street, Anahola | 4 to 6 =
+p.m.</li>
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000;">Tuesday, Sept. 15 =
+- K=C5=8Dloa Ball Park, Maluhia Road, K=C5=8Dloa | 3 to 5 p.m.=C2=A0</li>
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000;">Thursday, Sept. 17=
+ - St. Raphael=E2=80=99s Church, 3011 Hapa Road, K=C5=8Dloa | 4:30 to 6 pm=
+=C2=A0</li>
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000; margin-bottom: 10px=
+;">Thursday, Sept. 17 - Westside Christian Center, 8041 Kekaha Road, Kekaha=
+ | 10 a.m. - 12 p.m.</li>
+</ul>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">=C2=A0</p>
+
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;"><strong>County clo=
+sures:</strong></p>
+<ul style=3D"margin-top: 0px; margin-bottom: 10px;">
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000; margin-top: 0px;">A=
+ll County parks, campgrounds, and the Wailua Golf Course are closed.</li>
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000;">The Waimea and Kap=
+a=CA=BBa pools are closed.</li>
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000;">County board and c=
+ommission meetings are suspended.=C2=A0</li>
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000;">The Sept. 16 Count=
+y Council meeting is canceled.</li>
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000; margin-bottom: 10px=
+;">All in-person and counter services at the L=C4=ABhu=CA=BBe Civic Center =
+are closed through Friday, Sept. 18 following a fire at the K=C4=81pule Bui=
+lding. Impacted services include Real Property, Planning, building and zoni=
+ng, Wastewater, sewer billing, and the DMV, including driver=E2=80=99s lice=
+nses and vehicle registration.</li>
+</ul>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">=C2=A0</p>
+
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;"><strong>State road=
+ closures (NEW UPDATE)</strong>=C2=A0</p>
+<ul style=3D"margin-top: 0px; margin-bottom: 10px;">
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000; margin-top: 0px;">K=
+aumuali=CA=BBi Highway (Vicinity of Halfway Bridge): Tree/debris removal on=
+going; crews will use the shoulder to minimize traffic impacts.=C2=A0</li>
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000;">K=C5=ABhi=C5=8D Hi=
+ghway (Vicinity of Princeville Transfer Station to Kapaka Street): Tree/Deb=
+ris removal and one lane shifting. (Tomorrow =E2=80=93 8:30 a.m. - 3:00 p.m=
+.).</li>
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000;">K=C5=ABhi=C5=8D Hi=
+ghway (Vicinity of Kalihiwai Bridge): Tree/Debris removal ongoing and one l=
+ane shifting. (Tomorrow =E2=80=93 8:30 a.m. - 3:00 p.m.).</li>
+
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000;">Wainiha Bridge #3 =
+(Double bridge on H=C4=81=CA=BBena Side): Repair work ongoing. Bridge open =
+to local traffic only. 5-ton weight limit.</li>
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000;">Crews will resume =
+debris clearing under the mauka Wailua River Bridge Sept. 20.</li>
+
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000;">K=C5=8Dke=CA=BBe a=
+nd Waimea Canyon roads are still being cleared.</li>
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000;">Halewili Road is o=
+pen from the =CA=BBEle=CA=BBele side of Kaumuali=CA=BBi Highway but remains=
+ closed from the Kal=C4=81heo side of the highway to Kaua=CA=BBi Coffee due=
+ to downed utility poles.</li>
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000; margin-bottom: 10px=
+;">K=C5=ABhi=C5=8D Highway: Princeville to Ke=CA=BBe Beach open to local tr=
+affic only.</li>
+</ul>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">=C2=A0</p>
+
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;"><strong>Airport an=
+d harbors:</strong></p>
+<ul style=3D"margin-top: 0px; margin-bottom: 10px;">
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000; margin-top: 0px;">L=
+=C4=ABhu=CA=BBe Airport is open and fully operational. Arrive 90 minutes ea=
+rly for interisland flights and two hours early for flights to the continen=
+t.</li>
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000;">N=C4=81wiliwili Ha=
+rbor is open to cargo ships. No cruise ships are coming in.</li>
+
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000; margin-bottom: 10px=
+;">Port Allen is open for operations.=C2=A0</li>
+</ul>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">=C2=A0</p>
+
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;"><strong>Other clos=
+ures and advisories:</strong></p>
+<ul style=3D"margin-top: 0px; margin-bottom: 10px;">
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000; margin-top: 0px;">S=
+tate parks and forest reserves are closed.</li>
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000;">The Pacific Missil=
+e Range Facility has closed its recreation sites and guest pass program.</l=
+i>
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000; margin-bottom: 10px=
+;">A brown water advisory remains in effect islandwide. Stay out of floodwa=
+ter and out of the ocean near stream mouths, drains and harbors. The water =
+may carry sewage, animal waste, chemicals and debris.</li>
+</ul>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">More closures are =
+possible as crews continue clearing roads.</p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">=C2=A0</p>
+
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;"><strong>Department=
+ of Water</strong></p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">An island-wide wat=
+er conservation notice remains in effect and will be lifted when KIUC is ab=
+le to fully restore power islandwide. A timeline is unavailable at this tim=
+e.</p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">Please only use wa=
+ter for essential needs.</p>
+<ul style=3D"margin-top: 0px; margin-bottom: 10px;">
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000; margin-top: 0px;">O=
+utages can affect pumps and wells, so water may cut out or lose pressure ev=
+en if your home is fine.</li>
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000; margin-bottom: 10px=
+;">Do not use water if you believe it has been contaminated by flooding.</l=
+i>
+</ul>
+<ul style=3D"margin-top: 0px; margin-bottom: 10px;">
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000; margin-bottom: 10px=
+; margin-top: 0px;">To report a water service outage, or leak, call 808-245=
+-5444. Updates are posted at <a href=3D"https://links-2.govdelivery.com/CL0=
+/https:%2F%2Fwww.kauaiwater.org%2F%3Futm_medium=3Demail%26utm_source=3Dgovd=
+elivery/1/010101a0a328277b-e87bd6a7-8c41-4e24-8180-829169942082-000000/gWZR=
+BQDZqkhifLCS4NdOmfZgOrk8vpd6t30-QBfLyhc=3D452" style=3D"-webkit-text-size-a=
+djust: 100%; -ms-text-size-adjust: 100%; color: #54c8e8;">kauaiwater.org</a=
+>.</li>
+</ul>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">=C2=A0</p>
+
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;"><strong>Post-storm=
+ scam warning</strong></p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">The Kaua=CA=BBi Po=
+lice Department is reminding residents to remain vigilant for scams during =
+ongoing recovery from Hurricane Lowell. Be wary of unsolicited calls, texts=
+, emails, social media messages, or other communications offering assistanc=
+e or requesting information.=C2=A0</p>
+<ul style=3D"margin-top: 0px; margin-bottom: 10px;">
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000; margin-bottom: 10px=
+; margin-top: 0px;">For verified information regarding Hurricane Lowell rec=
+overy, visit the County of Kaua=CA=BBi=E2=80=99s official channels and <a h=
+ref=3D"https://links-2.govdelivery.com/CL0/https:%2F%2Fwww.kauairecovers.or=
+g%2F%3Futm_medium=3Demail%26utm_source=3Dgovdelivery/2/010101a0a328277b-e87=
+bd6a7-8c41-4e24-8180-829169942082-000000/v7iNArkJWCzDv76OQEKWHNJgRNw2mUslwR=
+BiXslolaM=3D452" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adj=
+ust: 100%; color: #54c8e8;">KauaiRecovers.org.</a>
+</li>
+</ul>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">=C2=A0</p>
+
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;"><strong>Driving</s=
+trong></p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">Police are urging =
+the public to travel only if necessary. Officers are escorting work crews, =
+and extra traffic is slowing debris removal, power restoration, and road re=
+pairs.</p>
+<ul style=3D"margin-top: 0px; margin-bottom: 10px;">
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000; margin-top: 0px;">S=
+kip non-essential travel. This includes general sightseeing and driving to =
+view storm damage.</li>
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000;">Pull to the right =
+and stop when an emergency vehicle approaches.</li>
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000;">Never follow a pol=
+ice escort or use one to get into a closed area.</li>
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000;">Obey closures, bar=
+ricades, and directions from officers and flaggers.</li>
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000;">Treat every dark t=
+raffic light as a four-way stop. Lights are out islandwide.</li>
+
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000; margin-bottom: 10px=
+;">Report hazards like downed lines or blocked roads. Do not stop to take p=
+hotos.</li>
+</ul>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">=C2=A0</p>
+
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;"><strong>Next storm=
+</strong></p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">State officials ar=
+e monitoring Tropical Storm Norbert, which is weakening and is not expected=
+ to bring severe impacts to the Hawaiian Islands at this time. Residents sh=
+ould continue to monitor official forecasts and take the opportunity to rev=
+iew their emergency supplies. For preparedness information, visit <a href=
+=3D"https://links-2.govdelivery.com/CL0/https:%2F%2Fdod.hawaii.gov%2Fhiema%=
+2F%3Futm_medium=3Demail%26utm_source=3Dgovdelivery/1/010101a0a328277b-e87bd=
+6a7-8c41-4e24-8180-829169942082-000000/kG6cBbMmqrVRXHC-DijIkqTZjScS_Hm8nKAU=
+pakBM7c=3D452" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjus=
+t: 100%; color: #54c8e8;">ready.hawaii.gov</a>.</p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">=C2=A0</p>
+
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;"><strong>Visitors</=
+strong></p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">Hawai=CA=BBi is st=
+ill welcoming visitors but is also urging anyone with upcoming trips to the=
+ islands to monitor conditions. The state is also encouraging travelers wit=
+h upcoming trips to Kaua=CA=BBi to consider visiting another island to allo=
+w Kaua=CA=BBi time to heal and recover from Hurricane Lowell.</p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">=C2=A0</p>
+
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;"><strong>Numbers an=
+d resources</strong></p>
+<ul style=3D"margin-top: 0px; margin-bottom: 10px;">
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000; margin-top: 0px;">K=
+aua=CA=BBi Emergency Management Agency =E2=80=93 <a href=3D"https://links-2=
+.govdelivery.com/CL0/https:%2F%2Fwww.kauai.gov%2FGovernment%2FDepartments-A=
+gencies%2FEmergency-Management-Agency%3Futm_medium=3Demail%26utm_source=3Dg=
+ovdelivery/1/010101a0a328277b-e87bd6a7-8c41-4e24-8180-829169942082-000000/-=
+dzvG46C0OB07rLZN6LsziJZx9LtnjYnW56Vh3SUucA=3D452" style=3D"-webkit-text-siz=
+e-adjust: 100%; -ms-text-size-adjust: 100%; color: #54c8e8;">kauai.gov/KEMA=
+</a>
+</li>
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000;">National Weather S=
+ervice =E2=80=93 <a href=3D"https://links-2.govdelivery.com/CL0/https:%2F%2=
+Fwww.weather.gov%2Fhfo%3Futm_medium=3Demail%26utm_source=3Dgovdelivery/1/01=
+0101a0a328277b-e87bd6a7-8c41-4e24-8180-829169942082-000000/21EUpn4uKC8ZqWH7=
+5_eZ-dsSXrT4KusI7hGGxlfXAGM=3D452" style=3D"-webkit-text-size-adjust: 100%;=
+ -ms-text-size-adjust: 100%; color: #54c8e8;">weather.gov/hfo</a> or 808-24=
+5-6001</li>
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000;">Department of Wate=
+r =E2=80=93 808-245-5444 or <a href=3D"https://links-2.govdelivery.com/CL0/=
+https:%2F%2Fwww.kauaiwater.org%2F%3Futm_medium=3Demail%26utm_source=3Dgovde=
+livery/2/010101a0a328277b-e87bd6a7-8c41-4e24-8180-829169942082-000000/s8Vho=
+9q5SZjaJsg0anQjlOi8QEsvwzIE0BMoKjZlbwM=3D452" style=3D"-webkit-text-size-ad=
+just: 100%; -ms-text-size-adjust: 100%; color: #54c8e8;">kauaiwater.org</a>
+</li>
+<li aria-level=3D"1" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, opti=
+ma, arial, sans-serif; font-size: 14px; color: #000000; margin-bottom: 10px=
+;">Aloha United Way 211 =E2=80=93 808-275-2000 or AUW211.org</li>
+
+</ul>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">Use 911 only for l=
+ife-threatening emergencies. Calls about weather or road conditions tie up =
+the line and delay help for others. For non-emergencies, call KPD Dispatch =
+at 808-755-8516 or 808-652-7837. KPD=E2=80=99s usual non-emergency line, 80=
+8-241-1711, is still down.</p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">To sign up for Eve=
+rbridge, the County=E2=80=99s emergency notification service, please visit =
+<a href=3D"https://links-2.govdelivery.com/CL0/https:%2F%2Fwww.kauai.gov%2F=
+Government%2FDepartments-Agencies%2FEmergency-Management-Agency%3Futm_mediu=
+m=3Demail%26utm_source=3Dgovdelivery/2/010101a0a328277b-e87bd6a7-8c41-4e24-=
+8180-829169942082-000000/jV6uUt95TNveRvH9Zu75fu5BSBA2YjPQS7y0MP2_9ms=3D452"=
+ style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; color=
+: #54c8e8;">www.kauai.gov/KEMA</a> and click on =E2=80=9CNotification Servi=
+ces.=E2=80=9D You may also text =E2=80=9CKAUAIEMA=E2=80=9D to 888777, or ca=
+ll the Kaua=CA=BBi Emergency Management Agency=E2=80=99s alternate numbers =
+at 808-726-0702 or 808-347-9833. The KEMA non-emergency line, 808-241-1800,=
+ remains unavailable due to ongoing outages.</p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">For recovery help,=
+ resources, and updates, visit <a href=3D"https://links-2.govdelivery.com/C=
+L0/https:%2F%2Fwww.kauairecovers.org%2F%3Futm_medium=3Demail%26utm_source=
+=3Dgovdelivery/3/010101a0a328277b-e87bd6a7-8c41-4e24-8180-829169942082-0000=
+00/EJp__kf02Me3mOTMWyWo1kNdBQzAI4eOQ6wIdNmGVQM=3D452" style=3D"-webkit-text=
+-size-adjust: 100%; -ms-text-size-adjust: 100%; color: #54c8e8;">www.kauair=
+ecovers.org</a>.</p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">=C2=A0</p>
+
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;"><strong>Report you=
+r damage</strong></p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">Take photos, write=
+ down what was damaged, and file a report at <a href=3D"https://links-2.gov=
+delivery.com/CL0/https:%2F%2Fsurvey123.arcgis.com%2Fshare%2F54d0b90fb9a74a1=
+094e89d9f26b5d759%3Futm_medium=3Demail%26utm_source=3Dgovdelivery/1/010101a=
+0a328277b-e87bd6a7-8c41-4e24-8180-829169942082-000000/h0sFSWJuBZzsomPS-nuru=
+3MVKEW15py6vDVNIw13vEA=3D452" style=3D"-webkit-text-size-adjust: 100%; -ms-=
+text-size-adjust: 100%; color: #54c8e8;">bit.ly/kauaidamage</a>. These repo=
+rts show how much of the island was hit and may help Kaua=CA=BBi qualify fo=
+r state and federal aid. The state has asked for a fast-tracked presidentia=
+l disaster declaration. You still need to file a claim with your insurance =
+company.</p>
+<p style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; lin=
+e-height: 1.4; font-family: calibri, candara, segoe, optima, arial, sans-se=
+rif; font-size: 14px; color: #000000; margin: 0 0 10px;">Report roadway and=
+ public space hazards at <a href=3D"https://links-2.govdelivery.com/CL0/htt=
+ps:%2F%2Fsurvey123.arcgis.com%2Fshare%2F060659e0fd7344d59ccb2056dcbe53f9%3F=
+utm_medium=3Demail%26utm_source=3Dgovdelivery/1/010101a0a328277b-e87bd6a7-8=
+c41-4e24-8180-829169942082-000000/3fxg8JU9BNstl4x7Rw53sBbOEKzFb5Rp_nFlwrR_b=
+Yc=3D452" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 10=
+0%; color: #54c8e8;">bit.ly/kauaihazard</a>. Businesses can report damage a=
+t <a href=3D"https://links-2.govdelivery.com/CL0/https:%2F%2Fsurvey123.arcg=
+is.com%2Fshare%2Ff828eb79bd884e6bbc54535007ba9bf9%3Futm_medium=3Demail%26ut=
+m_source=3Dgovdelivery/1/010101a0a328277b-e87bd6a7-8c41-4e24-8180-829169942=
+082-000000/M9B4IkdNpaKvZpsPA1meEaWxMdv-DNBWoEuJPQCckq8=3D452" style=3D"-web=
+kit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; color: #54c8e8;">bi=
+t.ly/lowelldamage</a>.</p>
+<p style=3D"text-align: center; -webkit-text-size-adjust: 100%; -ms-text-si=
+ze-adjust: 100%; line-height: 1.4; font-family: calibri, candara, segoe, op=
+tima, arial, sans-serif; font-size: 14px; color: #000000; margin: 0 0 10px;=
+" align=3D"center">###</p>
+</td>
+    </tr>
+  </table>
+</div>
+<!--[if (gte mso 9)|(IE)]>
+  </td>
+<![endif]-->
+<!--[if (gte mso 9)|(IE)]>
+  </tr>
+  </table>
+<![endif]-->
+      </td>
+    </tr>
+  </table>
+</div>
+<!--[if (gte mso 9)|(IE)]>
+      </td>
+    </tr>
+  </table>
+<![endif]-->
+<!--[if (gte mso 9)|(IE)]>
+  <table width=3D"600" align=3D"center" border=3D"0" cellpadding=3D"0" cell=
+spacing=3D"0">
+    <tr>
+      <td>
+<![endif]-->
+<div class=3D"abe-section-block" data-block-type=3D"FancyBlockSection" data=
+-test=3D"test" data-block-id=3D"175183993">
+  <table class=3D"abe-section-table" width=3D"100%" align=3D"center" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"m=
+ax-width: 600px; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%=
+; border-spacing: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+    <tr id=3D"abe-section-row-3230a443-5a40-4f7c-abf2-c159d3105dd8" class=
+=3D"abe-section-row" style=3D"background-color: #0563A0;" bgcolor=3D"#0563A=
+0">
+      <td style=3D"text-align: center; vertical-align: top; font-size: 0; -=
+webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace=
+: 0pt; mso-table-rspace: 0pt;" align=3D"center" valign=3D"top">
+        <!--[if (gte mso 9)|(IE)]>
+  <table width=3D"100%" align=3D"center" border=3D"0" cellpadding=3D"0" cel=
+lspacing=3D"0" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjus=
+t: 100%; border-spacing: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+    <tr>
+<![endif]-->
+<!--[if (gte mso 9)|(IE)]>
+  <td width=3D"600" valign=3D"top" id=3D"abe-column-block-ad0586b4-1186-443=
+2-9916-04357bbeaac7-outlook-only" class=3D"abe-column-block-outlook-only" s=
+tyle=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-tab=
+le-lspace: 0pt; mso-table-rspace: 0pt;">
+<![endif]-->
+<div id=3D"abe-column-block-ad0586b4-1186-4432-9916-04357bbeaac7" class=3D"=
+abe-column-block" data-block-type=3D"FancyBlockColumn" data-block-id=3D"175=
+183994" style=3D"width: 100%; box-sizing: border-box; display: inline-block=
+; font-size: 16px; vertical-align: top;">
+  <table width=3D"100%" align=3D"center" border=3D"0" cellpadding=3D"0" cel=
+lspacing=3D"0" role=3D"presentation" style=3D"table-layout: fixed; overflow=
+-wrap: break-word; word-wrap: break-word; text-align: left; -webkit-text-si=
+ze-adjust: 100%; -ms-text-size-adjust: 100%; border-spacing: 0; mso-table-l=
+space: 0pt; mso-table-rspace: 0pt;">
+    <tr>
+      <td class=3D"abe-column-block-padding" id=3D"abe-column-block-ad0586b=
+4-1186-4432-9916-04357bbeaac7-padding" style=3D"-webkit-text-size-adjust: 1=
+00%; -ms-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0=
+pt; padding: 15px;">
+<p style=3D"text-align: center; -webkit-text-size-adjust: 100%; -ms-text-si=
+ze-adjust: 100%; line-height: 1.4; color: #FFFFFF; font-family: calibri, ca=
+ndara, segoe, optima, arial, sans-serif; font-size: 14px; margin: 0 0 10px;=
+" align=3D"center"><strong><span style=3D"text-decoration: underline; line-=
+height: 1.4;">Media Contact:</span><br></strong></p>
+<p style=3D"text-align: center; -webkit-text-size-adjust: 100%; -ms-text-si=
+ze-adjust: 100%; line-height: 1.4; color: #FFFFFF; font-family: calibri, ca=
+ndara, segoe, optima, arial, sans-serif; font-size: 14px; margin: 0 0 10px;=
+" align=3D"center">If you are a member of the media with an inquiry for the=
+ County of Kaua=E2=80=98i, its departments or representatives, please email=
+ the County of Kaua=E2=80=98i's Communications Team at <a href=3D"mailto:Co=
+untyPIO@kauai.gov" target=3D"_blank" rel=3D"noopener" style=3D"-webkit-text=
+-size-adjust: 100%; -ms-text-size-adjust: 100%; color: #FFFFFF;">CountyPIO@=
+kauai.gov</a> to ensure a timely response to your request. Mahalo!</p>
+</td>
+    </tr>
+  </table>
+</div>
+<!--[if (gte mso 9)|(IE)]>
+  </td>
+<![endif]-->
+<!--[if (gte mso 9)|(IE)]>
+  </tr>
+  </table>
+<![endif]-->
+      </td>
+    </tr>
+  </table>
+</div>
+<!--[if (gte mso 9)|(IE)]>
+      </td>
+    </tr>
+  </table>
+<![endif]-->
+</td>
+    <td style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%=
+; mso-table-lspace: 0pt; mso-table-rspace: 0pt;"></td>
+  </tr>
+</table>
+</td></tr></table>
+ =20
+
+
+<div id=3D"mail_footer">
+    <table width=3D"100%" cellspacing=3D"0" cellpadding=3D"0" align=3D"cent=
+er">
+<tbody>
+<tr>
+<td align=3D"center" width=3D"100%">
+<!--[if mso]>
+<table width=3D"600" align=3D"center" cellpadding=3D"0" cellspacing=3D"0" s=
+tyle=3D"width:600px;">
+<tr>
+<td>
+<![endif]-->
+<div style=3D"margin: 0 auto; max-width: 600px; width: 100%;">
+<table style=3D"border-collapse: collapse;" width=3D"100%" cellspacing=3D"0=
+" cellpadding=3D"0" align=3D"center">
+<tbody>
+<tr>
+<td style=3D"font-family: arial, helvetica, sans-serif !important; font-siz=
+e: 13px; text-align: center; padding: 10px 20px 5px 20px;" align=3D"center"=
+>
+<p><font face=3D"arial,helvetica,sans-serif"><a href=3D"https://links-2.gov=
+delivery.com/CL0/http:%2F%2Fwww.kauai.gov%2F%3Futm_medium=3Demail%26utm_sou=
+rce=3Dgovdelivery/1/010101a0a328277b-e87bd6a7-8c41-4e24-8180-829169942082-0=
+00000/omap4ql_wfySnCbAzmO1AIXRlOeUHjRJiAX8qqWYYmY=3D452" target=3D"_blank" =
+title=3D"Homepage for the County of Kaua'i" rel=3D"noopener"><img src=3D"ht=
+tps://content.govdelivery.com/attachments/fancy_images/HIKAUAICOUNTY/2022/1=
+0/6585467/county-of-kauai-seal-color_original.png" alt=3D"County of Kaua'i,=
+ State of Hawaii" width=3D"100" height=3D"100"></a></font></p>
+<p><font face=3D"arial,helvetica,sans-serif">Stay Connected with County of =
+Kaua'i, Hawai'i:</font></p>
+</td>
+</tr>
+<tr>
+<td><img src=3D"https://content.govdelivery.com/attachments/fancy_images/HI=
+KAUAICOUNTY/2022/10/6585480/border_original.png" alt=3D"" width=3D"600" hei=
+ght=3D"30"></td>
+</tr>
+<tr>
+<td style=3D"padding: 10px 20px;" align=3D"center"><font face=3D"arial,helv=
+etica,sans-serif"><a href=3D"https://links-2.govdelivery.com/CL0/http:%2F%2=
+Fwww.facebook.com%2Fcountyofkauai%3Futm_medium=3Demail%26utm_source=3Dgovde=
+livery/1/010101a0a328277b-e87bd6a7-8c41-4e24-8180-829169942082-000000/Te6Z-=
+hmfDQLVJG5Td2Dk-xGaarOO-UdEhGJX12GBIiA=3D452" target=3D"_blank" rel=3D"noop=
+ener"><img src=3D"https://content.govdelivery.com/attachments/fancy_images/=
+implementation/2016/02/754187/facebook_original.png" alt=3D"Facebook" width=
+=3D"32"></a> =C2=A0 =C2=A0 =C2=A0<a href=3D"https://links-2.govdelivery.com=
+/CL0/https:%2F%2Fpublic.govdelivery.com%2Faccounts%2FHIKAUAICOUNTY%2Fsubscr=
+iber%2Fnew/1/010101a0a328277b-e87bd6a7-8c41-4e24-8180-829169942082-000000/U=
+PqVT8fjiI48yEw-PfM9YytR2BnSFwNVtwnLuvi9eKE=3D452" target=3D"_blank" rel=3D"=
+noopener"><img src=3D"https://content.govdelivery.com/attachments/fancy_ima=
+ges/implementation/2016/02/754150/govdelivery_original.jpg" alt=3D"Govdeliv=
+ery" width=3D"32" style=3D"width: 32px; height: auto;"></a></font></td>
+</tr>
+<tr>
+<td><img src=3D"https://content.govdelivery.com/attachments/fancy_images/HI=
+KAUAICOUNTY/2022/10/6585480/border_original.png" alt=3D"" width=3D"600" hei=
+ght=3D"30"></td>
+</tr>
+<tr>
+<td style=3D"text-align: center; font-family: arial, helvetica, sans-serif;=
+ font-size: 13px; padding: 10px 20px 20px 20px;">
+<font face=3D"arial,helvetica,sans-serif">SUBSCRIBER SERVICES:</font><br><f=
+ont face=3D"arial,helvetica,sans-serif"><a href=3D"https://links-2.govdeliv=
+ery.com/CL0/https:%2F%2Fpublic.govdelivery.com%2Faccounts%2FHIKAUAICOUNTY%2=
+Fsubscriber%2Fedit%3Fpreferences=3Dtrue%23tab1/1/010101a0a328277b-e87bd6a7-=
+8c41-4e24-8180-829169942082-000000/znPy23MbUlosSOFdGuhBJ7r4AkaGmz0j76B6iS9I=
+59Y=3D452" title=3D"Manage Subscriptions">Manage Subscriptions</a> =C2=A0|=
+=C2=A0=C2=A0<a href=3D"https://links-2.govdelivery.com/CL0/https:%2F%2Fsubs=
+criberhelp.govdelivery.com%2F/1/010101a0a328277b-e87bd6a7-8c41-4e24-8180-82=
+9169942082-000000/EpdahqML5zkjHkD3L00DtKIrXpIwqpPu8JWNuv8ZWdg=3D452">Help</=
+a></font>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!--[if mso]>
+</td>
+</tr>
+</table>
+<![endif]-->
+</td>
+</tr>
+</tbody>
+</table>
+<style type=3D"text/css">body .abe-section-table {max-width:601px !importan=
+t;} body .abe-column-block {min-height: 5px;}</style>
+
+</div>
+<div id=3D"tagline">
+    <table style=3D"border-collapse: collapse; margin: 0px auto; width: 100=
+%;" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">
+<tbody>
+<tr>
+<td style=3D"padding: 0 10px 0 10px;" valign=3D"top">
+<table class=3D"mobile-tagline" style=3D"border-collapse: collapse; margin:=
+ 0px auto; width: 100%;" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" a=
+lign=3D"right">
+<tbody>
+<tr>
+<td style=3D"padding: 10px 0 0 0;" colspan=3D"2" valign=3D"top"><hr></td>
+</tr>
+<tr>
+<td style=3D"padding: 10px 5px 10px 0;" align=3D"left" valign=3D"top"><span=
+ style=3D"color: #757575; font-size: 10px; font-family: arial, helvetica, s=
+ans-serif;">This email was sent to subscriber@example.com using Granic=
+us Communications Cloud on behalf of: County of Kaua'i, Hawai'i =C2=B7 4444=
+ Rice Street =C2=B7 Lihu=CA=BBe, Kaua=CA=BBi, Hawai=CA=BBi 96766</span></td=
+>
+<td style=3D"width: 95px; padding-top: 10px;" align=3D"right" valign=3D"top=
+" width=3D"95"><a href=3D"https://links-2.govdelivery.com/CL0/https:%2F%2Fg=
+ranicus.com%2Fsolution%2Fdigital-communication-engagement%2F%3Futm_medium=
+=3Demail%26utm_source=3Dgovdelivery/1/010101a0a328277b-e87bd6a7-8c41-4e24-8=
+180-829169942082-000000/7YhQCDGYoJK4PECuT3N6WLAqB0sT3j1LxKSisOqGG5w=3D452" =
+target=3D"_blank" rel=3D"noopener"> <img src=3D"https://content.govdelivery=
+.com/images/govd-logo-dark.png" border=3D"0" alt=3D"Granicus Communications=
+ logo" width=3D"95" height=3D"27" align=3D"right"> </a></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+
+<img alt=3D"" src=3D"https://links-2.govdelivery.com/CI0/010101a0a328277b-e=
+87bd6a7-8c41-4e24-8180-829169942082-000000/NxCxSTaAPKUEI0Ofam5TeMWrF3WDrhJQ=
+g9SvRxO9clY=3D452" style=3D"display: none; width: 1px; height: 1px;">
+</body>
+</html>
+
+--===============9139840317557587237==--
+
+--===============2176458299630799074==--

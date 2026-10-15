@@ -131,12 +131,16 @@ def scrape() -> dict:
         "</table>"
     )
 
+    text_parts = [f"{row['town']}: {row['status']}" for row in rows]
+    text = "AT&T: " + "; ".join(text_parts) if text_parts else "AT&T: no data"
+
     return {
         "id": "att_mobile",
         "label": f"AT&T Mobile (<a href=\"{ATT_CHECK_URL}\">AT&T</a>)",
         "retrieved_at": now_iso(),
         "source_urls": [ATT_URL, ATT_CHECK_URL],
         "html": body,
+        "text": text,
         "error": None,
         "stale": False,
     }

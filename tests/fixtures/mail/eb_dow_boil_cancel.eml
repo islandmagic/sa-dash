@@ -1,0 +1,285 @@
+Return-Path: <westwaiakaluawater+caf_=georges=auberger.com@gmail.com>
+X-Original-To: owner@example.com
+Delivered-To: x21416063@pdx1-sub0-mail-mx208.dreamhost.com
+Received: from postfix-inbound-5.inbound.mailchannels.net
+ (inbound-egress-7.mailchannels.net [23.83.220.5])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest
+ SHA256)
+	(No client certificate requested)
+	by pdx1-sub0-mail-mx208.dreamhost.com (Postfix) with ESMTPS id
+ 4hjGkF3pkrz9MTh
+	for <owner@example.com>; Sat, 12 Sep 2026 22:17:25 -0700 (PDT)
+ARC-Seal: i=3; a=rsa-sha256; d=mailchannels.net; s=arc-2022; cv=pass;
+	t=1789276644;
+	b=ovuV8ao9xuJ9lIXNKP8L4To2jUFkqYzZVuSeYt2AqbRB2vbHHGf+FUjpdaJeFRlWaQIpMM
+	QQ+3StMWoOGo9m6A1j4hM9vOWMUdLq7vU7f+f08z7nQFatJ4xgPmtqCiQ9S7ShngyDW85q
+	3DuBqFPH3bOti6fmTHhqSYHZb68sHMBSNIpZIDds/DaFJFw/RNLl/XD8pq+geksg7W2o2D
+	fqAOKA/kuXzIlA7hp9LoVkWn3T0o3IcGL03kVdJBQ9PjnEX4o6P+GbqZkstzLNMLL1v+1c
+	aZUJouijgZHOt93Lahuvsn2IkdPJPcBia8HQ1xhK4ojI2rZklfFhp+Tzzz8fxQ==
+ARC-Message-Signature: i=3; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net;
+	s=arc-2022; t=1789276644;
+	h=from:from:reply-to:reply-to:subject:subject:date:date:
+	 message-id:message-id:to:to:cc:mime-version:mime-version:
+	 content-type:content-type:list-unsubscribe:list-unsubscribe-post:
+	 dkim-signature; bh=zHU0RfWyxjVwVNqEKeecVQcjjnkxEo41vG6fwy/jmRQ=;
+	b=UTlLmJVwjRNO0Ez3sUAGI13ID7y4S7suV+/YM1Yyl8itCdX4CMyiT+cWUF6r8S5hKKZgzs
+	dpWs76jEbPS/cIO5wOoqgGOck+Cdf4X6k5xc2IiUJqyoJWVLgbvii5+W9D2DL724wFAh4B
+	67o4RU/ORVA/vypaFzgkE2WK0Zrax0R5rSu5Swg7e/r1iJhnDVyaDpeskBqPS6legUnsL4
+	kmuHvSGIuEgDG32m+SFRE3zEYWMtEwiesJTaj8a4ezYjE2uCpCcSxbdfI+NHXr1MQwm4Qy
+	u3kUHAoVeHLEJVJ418Utln6g2m/mH8dqRiLPhj9gPcbUphiuY3TZ7qZQOCiq6w==
+ARC-Authentication-Results: i=3;
+	inbound-rspamd-64698fd584-8t42l;
+	arc=pass ("google.com:s=arc-20260327:i=2")
+X-Message-ID: pVcHK6RwIdtt3e5Vi3tr081L
+Received: from mail-qk2-f13.google.com (mail-qk2-f13.google.com
+ [74.125.230.205])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256)
+	by 100.99.131.66 (trex/8.0.2);
+	Sun, 13 Sep 2026 05:17:24 +0000
+Authentication-Results: inbound.mailchannels.net;
+ spf=pass
+ smtp.mailfrom=westwaiakaluawater+caf_=georges=auberger.com@gmail.com;
+ dkim=pass header.d=everbridge.net;
+ dmarc=pass (policy=reject; pct=100; status=pass);
+ arc=pass (i=2)
+Received-SPF: pass (dmarc-service-fbc5884c8-d997l: domain of gmail.com
+ designates 74.125.230.205 as permitted sender) client-ip=74.125.230.205;
+ envelope-from=westwaiakaluawater+caf_=georges=auberger.com@gmail.com;
+ helo=mail-qk2-f13.google.com;
+Received: by mail-qk2-f13.google.com with SMTP id
+ d75a77b69052e-5309ce58730so18194641cf.2
+        for <owner@example.com>; Sat, 12 Sep 2026 22:17:24 -0700 (PDT)
+ARC-Seal: i=2; a=rsa-sha256; t=1789276644; cv=pass;
+        d=google.com; s=arc-20260327;
+        b=rWTLZd98jCyn9gUsWzehyG69EpjaNRPTSX/al7+EEvY5M6wNZXYuSY0E4unpNxtuCO
+         KDF7mCCnHzzysU3Z24CjC/JEWV+bkFtCWXaYJPl7KEIwVGFucppO3kltJy09nbQ71wyz
+         sTSzJPIoEOtCI/pdvTjP+lw3K20Vn7MXRwbVFUsBFmfOI4H/dxJTkWNoNjHQ4SafaqYF
+         wiGK6StfUnBYdE9VzG9XRUSnEMxzr/TRKtsx+rk7hIfrj2lcGgx7N/kRTwQmLxhoXx/l
+         ZQufimoHr5AOXMZ+UhuF4RrUvrP6TKaI6jNcv5d2UnNbUVk3lyAdcGhQjSl0TqERpMDS
+         WN2Q==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327;
+        h=list-unsubscribe:list-unsubscribe-post:mime-version:subject
+         :message-id:to:reply-to:from:date:dkim-signature:delivered-to;
+        bh=zHU0RfWyxjVwVNqEKeecVQcjjnkxEo41vG6fwy/jmRQ=;
+        fh=HE6oile/JldNRtwyjjidvbM03BMYdS790mjJDwIxivk=;
+        b=bsOiOiaDgWkN1/7vtGrNLHS99Nk8rFu+k4QYpD0blgC+cY3Mt3yqaNqJRDmLUfwMiG
+         qyhDH9o0ePC73ncHBXFD1lIjrnWIbIEt/GNphV3srTP9XLLArtondcy+NsDbsuWGnEp1
+         amE6sJJBL40Vjh0OonY9R6assH7dYOtld7w5I15aKPqKsDOvFdbQ1BRB3ta3L4qdp2ny
+         DQ51PSpFOpUs7sukHbrAFamFXSxlW/Xcc5/m9/CKsnLzbK8BfIicRc6x3BGqll4K+a8P
+         LJKonST+2nGjqVTC8g9fTEgrrtpxsAhDavLmd0p/iVbDW0tbWDGM/g4Tx61xlenaoO/O
+         k7Xw==;
+        darn=auberger.com
+ARC-Authentication-Results: i=2; mx.google.com;
+       dkim=pass header.i=@everbridge.net header.s=20190507 header.b=eg9M+Ium;
+       spf=pass (google.com: domain of noreply@everbridge.net designates
+ 3.21.23.140 as permitted sender) smtp.mailfrom=noreply@everbridge.net;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=everbridge.net
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1789276644; x=1789881444;
+        h=list-unsubscribe:list-unsubscribe-post:content-type:mime-version
+         :subject:message-id:to:reply-to:from:date:dkim-signature
+         :delivered-to:x-forwarded-for:x-forwarded-to:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=zHU0RfWyxjVwVNqEKeecVQcjjnkxEo41vG6fwy/jmRQ=;
+        b=I5k/tqLFmzv8FGjhE95tpxDG/jVnvslINvAbq6L/+zRqh/eUENMCM/MEtB7dcswTx7
+         hDHFZcQolRsPVBYSHEZ8Gp52J6gOSO5VDMnruohcmkl3Fj1tE7vhw0aUSP0FNf5tT/Ps
+         ivVk3DUdCKQK5m+uMGNxa/JgmzfmRtl+aBUuCJaQB3y/pi8pDSKvUklglCQhr9nbNxkr
+         sTUGRoTuCDpjY2MNChJpWaZ5b5g0BGaj65VLnl4FJAOsFXuVm7ZIyrjZ8C6LUbz0zcIa
+         WLIP7aGvJ82RuCgN9oyPzkJJruo9VOKRto9vI2THbnvmGuNsxbdOkCaEE+3IJ7JHKMeA
+         A/kA==
+X-Forwarded-Encrypted: i=2;
+ AKwUvBzXNqO6TX26x8xZW/NHhxHR4QbWoW1c7UCSvJk/+kMTR9RsvuuMDwtyS10lvgzgiTUi/owner@example.com
+X-Gm-Message-State: AFuF++l/yVQ76xpytR6fEsP8OyEu0ISABjpWYAW5UL5ittshjESoGvxO
+	svbnhseDPfmMeTfQJ9RrfWLzVT3FYYQg8UGdcHR7A5YOyh2oHAmERVD7GaikKX/QvLT1R/5USkj
+	iSCKRzaHXmLxfM5u8tgX1zZ5rsa+FkMfxjJGAZ0SXHKITdc6nC3j1bnn1wZsqoQ==
+X-Received: by 2002:a05:622a:58c6:b0:530:b2e1:2f45 with SMTP id
+ d75a77b69052e-530e8320ba2mr81429511cf.60.1789276643766;
+        Sat, 12 Sep 2026 22:17:23 -0700 (PDT)
+X-Forwarded-To: owner@example.com
+X-Forwarded-For: westwaiakaluawater@gmail.com owner@example.com
+Delivered-To: westwaiakaluawater@gmail.com
+Received: by 2002:a05:6200:c0cf:10b0:662:c68c:ca21 with SMTP id
+ u15-n1csp2224217qnd;
+        Sat, 12 Sep 2026 22:17:21 -0700 (PDT)
+X-Received: by 2002:ad4:5946:0:b0:910:52ab:59db with SMTP id
+ 6a1803df08f44-9121daa7ed7mr90911306d6.21.1789276641692;
+        Sat, 12 Sep 2026 22:17:21 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789276641; cv=none;
+        d=google.com; s=arc-20260327;
+        b=NoLCfS3Y0kZHUS9s1G9G8x82kAoopQOlv//cL2oJLngRK5MjDauP1K3Xf7KKM61OuZ
+         094xOZZWJaBGPZs6BqU15CezlZaM/KtCq9EER17RDxLsWny8CBrXEhaAf5lpCVxjYolP
+         tQ3PgUq1gjvmsDUxKyKbIsg1tVYBeVMoqYxilS1jN1V3TcPdUx49MP5y7oIafImsTs4i
+         Y1vVoE2yj1Cx/UXX4OCMgKO65BsWQp+FzCphwBp6Sk2vZ5ak/R6P1qzxgc/buxvTPauK
+         j9TSecD06bD4ECKlYGd4Yjso0ZC09ljgApzMV6mUd8oE+aktS9u/xRlray+34CsmUosD
+         0P5w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327;
+        h=list-unsubscribe:list-unsubscribe-post:mime-version:subject
+         :message-id:to:reply-to:from:date:dkim-signature;
+        bh=zHU0RfWyxjVwVNqEKeecVQcjjnkxEo41vG6fwy/jmRQ=;
+        fh=g7JAbXZb9dxZz9wxAmkvs8/kB6B1OcpDOm4mGBMHBms=;
+        b=TmaxVb5YWzVt7McZLmqB79UfgwVmKAWnmPwMIzcJxMwSNWbPx4JjCcaWR0WMdIWhzm
+         iytS523rktB24NntCC+grDokk4F9RhmIc0A6X8wOU4Bc8L2UPZZmQhDhrzishGgHX4tG
+         mKAPTEGLdmszVoUlZdZoJUYjTiPHzV6pn322atrAa6CsReJXb+bvWS9T6ePV7mo/gFzx
+         eUkaziWkq2d4Ap1LwSt5IisnkdTXNo+SVduSNlRLct9uBEygnRi1I7sx2CB7K1NWgMoi
+         WEs7zjFt5AyQUBVERfMCRl3H2hEQj1myBBDLUxeW1uuTFEdB3caHTGyuh3S6338mOqnW
+         7poA==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@everbridge.net header.s=20190507 header.b=eg9M+Ium;
+       spf=pass (google.com: domain of noreply@everbridge.net designates
+ 3.21.23.140 as permitted sender) smtp.mailfrom=noreply@everbridge.net;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=everbridge.net
+Received: from smtp04-e2.everbridge.net (smtp04-e2.everbridge.net.
+ [3.21.23.140])
+        by mx.google.com with ESMTPS id
+ 6a1803df08f44-9121b8cef9dsi56750036d6.423.2026.09.12.22.17.21
+        for <westwaiakaluawater@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 12 Sep 2026 22:17:21 -0700 (PDT)
+Received-SPF: pass (google.com: domain of noreply@everbridge.net designates
+ 3.21.23.140 as permitted sender) client-ip=3.21.23.140;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@everbridge.net header.s=20190507 header.b=eg9M+Ium;
+       spf=pass (google.com: domain of noreply@everbridge.net designates
+ 3.21.23.140 as permitted sender) smtp.mailfrom=noreply@everbridge.net;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=everbridge.net
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=everbridge.net;
+	s=20190507; t=1789276641;
+	bh=zHU0RfWyxjVwVNqEKeecVQcjjnkxEo41vG6fwy/jmRQ=;
+	h=Date:From:Reply-To:To:Subject:List-Unsubscribe-Post:
+	 List-Unsubscribe;
+	b=eg9M+Ium+3x4/HfARbXSLrkzArb+gD5WRpJZAvrAArve2v9ltdlqePFB2eZ6ia37f
+	 hs49U3SL4ZibjVbgnkCo6MIe/rlvYsbrL0Cwf3aNBHjWICCnGqSJl0FokDiASQis2s
+	 IN2krhh1yRYRDcqwJsGuINQlQksBqr+rifpM7CTisc74hjhC6Ovyj5gtazHggV4Ajd
+	 s7brxmZyzB7x/ZmCFWBW3BX80f6F2tbMP+HyPM0Q4fOJKyPSMvgamqivG+XuDYylg5
+	 iUm/75SXtUVou5R5piXKb6X5xf+Fp72oZQF6gZegGbH/dXUiCghm501Z9s03cRD5Cl
+	 WUtX3f+/7ro5Q==
+Received: from ne02-nconn-email-prod-us-deployment-666fccd489-r8lq5
+ (ip-10-220-19-2.us-east-2.compute.internal [10.220.19.2])
+	by smtp04-e2.everbridge.net (Postfix) with ESMTP id 3613660730
+	for <westwaiakaluawater@gmail.com>; Sun, 13 Sep 2026 05:17:21 +0000 (UTC)
+Date: Sun, 13 Sep 2026 05:17:21 +0000 (GMT)
+From: Kauai Alerts - DOW <noreply@everbridge.net>
+Reply-To: Kauai Alerts - DOW
+ <conf-6aa631de815d60356ab6d790-6aa631db5ae3a0b1de2b2f11@smtpic-ne.prd1.everbridge.net>
+To: "westwaiakaluawater@gmail.com" <westwaiakaluawater@gmail.com>
+Message-ID: 
+ <2023995906.4014836.1789276641239@ne02-nconn-email-prod-us-deployment-666fccd489-r8lq5>
+Subject: FROM: Kauai Dept. of Water UPDATE for Kauai - Kilauea
+MIME-Version: 1.0
+Content-Type: multipart/mixed;
+	boundary="----=_Part_4014831_1596594368.1789276641186"
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+List-Unsubscribe: 
+ <https://notifications.everbridge.net/unsubscription/email/cgslLhbZn6qUZhWOcDJpgk2WN3nqgDb6BULtZKbBHWLPD-SCRTdaxGNYMsiarTH5jnKmka7wIN1qwTgI7fu48i8V57LsHmMXTCrh9ckacsfoxr1_-B2pXmXltB8qUW75zCoOsclEB9vY3AN1LgwMlHo5kOVoFOwzyh6XOTLFDWvQe0ARjlJw3xupGRmtWVaZU20JwAIiE0DoyTM8ufND-8V7apbkkQ-bYxQxbEfNa6R5FsVavkkt9nyxYp28gvg3pUpsI1pRE4eTrfGBqISTCZ4j6Z3rwKe7P-sxJM2Z285aOu_Zh71PVFqP8CWOO6c9GJxQLuRPwgyQB2XC3YKEiJc7CpfsHjaEGA8rcUuqZRJj1lHA4J8ZKzZ8y2YUFz7OeMV738xySnfBDiWu9RF6bLXMHR_bkJxFwWqpsTEwEuC-6fdG1kaPEyS6ZUIqYxUzAAoLdmGqGI1Yn6Ck4AzzrLjpIThdgRKeskleYFmEdGd52D_TJWDLG5bTPBQZmW_ThVMDuP0F8j0=?language=en-US>
+
+------=_Part_4014831_1596594368.1789276641186
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+        <!doctype html>
+        <html>
+        <head>
+            <meta charset=3D"UTF-8">
+            <title>FROM: Kauai Dept. of Water UPDATE for Kauai - Kilauea</t=
+itle>
+        </head>
+
+        <body style=3D"font-family: Helvetica, Arial; line-height:1.5">
+        <!-- Header start-->
+        <div>
+            <div>
+            </div>
+            <!-- Header end-->
+            <!-- Messages start-->
+            <div   >
+                <p> <style>body {font-family: 'arial'}</style><p style=3D"b=
+ackground: white; margin: 0in 0in .25in 0in;"><span style=3D"font-size: 13.=
+5pt; font-family: 'Arial',sans-serif; color: #0a2631;">7 p.m (UPDATE) 09-12=
+-2026 KILAUEA =E2=80=93 Boil Water Notice canceled for Kilauea</span></p>
+<p style=3D"background: white; box-sizing: border-box; font-variant-ligatur=
+es: normal; font-variant-caps: normal; orphans: 2; text-align: start; widow=
+s: 2; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; t=
+ext-decoration-style: initial; text-decoration-color: initial; word-spacing=
+: 0px; margin: 0in 0in .25in 0in;"><span style=3D"font-size: 13.5pt; font-f=
+amily: 'Arial',sans-serif; color: #0a2631;">Date: September 12, 2026</span>=
+</p>
+<p style=3D"background: white; box-sizing: border-box; font-variant-ligatur=
+es: normal; font-variant-caps: normal; orphans: 2; text-align: start; widow=
+s: 2; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; t=
+ext-decoration-style: initial; text-decoration-color: initial; word-spacing=
+: 0px; margin: 0in 0in .25in 0in;"><span style=3D"font-size: 13.5pt; font-f=
+amily: 'Arial',sans-serif; color: #0a2631;">To: Consumers of the Kilauea Wa=
+ter System</span></p>
+<p style=3D"background: white; box-sizing: border-box; font-variant-ligatur=
+es: normal; font-variant-caps: normal; orphans: 2; text-align: start; widow=
+s: 2; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; t=
+ext-decoration-style: initial; text-decoration-color: initial; word-spacing=
+: 0px; margin: 0in 0in .25in 0in;"><span style=3D"font-size: 13.5pt; font-f=
+amily: 'Arial',sans-serif; color: #0a2631;">Boil Water Notice canceled for =
+Kilauea</span></p>
+<p style=3D"background: white; box-sizing: border-box; font-variant-ligatur=
+es: normal; font-variant-caps: normal; orphans: 2; text-align: start; widow=
+s: 2; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; t=
+ext-decoration-style: initial; text-decoration-color: initial; word-spacing=
+: 0px; margin: 0in 0in .25in 0in;"><span style=3D"font-size: 13.5pt; font-f=
+amily: 'Arial',sans-serif; color: #0a2631;">The Department of Water (DOW) h=
+as canceled the precautionary Boil Water Notice for the Kilauea Water Syste=
+m, effective immediately.</span></p>
+<p style=3D"background: white; box-sizing: border-box; font-variant-ligatur=
+es: normal; font-variant-caps: normal; orphans: 2; text-align: start; widow=
+s: 2; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; t=
+ext-decoration-style: initial; text-decoration-color: initial; word-spacing=
+: 0px; margin: 0in 0in .25in 0in;"><span style=3D"font-size: 13.5pt; font-f=
+amily: 'Arial',sans-serif; color: #0a2631;">Laboratory results on the sampl=
+es collected on </span><span style=3D"font-size: 13.5pt; font-family: 'Aria=
+l',sans-serif; color: black;">September 11, 2026</span><span style=3D"font-=
+size: 13.5pt; font-family: 'Arial',sans-serif; color: #0a2631;">, </span><s=
+pan style=3D"font-size: 13.5pt; font-family: 'Arial',sans-serif; color: bla=
+ck;">indic</span><span style=3D"font-size: 13.5pt; font-family: 'Arial',san=
+s-serif; color: #0a2631;">ate the water is safe for consumption. No further=
+ customer action is required at this time and customers in the Kilauea area=
+ may now resume normal water use.</span></p>
+<p style=3D"background: white; box-sizing: border-box; font-variant-ligatur=
+es: normal; font-variant-caps: normal; orphans: 2; text-align: start; widow=
+s: 2; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; t=
+ext-decoration-style: initial; text-decoration-color: initial; word-spacing=
+: 0px; margin: 0in 0in .25in 0in;"><span style=3D"font-size: 13.5pt; font-f=
+amily: 'Arial',sans-serif; color: #0a2631;">The Boil Water Notice was issue=
+d as a precautionary measure following the aftermath of Hurricane Lowell.</=
+span></p>
+<p style=3D"background: white; box-sizing: border-box; font-variant-ligatur=
+es: normal; font-variant-caps: normal; orphans: 2; text-align: start; widow=
+s: 2; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; t=
+ext-decoration-style: initial; text-decoration-color: initial; word-spacing=
+: 0px; margin: 0in 0in .25in 0in;"><span style=3D"font-size: 13.5pt; font-f=
+amily: 'Arial',sans-serif; color: #0a2631;">For more information or to view=
+ updates, please visit www.kauaiwater.org.</span></p></p>
+                <div style=3D"margin:30px 0px">
+                </div>
+            </div>
+            <!-- Messages end-->
+            <!-- Footer start-->
+            <div style=3D"color:#777777; margin-top:20px">
+                <hr/><p style=3D"text-align:center;">To stop receiving futu=
+re email notifications from this organization <a href=3Dhttps://notificatio=
+ns.everbridge.net/unsubscription/email/o135WIQ2Hlr67CXD5BhyKsnLyR4M3Pe4wYku=
+tHtc02DrK2sf6uInA5lKYUQ0lWch1LaokrY2oa5IGMkDTMZ-qgKgakAcrLhbH1FKlyPuc0TdRyA=
+mXIyScTvK5LTzpujq4AoaHZfft8Nm35B3RFbdsj85QvekYIe4vU07qFCYWZjpRPEQfK3OVHS-22=
+3iVfURoyng1h37i74W--djgtvNGlspNqyosqSiETShGGYfLf8IjdZGnD86zfRpMYot6c4Ccxk8O=
+sGjGrVyE2nePeDzmocpVSJGW8MIJbzgCVG8-8ijJS2ef-Df6hHwVhJNFvXVnyvt1DoTv2kZ4bAj=
+OZ-wV278nuM0Vjd1rTWE2JKlgcGQ_wfdfQiPdy3Qbnb1-lKjMdshhRJUjeG13OlLDzYdme3HFCR=
+n5d1ogXydPfeypABrzIeIrPo8QTiaSUGC9Hbv4DJr8L--isR6las_X0I_pZIZCug8LoLo9jqxhq=
+dNIf6w5IzU-ZSwQCRfqhhOerY22mVOhwJv2HQ=3D?language=3Den-US style=3D"color:#0=
+000EE;font-weight:bold;text-decoration:underline;">unsubscribe here</a>.</p=
+></div>
+        </div>
+        <!-- Footer end-->
+        </body>
+        </html>
+
+------=_Part_4014831_1596594368.1789276641186--

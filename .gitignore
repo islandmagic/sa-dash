@@ -4,6 +4,9 @@ __pycache__/
 data/cache/*
 !data/cache/
 !data/cache/marinetraffic_kauai.json
+!data/cache/county_alerts.json
+!data/state/
+!data/state/event.json
 site/
 .env
 .DS_Store

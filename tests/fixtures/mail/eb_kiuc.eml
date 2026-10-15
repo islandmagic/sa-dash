@@ -1,0 +1,247 @@
+Return-Path: <westwaiakaluawater+caf_=georges=auberger.com@gmail.com>
+X-Original-To: owner@example.com
+Delivered-To: x21416063@pdx1-sub0-mail-mx207.dreamhost.com
+Received: from postfix-inbound-2.inbound.mailchannels.net
+ (inbound-egress-8.mailchannels.net [23.83.223.254])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest
+ SHA256)
+	(No client certificate requested)
+	by pdx1-sub0-mail-mx207.dreamhost.com (Postfix) with ESMTPS id
+ 4hkR4X1N0Wz9P1T
+	for <owner@example.com>; Mon, 14 Sep 2026 19:37:16 -0700 (PDT)
+ARC-Seal: i=3; a=rsa-sha256; d=mailchannels.net; s=arc-2022; cv=pass;
+	t=1789439835;
+	b=t7LsB4stXgAZLlm6LTFPzSj3YzXHzW0tZlhqsvyZEh/YCragEthubWvrDQhigZa/+Rq+OD
+	u1sbSMMSBHlxuq9rDZh5ePo18nbmySVLGEZaNPTkw6Pr2Jwm2Liyr25Z+laUuUShQkcdaj
+	eQHHU1uwSWFctcGUpXk05PTZWgUM4QOItm41Sk0Vu2EjTyRRklcsyMWc84NmT4og+Rgv4Z
+	FD1IuDOdplT/7eGBymikAW60gsInlsvj3Qbk9JCpolHrkiwzvApkIcqppgRMpa4XV5OLL4
+	qnxz1fhyHGfiAzg9HwngWydiu0Ta4/XmpfGYwHsjk9xTAvLyGcTw/f3TQk3BqQ==
+ARC-Message-Signature: i=3; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net;
+	s=arc-2022; t=1789439835;
+	h=from:from:reply-to:reply-to:subject:subject:date:date:
+	 message-id:message-id:to:to:cc:mime-version:mime-version:
+	 content-type:content-type:dkim-signature;
+	bh=dErh8qDEqpk4MX49VI1mQTv+2rZ+6xgwCy8beu24/Ws=;
+	b=zhY7X4ylQThDy1LPNL+KQu70ZKwBisoOli3xLcCLiDTVWKk7h0ci7520teQi4jLF3YRdh7
+	Lal3AiB5r/EPPMJS7PK9k5/5ru6GkAo52ks9OhKXYa9plLbNgLcksCIjHQTaC/GxEdPG8J
+	yVKTwe+sICDib/Nh1GOSBTBcCeJIJboYpFtZudeDvgeRvat1YSeIwh3QbgCJ80viZCKY+Z
+	Aub5wBj8mC066Teo2ISqMHjITRPM50BMPc9/3F+PfOphc0nMMF8sCjwPz7/3uT+njb85gI
+	hq6DoEkfLdGq4iwShyTWGc/Bumx+zl7+ruuKz8Wiq5CK+6Zbi5Yg4i9s3PDgvw==
+ARC-Authentication-Results: i=3;
+	inbound-rspamd-8f8f8b9c5-skkbj;
+	arc=pass ("google.com:s=arc-20260327:i=2")
+X-Message-ID: CzBOvEsRbpbkKGXAhUZ0gMYH
+Received: from mail-qk2-f13.google.com (mail-qk2-f13.google.com
+ [74.125.230.205])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256)
+	by 100.98.13.218 (trex/8.0.2);
+	Tue, 15 Sep 2026 02:37:16 +0000
+Authentication-Results: inbound.mailchannels.net;
+ spf=pass
+ smtp.mailfrom=westwaiakaluawater+caf_=georges=auberger.com@gmail.com;
+ dkim=pass header.d=everbridge.net;
+ dmarc=pass (policy=reject; pct=100; status=pass);
+ arc=pass (i=2)
+Received-SPF: pass (dmarc-service-554597bf55-jbzfk: domain of gmail.com
+ designates 74.125.230.205 as permitted sender) client-ip=74.125.230.205;
+ envelope-from=westwaiakaluawater+caf_=georges=auberger.com@gmail.com;
+ helo=mail-qk2-f13.google.com;
+Received: by mail-qk2-f13.google.com with SMTP id
+ af79cd13be357-93910cc46c4so209512985a.2
+        for <owner@example.com>; Mon, 14 Sep 2026 19:37:15 -0700 (PDT)
+ARC-Seal: i=2; a=rsa-sha256; t=1789439835; cv=pass;
+        d=google.com; s=arc-20260327;
+        b=PKd1xMi3Cvp6f4cuKHJ4lNItegz03NNUSiPn8B1PCc/Or7+PtXuFlUMkbN5CXR4Gfb
+         BqJQq4bVQM1wdSChC4WZ8/uKto8bUOeJc5lQMCMVehTN5V6RoROXxbKxsXmGyHhh13qG
+         76uyp1SiGw07JlEtqfaaroseeFPY/QnEjP3FdWEypZWuonvDTwb+LeLsF99OAuVZpXWW
+         /WxXyYBxRqPlc7USxv6ICsAXzRgI5XMuZ83QNB8ZcWMZK8QU2wkEK1sb/SJIaRkxe3TE
+         81Wd6o7OkcvMJiZCq/zuqUv/jmuPFm69gOBnLVBD2DcPbwwW9qF290oC3zNY0I8XyRcI
+         uLCA==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327;
+        h=mime-version:subject:message-id:to:reply-to:from:date
+         :dkim-signature:delivered-to;
+        bh=dErh8qDEqpk4MX49VI1mQTv+2rZ+6xgwCy8beu24/Ws=;
+        fh=CJVqHOEsu9g/JgbQTjgxd9j3TWSx74B7iazDDq6bW+g=;
+        b=WiTPr3/I74iiNUsGIUu2rg428hREU7qTc4K1yQjfK7SewGF2/zVpmzILKBEzlhi866
+         xyUOzsXpSc1WF3Q2o0wKyF4EbT/MecNiKZrju8xQO3pyhLEo7VM2md+phVjbpdGrFlRe
+         igi9JWS7lMFz7zqQtqIs7WCSfHB4GSAgs4QWs1dujyuHw6fB0o7RrI+VRGzIDdTX38pv
+         wlB6u2CDES1f6dGpUTLHEuUPH0kwwAuI5EqxOfOHjn1Rh0pk+dVPlzwv2z2hgw8atE8h
+         wXbOJDloCfYy5lFGbKAU6oSpqmsiyn2T6oqELTDxbvseSP9V4RI1SQlolEW8cdjJFXkO
+         rl5w==;
+        darn=auberger.com
+ARC-Authentication-Results: i=2; mx.google.com;
+       dkim=pass header.i=@everbridge.net header.s=20190507 header.b=jV4RDpux;
+       spf=pass (google.com: domain of noreply@everbridge.net designates
+ 3.23.38.224 as permitted sender) smtp.mailfrom=noreply@everbridge.net;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=everbridge.net
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1789439835; x=1790044635;
+        h=content-type:mime-version:subject:message-id:to:reply-to:from:date
+         :dkim-signature:delivered-to:x-forwarded-for:x-forwarded-to
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=dErh8qDEqpk4MX49VI1mQTv+2rZ+6xgwCy8beu24/Ws=;
+        b=TJaWnalW5QbZMS6+lkYtisGN9uAWpZeuZyGnvGmU2yTd986r64M2qbzrc8WYM4aZIV
+         CfBepraq40NlBsZfGkEQcx0gUr7oNtB3NdheQUAXnSDC5FP4sBJtLjmB4G1ySWry+BaK
+         LnqNWK/VGzkE48j/fWdM12RUigKwmFbngX1rtaUJozyG0o4GTCfQUlbte1dvGD2xNdlm
+         bDUksZLcM7zdC/LCoM3vwlIGQra4j3Offl1ANfCoZPnxTBopSVw8CX5Ie9RF8A8L+hdJ
+         7kcInu5bW8BbfYpbLky1TZhr1AvYPGXocz5aWGy4QVPxhgApyXTsolhCsN0uko1rbKai
+         04PA==
+X-Forwarded-Encrypted: i=2;
+ AKwUvBz+fTlXPtCSHo3S3grZzUTWjX63yg1oCUUFOkvm+9ufmECaFSaagCDpLfbO+EXs8S/owner@example.com
+X-Gm-Message-State: AFuF++nx5V7LGA2KEkyh5wERFFuT0CSeSdLwFdyGyRl5cwZyYtqH+lcm
+	L4wdudfLz44Q3w+DDj0p+L7SqIZnS+fNlCMwLTPpsrl0sRsRraZHKPwXqCmb8YxAEJ+R/Cn1q44
+	Ck2boyPA5dGqVcbfmcBCoAkADBzgcjJkgKkhTF1ArZhQvSsLZseyrTTiY5N8Efg==
+X-Received: by 2002:a05:620a:43a2:b0:915:a953:4b9c with SMTP id
+ af79cd13be357-93a297cb041mr899191785a.3.1789439834861;
+        Mon, 14 Sep 2026 19:37:14 -0700 (PDT)
+X-Forwarded-To: owner@example.com
+X-Forwarded-For: westwaiakaluawater@gmail.com owner@example.com
+Delivered-To: westwaiakaluawater@gmail.com
+Received: by 2002:a05:6200:c0cf:10b0:662:c68c:ca21 with SMTP id
+ u15-n1csp4340196qnd;
+        Mon, 14 Sep 2026 19:37:13 -0700 (PDT)
+X-Received: by 2002:a05:620a:890e:b0:936:9fd4:e2bf with SMTP id
+ af79cd13be357-93a29a6a705mr832487185a.37.1789439833665;
+        Mon, 14 Sep 2026 19:37:13 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789439833; cv=none;
+        d=google.com; s=arc-20260327;
+        b=K4nCRPyKJ98hHdcopUqxhhr1NLPEtVkdSTyPQiNYoje8KpuxKBRAUljp0xB3UNg+X/
+         DwytqccbgRNEfDJ47oTUtQfAC4abvF+7un+pM9Cd1S7oJGNLSxDdiTLLpJBsWY4Pms/f
+         3xzbLs+WwFAYVPzcKazTpCp4lW/7NtbmbAj+AHxJD9GhjjwCj6B5kPHbUuSh/8W1UqHR
+         IJawZkMEn1eGbQim5f1M6i1sbH8kF7383pMER2sMH9HEitDUHADh/VN8ooXOY2POIlKJ
+         IEO6u5EFuWuA8yVdkmUzuhmgAZqI0cE0G9X7nof9QMYKNmcBS/683cqHegodbQSCEbrG
+         rSyw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327;
+        h=mime-version:subject:message-id:to:reply-to:from:date
+         :dkim-signature;
+        bh=dErh8qDEqpk4MX49VI1mQTv+2rZ+6xgwCy8beu24/Ws=;
+        fh=g7JAbXZb9dxZz9wxAmkvs8/kB6B1OcpDOm4mGBMHBms=;
+        b=O2+qw60McKgvzYwswEAZv0qghzC/bfjsmwucJAVzmQT/tc9vTCbtVQqj9kC8CJuigM
+         xOR0M4lr2ls1yyiP42AePvTA9GghuenDprll2/tRGCK0RUmPZRFq7vLsrEJzPDck9Usk
+         IUvrKRhkaoqNJVpO/lIuzXGhJoVoXZmQggViPYu2gFiyxunyj35i2GWIBZnvqGBpwIF6
+         z3mS9UFiyQQ25ctfEvfLVMUzJNP0eYQ/z5/P+sm6dVQnX+43D81oOhEhOG3x8Y0pJZQ4
+         bQMw1R/3EFw0vbaJu99jE2M6H3QGikGLeUY3olvu2i59fN2HwwgCrS59+O2B5HzHGABk
+         p3Ug==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@everbridge.net header.s=20190507 header.b=jV4RDpux;
+       spf=pass (google.com: domain of noreply@everbridge.net designates
+ 3.23.38.224 as permitted sender) smtp.mailfrom=noreply@everbridge.net;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=everbridge.net
+Received: from smtp05-e2.everbridge.net (smtp05-e2.everbridge.net.
+ [3.23.38.224])
+        by mx.google.com with ESMTPS id
+ af79cd13be357-93a26921c5csi342346785a.14.2026.09.14.19.37.13
+        for <westwaiakaluawater@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 14 Sep 2026 19:37:13 -0700 (PDT)
+Received-SPF: pass (google.com: domain of noreply@everbridge.net designates
+ 3.23.38.224 as permitted sender) client-ip=3.23.38.224;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@everbridge.net header.s=20190507 header.b=jV4RDpux;
+       spf=pass (google.com: domain of noreply@everbridge.net designates
+ 3.23.38.224 as permitted sender) smtp.mailfrom=noreply@everbridge.net;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=everbridge.net
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=everbridge.net;
+	s=20190507; t=1789439833;
+	bh=dErh8qDEqpk4MX49VI1mQTv+2rZ+6xgwCy8beu24/Ws=;
+	h=Date:From:Reply-To:To:Subject;
+	b=jV4RDpux6YlCiopsQXCob1fLXmQ0hKjDgyI41umplWO9T0VrfKHIPtzOuZvCDbDJC
+	 WZPFbdy9hEia9iW62RtkzBk5WUgm7T4OI33tp83rvBp9/HuW0G0eIJ8aZ7hCmvIUUT
+	 N5c7+L0Tlx0aqfqV9XSDl95z+JmLmypkCOxK9hFYtN7yxW8yzCDDeT1KKsIhgOIbKe
+	 qPa7Qh98PLOScqa/9hVT634HfzINaX6GdKkDTIMkUKeAs1LFK0yee4pWxHhA/2WL8p
+	 qJwjD8JOgWgh1Ls7MAMoL21MCgcVXgLt1RMR8E/8q3YR3T25M/XPrAYTDTaZVO8/l+
+	 iUMrHq7grgVnA==
+Received: from ne02-nconn-email-prod-us-deployment-666fccd489-thj8g
+ (ip-10-220-22-129.us-east-2.compute.internal [10.220.22.129])
+	by smtp05-e2.everbridge.net (Postfix) with ESMTP id 217D160E15
+	for <westwaiakaluawater@gmail.com>; Tue, 15 Sep 2026 02:37:13 +0000 (UTC)
+Date: Tue, 15 Sep 2026 02:37:13 +0000 (GMT)
+From: Kauai Island Utility Cooperative Alert <noreply@everbridge.net>
+Reply-To: Kauai Island Utility Cooperative Alert
+ <conf-6aa8af58edda5da47495e416-6aa8af5681c5e55578a06023@smtpic-ne.prd1.everbridge.net>
+To: "westwaiakaluawater@gmail.com" <westwaiakaluawater@gmail.com>
+Message-ID: 
+ <584458883.6411050.1789439833150@ne02-nconn-email-prod-us-deployment-666fccd489-thj8g>
+Subject: KIUC Alert: Hurricane Lowell Restoration Update
+MIME-Version: 1.0
+Content-Type: multipart/mixed;
+	boundary="----=_Part_6411048_1859920789.1789439833105"
+
+------=_Part_6411048_1859920789.1789439833105
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+        <!doctype html>
+        <html>
+        <head>
+            <meta charset=3D"UTF-8">
+            <title>KIUC Alert: Hurricane Lowell Restoration Update</title>
+        </head>
+
+        <body style=3D"font-family: Helvetica, Arial; line-height:1.5">
+        <!-- Header start-->
+        <div>
+            <div><p><span style=3D"color: #172b4d; font-family: -apple-syst=
+em, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, 'Fira Sans', 'D=
+roid Sans', 'Helvetica Neue', sans-serif; font-size: 14px; font-style: norm=
+al; font-variant-ligatures: normal; font-variant-caps: normal; font-weight:=
+ 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0=
+px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke=
+-width: 0px; white-space: normal; background-color: #ffffff; text-decoratio=
+n-thickness: initial; text-decoration-style: initial; text-decoration-color=
+: initial; display: inline !important; float: none;">This is an important m=
+essage from Kauai Island Utility Cooperative's ALERT SYSTEM.</span></p>
+            </div>
+            <!-- Header end-->
+            <!-- Messages start-->
+            <div  style=3D"margin-top:30px;" >
+                    <a href=3D"https://neconfirm.everbridge.net/email/6aa8a=
+f58edda5da47495e416?instanceId=3DNE2&broadcastId=3D6aa8af5681c5e55578a06023=
+&userConfirm=3Dtrue&language=3Den-US" style=3D"color:#1C6EBD">Please click =
+here to acknowledge receipt of this message</a>
+                <p> <style>body {font-family: 'arial'}</style><p>This is th=
+e latest update regarding outage restoration efforts on the North Shore.</p=
+>
+<p>KIUC and HECO line crews continued repairing damaged lines, poles and el=
+ectrical equipment on the North Shore today.</p>
+<p>Based on progress to date, KIUC anticipates that the first North Shore r=
+estorations could occur in portions of Princeville and Hanalei Wednesday, a=
+lthough any number of factors =E2=80=93 including weather =E2=80=93 could i=
+mpact this estimate. Once those first restorations are made, we can better =
+estimate a restoration timeline for the rest of the North Shore.</p>
+<p>Note that these restoration estimates are based on current conditions an=
+d may change if crews encounter additional damage or other unforeseen chall=
+enges.</p>
+<p>Mahalo for your patience.</p></p>
+                <div style=3D"margin:30px 0px">
+                </div>
+            </div>
+            <!-- Messages end-->
+            <!-- Footer start-->
+            <div style=3D"color:#777777; margin-top:20px">
+                <p><em style=3D"color: #172b4d; font-family: -apple-system,=
+ BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, 'Fira Sans', 'Droi=
+d Sans', 'Helvetica Neue', sans-serif; font-size: 14px; font-variant-ligatu=
+res: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: 0=
+px; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
+widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: =
+normal; background-color: #ffffff; text-decoration-thickness: initial; text=
+-decoration-style: initial; text-decoration-color: initial;">This email may=
+ contain confidential and/or proprietary information. Access to this e-mail=
+ by anyone other than the intended recipient is unauthorized. If you are no=
+t the intended recipient (or responsible for delivery of the message to suc=
+h person), you may not use, copy, distribute or deliver this message or any=
+ of its contents to anyone or take any action in reliance on it.</em></p> <=
+/div>
+        </div>
+        <!-- Footer end-->
+        </body>
+        </html>
+
+------=_Part_6411048_1859920789.1789439833105--

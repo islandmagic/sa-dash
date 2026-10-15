@@ -4,6 +4,7 @@ from datetime import datetime, timedelta, timezone
 from src.scrape.base import clean_text, fetch_json, now_iso
 from src.hcdp.client import HCDP_BASE_URL, MesonetClient
 from src.hcdp.parse import pivot_latest_measurements
+from src.scrape.precipitation import build_rainfall_details
 
 POINTS_URL = "https://api.weather.gov/points/22.2,-159.42"
 ALERTS_URL = "https://api.weather.gov/alerts?active=true&point=22.21%2C-159.41&limit=500"
@@ -264,6 +265,7 @@ def _extract_hazards_from_api(payload: dict) -> list[dict]:
         hazards.append(
             {
                 "headline": headline,
+                "event": props.get("event") or "",
                 "description": description,
                 "instruction": instruction,
             }
@@ -367,17 +369,15 @@ def scrape() -> dict:
     )
 
     station_html = _build_station_block()
-    links_html = (
-        "<p class=\"info\">"
-        f'<a href="https://kiloino.org/kilauea">Kilo ʻino</a>'
-        " · "
-        f'<a href="https://www.nhc.noaa.gov">NHC</a>'
-        " · "
-        f'<a href="https://www.youtube.com/@WorldWideWeatherWatch/videos">World Wide Weather Watch</a>'
-        "</p>"
-    )
+    try:
+        rainfall_html, rainfall_sources = build_rainfall_details()
+    except Exception as exc:  # noqa: BLE001 - keep weather module resilient
+        rainfall_html = (
+            f'<p class="info">Rainfall tables unavailable: {html.escape(str(exc))}</p>'
+        )
+        rainfall_sources = []
+
     block_html = (
-        f"{links_html}"
         f"<h3>Forecast ({html.escape(location_name)})</h3>"
         "<table>"
         "<thead><tr><th></th><th>Day</th><th>Night</th></tr></thead>"
@@ -386,11 +386,36 @@ def scrape() -> dict:
         f"{station_html}"
         "<h3>Hazards</h3>"
         f"{hazard_html}"
+        f"{rainfall_html}"
     )
+
+    alert_events = []
+    for hazard in hazards:
+        event_name = hazard.get("event") or ""
+        if event_name and event_name not in alert_events:
+            alert_events.append(event_name)
+
+    text_lines = [f"Weather ({location_name}):"]
+    if hazards:
+        text_lines.append("Hazards:")
+        for hazard in hazards[:5]:
+            text_lines.append(f"- {hazard.get('headline')}")
+    else:
+        text_lines.append("- No active hazards.")
+    text_lines.append("Forecast:")
+    for day_name, day_period, night_period in rows:
+        day_short = clean_text(day_period.get("shortForecast", "")) or "N/A"
+        night_short = (
+            clean_text(night_period.get("shortForecast", "")) if night_period else "N/A"
+        )
+        text_lines.append(f"- {day_name}: {day_short} / night: {night_short}")
 
     return {
         "id": "weather_kauai",
-        "label": f'Weather (<a href="{MAP_URL}">NWS</a>, <a href="{HCDP_MAP_URL}">HCDP Mesonet</a>)',
+        "label": (
+            f'Weather (<a href="{MAP_URL}">NWS</a>, '
+            f'<a href="{HCDP_MAP_URL}">HCDP Mesonet</a>)'
+        ),
         "retrieved_at": now_iso(),
         "source_urls": [
             POINTS_URL,
@@ -400,8 +425,11 @@ def scrape() -> dict:
             PHLI_LATEST_URL,
             HCDP_BASE_URL + "/mesonet/db/measurements",
             HCDP_DOCS_URL,
+            *rainfall_sources,
         ],
         "html": block_html,
+        "text": "\n".join(text_lines),
         "error": None,
         "stale": False,
+        "signals": {"alert_events": alert_events},
     }

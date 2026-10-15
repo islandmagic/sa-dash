@@ -1,0 +1,235 @@
+Return-Path: <subscriber@example.com>
+X-Original-To: owner@example.com
+Delivered-To: x21416063@pdx1-sub0-mail-mx213.dreamhost.com
+Received: from postfix-inbound-4.inbound.mailchannels.net
+ (inbound-egress-11.mailchannels.net [23.83.208.2])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest
+ SHA256)
+	(No client certificate requested)
+	by pdx1-sub0-mail-mx213.dreamhost.com (Postfix) with ESMTPS id
+ 4hgPKS6jN8z3RVP
+	for <owner@example.com>; Wed,  9 Sep 2026 21:07:56 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; d=mailchannels.net; s=arc-2022; cv=none;
+	t=1789013272;
+	b=zwrlZF38m6vKsG0Vg7WdHj4IBhLexQCazJh7qoOQ0uncIEDp6gIF0UtkGfAH2BjgR+2n/J
+	MXEnouqNV9ZvsVNMUMFt+2cvVrwouGcdAhS2c2JVjf//+jUEgN+mcun+t2DRA3sxt26xJH
+	KsFoo+HjQdrTOIF2R6gSrLXLN+aaa510gp9I35r0ECNyZtY/8hl9vxeCtzBISCWZp8sl6s
+	9C2Dp3Us+G9koUlwEUosIbMT8u9W9TifHkr6BqCZ9Db05uRcyJTZepywZuJKaRM/uoVoD2
+	tYaTijSYxvdijgtn09X5QOrBye27CMQ96JeX47qDkFslLOxPKFvdsJNP/RTeyw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net;
+	s=arc-2022; t=1789013272;
+	h=from:from:reply-to:reply-to:subject:subject:date:date:
+	 message-id:message-id:to:to:cc:mime-version:mime-version:
+	 content-type:content-type:dkim-signature;
+	bh=VSJ/gJFYjYPoZuNFVijyBbk4/oO6TKnkJiGFWRiHZ1k=;
+	b=ROUzl/OtmkpYeP5WvEEDrjjjQ3oNloQ90OlyQ4pO3QRddLIerAxeVa2x5YpnQXW0uchOYx
+	OO0somZUqfPLUwsw+4PMyQFaW4OVpgL96cW4RzmJrxDU9svrLV9ncyl8HSKYmGXr2rU6OK
+	t7bKVY2tCp6alxAly0TDGychkNKIdxgRoCZuFq2gGTSpeMgdmFDV+8ewo5Aw8oVf+pNpcl
+	TX3fdZh14hVL1I3QzRY78eqt/YenEUxmJqJbh0QqONH4w78ZMEhGsBDflSGWXGC/28G9/p
+	cm0AFto16ND0G+ViFsO2bU1dyE86in+XVX6nx2mXBwupv4toWg0HrEDUoAAYkA==
+ARC-Authentication-Results: i=1;
+	inbound-rspamd-8f8f8b9c5-7gd7f;
+	none
+X-Message-ID: dUHc3GeCs75UPnhBXotGnksQ
+Received: from outbound.qs.icloud.com (qs-2004b-snip4-11.eps.apple.com
+ [57.103.84.23])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+	by 100.99.73.157 (trex/8.0.2);
+	Thu, 10 Sep 2026 04:07:56 +0000
+Authentication-Results: inbound.mailchannels.net;
+ spf=pass
+ smtp.mailfrom=subscriber@example.com;
+ dkim=pass header.d=icloud.com;
+ dmarc=pass (policy=quarantine; pct=100; status=pass);
+ arc=none
+Received-SPF: pass (dmarc-service-554597bf55-v4pfr: domain of icloud.com
+ designates 57.103.84.23 as permitted sender) client-ip=57.103.84.23;
+ envelope-from=subscriber@example.com;
+ helo=outbound.qs.icloud.com;
+Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
+	by p00-icloudmta-asmtp-us-east-2d-100-percent-11 (Postfix) with ESMTPS id
+ ED5991800101
+	for <owner@example.com>; Thu, 10 Sep 2026 04:07:48 +0000 (UTC)
+X-ICL-RepId: 01a08980-1973-7959-bb2c-5f29ec308b2d
+X-ICL-Out-Info: 
+ HUtFAUMEWwJACUgATUQeDx5WFlZNRAJCTUwWWANYHFxQXBwOA1gZVwBVAWwMQzRXBlwKUR9eD1UVZhZWGWgMXEhfC1lcBA9IFF8bATIEClhFCEEKWncCURxWDVdDVARfUF8cDgRUB10FXVZQAlpLQBMESRMFUgddTVYNRw9YHlwUFwlAQ14IXh9MHB0OWAYSAE0KDjYGWQVeCVYDQwU2EhRdRVoOWwRHFBcbXAAMDkQVSxpBBFMMV15XHUdNWgJWTQVKA1sHWQVJAE4GQwFcBkEJQR1cAFMLQAhLAVsCXABIeRZWXQVGXBNWFl1AUgZTGVVVQx9YDx8FSlVXCEcHXQlUHV0ZGl0ERl8bUAkDUwtdVwtADwFVEgRACFZQXwZX
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com; s=1a1hai;
+ t=1789013271; x=1791605271; bh=VSJ/gJFYjYPoZuNFVijyBbk4/oO6TKnkJiGFWRiHZ1k=;
+ h=Date:From:To:Message-ID:Subject:MIME-Version:Content-Type:X-ICLOUD-HME:x-icloud-hme;
+ b=ptnoRWZQhchTdiBXP24Ruy+4pDXyjp98p/+siXasfO1hR0FTv+rQJdicAxZgTvNDyYXt0uvu6ZNMgjDhVa/7dDJtwzLv7f/SU1FGKMsx0CAfjqAjWr7N6dmcaKqgLZWqq545NJ8Gj3NIPvq9oN5kW/F1oSRWJFR6cOyTyFZfJ9bn+en2g2544qp3awvpA0oHgjH/xw+i/2e2vH6GACqEVjQyipIFnmhytlOz61FJbb12bPohKA13aZhDj++q1IijpywCNG6QgNQ1hmiw1+sgQ7dJXTFqzETEiDm0vrXeIZLid5BXNga+oa3Oqnm+BuNMrc+81t+0TTcl/zppiIbn8A==
+Received: from
+ p00-icloudmta-smtpin-us-east-2d-100-percent-4.p00-icloudmta-smtpin-vip.icloud-mail-production.svc.kube.us-east-2d.k8s.cloud.apple.com
+ (unknown [10.112.113.19])
+	by p00-icloudmta-asmtp-us-east-2d-100-percent-11 (Postfix) with ESMTP id
+ 03878180010D
+	for <owner@example.com>; Thu, 10 Sep 2026 04:07:48 +0000 (UTC)
+Received: from smtp05-e1.everbridge.net (smtp05-e1.everbridge.net
+ [23.21.137.69])
+	by p00-icloudmta-smtpin-us-east-2d-100-percent-4 (Postfix) with ESMTPS id
+ 415F8C000AB
+	for <owner@example.com>; Thu, 10 Sep 2026 04:07:47 +0000 (UTC)
+X-ICL-Info: 
+ GAtbRVYDBVFFSlVFSgQEUVUKE0oWX1gHVQoPB0UCBUxHSEhGSwcYVExZAxNFXlkQEAkKDjhVQAcHGxQeHFdTTBscElceVAsHAxwUFQpZUgUQVwgSDBBEAUgUExEeWVhPBgwUGxFVRExAFCYeG1xZFxFXBRgVEF4HGRZbBBVERlJAVANGVlVABwcbFB4cV1NMGxwSVwhERF8GFBIHSAUbB0RXAwEdQlQQHB0BElZeUxZVHQJKHUZTEBcLDxMfVRgMEA1GGhFUC15HSVBHSgcPW0NMSEFPBAdSTFdXQEAJBlNGS1BCTwIOIhscVkVVXlUNGxdLEhVRXw5YCRQYHB1DEVgdAwcUX08PEBcSWk4GAAQWGgJDQAkbDAYKBEFG
+X-ICL-Score: 2.33303322423
+Authentication-Results: bimi.icloud.com; bimi=none
+X-ARC-Info: policy=fail; arc=none; r1=-20; r2=0
+Authentication-Results: arc.icloud.com; arc=none
+Authentication-Results: dmarc.icloud.com;
+ dmarc=pass header.from=everbridge.net
+X-DMARC-Policy: v=DMARC1; p=reject; sp=reject;
+ rua=mailto:8974f3f9@mxtoolbox.dmarc-report.com,mailto:k1acaveg@ag.dmarcian.com;
+ ruf=mailto:8974f3f9@forensics.dmarc-report.com; fo=1; rf=afrf; pct=100;
+ ri=86400
+X-DMARC-Info: pass=pass; dmarc-policy=reject; s=r1; d=r1;
+ pdomain=everbridge.net
+Authentication-Results: dkim-verifier.icloud.com;
+ dkim=pass header.d=everbridge.net header.i=@everbridge.net header.b=aS9dL25Y
+Received-SPF: pass (spf.icloud.com: domain of noreply@everbridge.net
+ designates 23.21.137.69 as permitted sender) receiver=spf.icloud.com;
+ client-ip=23.21.137.69; helo=smtp05-e1.everbridge.net;
+ envelope-from=noreply@everbridge.net
+Authentication-Results: spf.icloud.com;
+ spf=pass (spf.icloud.com: domain of noreply@everbridge.net designates
+ 23.21.137.69 as permitted sender) smtp.mailfrom=noreply@everbridge.net
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=everbridge.net;
+	s=20190507; t=1789013265;
+	bh=VSJ/gJFYjYPoZuNFVijyBbk4/oO6TKnkJiGFWRiHZ1k=;
+	h=Date:From:Reply-To:To:Subject:List-Unsubscribe-Post:
+	 List-Unsubscribe;
+	b=aS9dL25Yj2mDTUfSyKK90lac+V4UcxoNiO3++j81hWYzqCepUEkl2bfusjk+yKG9a
+	 ZkDmqAcglvr4LZSAd6nWvdC94mi/OE8680P6BN3XTwxE06M3LGqydw30fBc0mpMyFd
+	 W8KX3laUbZ3kWQ6DHlEtLibBM4SUmlngqOAEnRb6fPRrfjJrtrwnLKkN+6lvkaPp9A
+	 8eLvMYjvcu3PrU7W50pS8wnSxCRWd/p4huitGC0nqr8G0mV1IB+wLi+HEQbXc4Pz/Q
+	 uXXuJuSy6JsA+67rmFZJccjqmtzMOu3j/pbNP+eYI4HMgngDIxczwzg171UllWQjRG
+	 eNgj/qNFvZ5+w==
+Received: from ne02-nconn-email-prod-us-deployment-666fccd489-nssb6
+ (ip-10-220-1-123.ec2.internal [10.220.1.123])
+	by smtp05-e1.everbridge.net (Postfix) with ESMTP id B16C560FBD
+	for <subscriber@example.com>; Thu, 10 Sep 2026 04:07:45 +0000 (UTC)
+Date: Thu, 10 Sep 2026 04:07:45 +0000 (GMT)
+From: CountyofKauaiResident Alert
+ <subscriber@example.com>
+Reply-To: CountyofKauaiResident Alert
+ <subscriber@example.com>
+To: Hide My Email <subscriber@example.com>
+Message-ID: 
+ <2060279965.674109.1789013265728@ne02-nconn-email-prod-us-deployment-666fccd489-nssb6>
+Subject: County waives tipping fees
+MIME-Version: 1.0
+Content-Type: multipart/mixed;
+	boundary="----=_Part_674106_1942603746.1789013265721"
+X-Priority: 1
+Importance: High
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTEwMDA0MSBTYWx0ZWRfX6LwsJTOg8ZIo
+ PXg60W4+C/EFXvvLO8FAPihpp8mNM40PXVEV1BpYA7HIo1SPoytikhXc7Vpg45fOCahwIGTo64x
+ ouASA7AyBrrRTDK4wKpUoI2qMgNNi8e5fzxzkIH2cZoDS5b9L5wfBHKMwaK8KZQD8eUe0GuPuLv
+ LwOR9uqmJ3gY818SDZy454zAh3lTP8/qzv7ZSmlOwvIDBaejkBQVSl4vg7qNSgYAKomgrNY9Knr
+ aqRXMbbMDhUJeSGIRGMHuL+zntY9WfYUO7GwsG2PWWtuTRD0sPGXSCowi6QDVQ+nCyaABmA8ozj
+ noOZ4I0fOM6ErsfWYhaUJB7bnkkimeAv/qBGoBzDjfZuZeLEPwH6M9/oK5Kilg=
+X-Authority-Info: v=2.4 cv=J7GnLQnS c=1 sm=1 tr=0 ts=6aa22d13 b=1
+ cx=c_apl:c_pps a=+NCe/l5JDfyuMjtZWxBa+g==:117 a=+NCe/l5JDfyuMjtZWxBa+g==:17
+ a=VdqzKS8jKosA:10 a=N72U4rUfpO4A:10 a=g8TUdU_LZmEA:10 a=_un2NjF1AAAA:8
+ a=UNM7KGeMfsNNo2vizaYA:9 a=xsNJfORGvvJfDGM8:21 a=_W_S_7VecoQA:10
+ a=QEXdDO2ut3YA:10 a=1dv7-sUhv4UGYWOijKA9:22 a=YTyRf_RLSPtcKS1z__Xa:22
+ a=5yU3S35YU4bGjq-dph-N:22 a=Bho9c0fBagfJEIQBS7DQ:22 cc=ntf awl=host:1151
+X-Proofpoint-GUID: SmNCK17g4jDDtIALPBdU_L6Bq6Zy7BOZ
+X-Proofpoint-ORIG-GUID: SmNCK17g4jDDtIALPBdU_L6Bq6Zy7BOZ
+X-JNJ: 
+ AAAAAAABlQOMmvApIf+FyxJgVT7s1mAAON1BMYbZj5kmjW7uhs+sMc0BKY2aBOk6+vBB+SKeSGYNTSGUDuFgMbe8uomKMehcqyMN6QPQKF4P1Ev1MfCtIlrSNRmUelXWAVH4QXewLTi9IKpaHRYeiCnMVVw11X0dkEgf3PZeeBctb0b9djZs+kVaCt4jnoDYVGAhplyQoy6E9vV3ppWOdhbdZ2BjKOYqbqFWTsEfXCqNK0UTjUTaG09YMjVl85VLNV+hhovImQKxIpppQ6BralS6ZS/jXK6DHieMZgHNuPdDRnot+7VHuNuldFs3aGP0f7lwieP2BaVj+LpUK8XZw/8OYfcdfr6aHPjazipT4wawi+5fkb3zT9X5L9Jb+GhBqB2ZoGz459ipBc1QNlKnPDg0MYz+h3fI6GLAaoPVzYZml2L3GDb7PVQmUf4rF5wV63XcoAY8ktkow9yDNXkyIuAH/ENCsnRgj33ljEN5a1IpJajqmR2lXe8jnhPv5alg2Gb7P4rwDZl1pXkOF0J10DsWh1RKzQvroS6tqru846j894YnNF5fwkINfdZN4kkW3SCHIqj+ypp1LY5SWpqS8iWpGEvmUgcjpD7PwhdVOtSqKAoRTRRRFAZ6LDqqIwIhZ2v1JB56Y7aRVDCweceWAkDhlKzmPrIcLD+f7CpH88XSEC/lYDHgc3pxSfdJDPunvi5bKKmpwqWNG3a57YWVLAYwROrbtI+1LQ6m8piRvW+T1S4ucNRlfbZR9nFR7KOb
+X-ICLOUD-HME: p=subscriber@example.com; d=everbridge.net;
+ f=owner@example.com; r=to; s=noreply@everbridge.net
+X-Authority-Info-Out: v=2.4 cv=dPyrWeZb c=1 sm=1 tr=0 ts=6aa22d15
+ cx=c_apl:c_pps:t_out a=w0vwr1DNSLjGex3smDq1Tg==:117
+ a=+NCe/l5JDfyuMjtZWxBa+g==:17 a=DEzTIcWhoXUA:10 a=VdqzKS8jKosA:10
+ a=WFvD4bZU1dUA:10 a=x7bEGLp0ZPQA:10 a=3HF1Atgr3DUA:10 a=N72U4rUfpO4A:10
+ a=g8TUdU_LZmEA:10 a=VkNPw1HP01LnGYTKEx00:22 a=_un2NjF1AAAA:8
+ a=UNM7KGeMfsNNo2vizaYA:9 a=xsNJfORGvvJfDGM8:21 a=_W_S_7VecoQA:10
+ a=QEXdDO2ut3YA:10 a=1dv7-sUhv4UGYWOijKA9:22 a=YTyRf_RLSPtcKS1z__Xa:22
+ a=5yU3S35YU4bGjq-dph-N:22 a=Bho9c0fBagfJEIQBS7DQ:22 cc=ntf
+X-JNJ: 
+ AAAAAAABLfMD/fdu25riDymQcMETN+wPHf3nYsFuPh4FqLOXteTihBOGWeJ8oi9iTKA8G/BrhxhO9761hSNy0ehjwLuF+xv4XcNLe6Ag15SALU21jJJlzMqXhJ+yorBYU1yXAH+OuXyjAaG4WFrwnUE/GbyfsUzCWbb+RB/OG6EGKmPFeilzPY6SvqWABQIX87R1K4LYJU0eZSprHq6woVeFEtqNpSsooKJnnGQioShptYxOhVVOxpweeYHAnGGSUuyRF+GjQAwseMB1AtlZmQsRGD+vxnPWh7/FCiC1VLffmDzY2FLGt6csL4dn4EvoKCb4dznXmlzSgXucy0gealm8Q+g9hzrsrbqEw8GEIgC6Rd+GfDDWj53GJKq9JLxKEJCYO/UAjG0zDoPIEBIgs74S/5QAxrR/EPYUOM77JvJKTkCu9uJm0oqKl7dEvx83R+QatrJBdr13Xcg699bDhCQjgSxOfUGw22thu9cA2ODZiG7LqfWp8pkRk3jECTSj9LOsV0V/aWa/NaDxknTE1g3qllut0Sx0MVJ3BPrwuHS2kHppTLcNGhWqsAt7MwJOE2UYu1rOzMEWa7xuP4yXK5R6ftwbvEciP30yzWFNkjK8QesgpgjfuyLGCHupIJBpHYfBeXWSs5wPUrGaB/B6ADtC9sPfl+2mTi2IatH5N4HqDTlH+x0Ckm8cGA9vl6TOAoeCuy3U9YbvMCjN6cEK/uvqp6fm7M/HwPgNFpNdvlNY7x1It6XDvq6SrgiXKkcPUJBA0zu2nn9jrZbULokND0fVvYyXRkp4iR1fiOr/7jk017Y/SroR+xO7zg==
+
+------=_Part_674106_1942603746.1789013265721
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+        <!doctype html>
+        <html>
+        <head>
+            <meta charset=3D"UTF-8">
+            <title>County waives tipping fees</title>
+        </head>
+
+        <body style=3D"font-family: Helvetica, Arial; line-height:1.5">
+        <!-- Header start-->
+        <div>
+            <div><p class=3D"p1" style=3D"text-align: center;"><span style=
+=3D"color: #7e8c8d;"><em>This is an urgent message from the County of Kaua'=
+i through Everbridge, the County's mass notification system.</em></span></p=
+>
+            </div>
+            <!-- Header end-->
+            <!-- Messages start-->
+            <div  style=3D"margin-top:30px;" >
+                <p> Sept. 9, 6:05 p.m. UPDATE =E2=80=93 County of Kaua=CA=
+=BBi Solid Waste Division<br><br>L=C4=AAHU=CA=BBE =E2=80=93 The County of K=
+aua=CA=BBi Solid Waste Division is waiving tipping fees for storm-generated=
+ debris at the Kekaha Landfill and Refuse Transfer Stations as residents an=
+d businesses clean up following Hurricane Lowell.<br><br>=E2=80=9COur famil=
+ies are hauling out water-damaged furniture, spoiled food, and whole trees =
+from their yards, and the last thing we want is a fee standing between them=
+ and getting their homes back in order,=E2=80=9D said Mayor Derek S.K. Kawa=
+kami. =E2=80=9CWaiving these fees is one way we can lighten the load. Pleas=
+e be patient with our crews at the landfill and transfer stations. They are=
+ working long hours to keep these facilities open for you.=E2=80=9D<br><br>=
+There is no charge for storm-generated debris, including commercial loads.<=
+br><br>**Facility status:**<br><br>* Kekaha Landfill and Hanap=C4=93p=C4=93=
+ Refuse Transfer Station are open.<br>* Hanalei, L=C4=ABhu=CA=BBe and Kapa=
+=CA=BBa Refuse Transfer Stations are closed due to access issues and will r=
+eopen when trailers can be hauled to the landfill.<br>* Green waste is bein=
+g accepted at L=C4=ABhu=CA=BBe and Kapa=CA=BBa until capacity is reached. P=
+lease keep green waste free of trash, dirt and construction debris.<br>* Re=
+fuse collection remains suspended due to downed and low-hanging wires. Plea=
+se leave carts out and accessible.<br>* The County=E2=80=99s recycling cont=
+ractor remains without power and cannot service Kaua=CA=BBi Recycles bins o=
+r process HI-5 materials. Service will resume once power is restored.<br><b=
+r>Landfill hours are 8 a.m. to 4 p.m. for residential loads and 8 a.m. to 3=
+:30 p.m. for commercial loads. The landfill is closed from noon to 12:30 p.=
+m.<br><br>Residents are asked to separate waste into green waste, metals, p=
+utrescible waste and dry waste. Please prioritize putrescible waste, such a=
+s food, to reduce odors and pests while collection services are disrupted. =
+Keep mixed waste free of rainwater and other liquids, including cooking oil=
+.<br><br>To sign up for Everbridge emergency notifications, text =E2=80=9CK=
+AUAIEMA=E2=80=9D to 888777 or call KEMA at 808-241-1800.<br><br>###<br><br>
+<br>Message Sender: Alden  Alayvilla  =20
+<br>Notification Status: New  =20
+<br>Tipping fees waived for storm debris at Kekaha Landfill and refuse tran=
+sfer stations as Kauai cleans up after Hurricane Lowell.</p>
+                <div style=3D"margin:30px 0px">
+                </div>
+            </div>
+            <!-- Messages end-->
+            <!-- Footer start-->
+            <div style=3D"color:#777777; margin-top:20px">
+                <p class=3D"p1" style=3D"text-align: center;"><span style=
+=3D"color: #95a5a6; font-family: -apple-system;"><span style=3D"font-size: =
+18.6667px;"><i>###</i></span></span></p> <hr/><p style=3D"text-align:center=
+;">To stop receiving future email notifications from this organization <a h=
+ref=3Dhttps://notifications.everbridge.net/unsubscription/email/ccYLxKzzKjp=
+1Jcj1xyVchxWdZBpwv256tBuMHAieClHfZFFd6h5Li4PIKfSPz9BzQjg7Bx-j-j-kCYac1aQHVV=
+HSCAZnFHvbAOTvaLXoy1z7KH4kCjYQlrJfQqe_FFNmKpkHZlNfauXohlwB2Flk-dZoFp6Cq4pur=
+AmzxdMBRHx_INkaS3oZT8Yu3cZyijtimml46tiRVKaX2EKIdBQaXmlv3nnJCtcTBZIuV3le1OPN=
+WQE4qD9hgHHYwIWq8weqU40kAxUbYxrUSyBFGETwGac7ckUSvI4v2qora87wFMXbVk_eRovjkiK=
+6jeZ11skqOmJEPUefc4oUyZCKrdHcmmMyzdnuSAjfLBgi2rm-GePWdfQyGkPcLh8AX8cLgeriyc=
+cuvoT4k5_kizKirEe7rD_waIrwoYRgne-E5ryqkxq24sTDVHvyoLzxVX1mIMN45NjsB122gNJAy=
+brC0f8GIffX5jwsXWLjjPy68PBpAeBZc2KlCoakEN6T18nkFCYTUgYMPHErM8Re?language=3D=
+en-US style=3D"color:#0000EE;font-weight:bold;text-decoration:underline;">u=
+nsubscribe here</a>.</p></div>
+        </div>
+        <!-- Footer end-->
+        </body>
+        </html>
+
+------=_Part_674106_1942603746.1789013265721--
