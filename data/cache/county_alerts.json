@@ -1,7 +1,7 @@
 {
   "id": "county_alerts",
   "label": "County Alerts (email)",
-  "retrieved_at": "2026-10-15T02:12:31-10:00",
+  "retrieved_at": "2026-10-15T07:24:50-10:00",
   "source_urls": [],
   "html": "<p>No recent county alerts.</p>",
   "text": "Recent alerts (24h headlines):",
