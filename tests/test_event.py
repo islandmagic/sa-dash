@@ -86,28 +86,55 @@ def test_hysteresis_expires():
     assert state["active"] is False
 
 
-def test_send_hour_gating(monkeypatch):
+def test_send_window_opens_after_target(monkeypatch):
+    monkeypatch.setenv("DIGEST_SEND_HOURS_HST", "6,18")
+    state = {"active": True, "last_sent_at": None}
+    # Before first window — wait for morning
+    assert not should_send_digest(state, now=dt.datetime(2026, 9, 10, 5, 30, tzinfo=HST))
+    # At/after 6:00 — send
+    assert should_send_digest(state, now=dt.datetime(2026, 9, 10, 6, 5, tzinfo=HST))
+    # Delayed CI past hour 6 still sends (was the exact-hour bug)
+    assert should_send_digest(state, now=dt.datetime(2026, 9, 10, 7, 10, tzinfo=HST))
+
+
+def test_send_window_once_per_slot(monkeypatch):
     monkeypatch.setenv("DIGEST_SEND_HOURS_HST", "6,18")
     state = {
         "active": True,
-        "last_sent_at": None,
+        "last_sent_at": "2026-09-10T06:55:00-10:00",
     }
-    assert should_send_digest(state, now=dt.datetime(2026, 9, 10, 6, 5, tzinfo=HST))
-    assert not should_send_digest(state, now=dt.datetime(2026, 9, 10, 7, 5, tzinfo=HST))
-
-
-def test_send_gap():
-    state = {
-        "active": True,
-        "last_sent_at": "2026-09-10T06:00:00-10:00",
-    }
-    # Same send hour but within 6h gap
+    # Already fulfilled morning window
     assert not should_send_digest(
-        state, now=dt.datetime(2026, 9, 10, 6, 30, tzinfo=HST)
+        state, now=dt.datetime(2026, 9, 10, 7, 10, tzinfo=HST)
     )
-    # Next send window next day
+    # Afternoon window opens
     assert should_send_digest(
         state, now=dt.datetime(2026, 9, 10, 18, 0, tzinfo=HST)
+    )
+    # Delayed afternoon still sends
+    assert should_send_digest(
+        state, now=dt.datetime(2026, 9, 10, 19, 5, tzinfo=HST)
+    )
+
+
+def test_send_window_next_morning(monkeypatch):
+    monkeypatch.setenv("DIGEST_SEND_HOURS_HST", "6,18")
+    state = {
+        "active": True,
+        "last_sent_at": "2026-09-10T18:55:00-10:00",
+    }
+    assert not should_send_digest(
+        state, now=dt.datetime(2026, 9, 11, 5, 50, tzinfo=HST)
+    )
+    assert should_send_digest(
+        state, now=dt.datetime(2026, 9, 11, 6, 55, tzinfo=HST)
+    )
+
+
+def test_inactive_never_sends():
+    state = {"active": False, "last_sent_at": None}
+    assert not should_send_digest(
+        state, now=dt.datetime(2026, 9, 10, 7, 0, tzinfo=HST)
     )
 
 

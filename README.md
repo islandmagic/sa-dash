@@ -40,6 +40,8 @@ send http://kauai.islandmagic.co/digest.txt
 
 to `query@saildocs.com`.
 
+While event mode is active, Winlink digests are pushed on the first generate at or after each configured HST hour (default **06:00** and **18:00**), so a delayed hourly run still delivers the morning/afternoon slot.
+
 ## Notes
 
 - Scrapers prioritize resilience. If a source fails, the last known cache is used when available. Stale sections are flagged on the dashboard with a **Stale** badge, show the cached data's last-retrieved time, and display any error note.

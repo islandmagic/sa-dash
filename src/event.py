@@ -26,7 +26,6 @@ DEFAULT_OUTAGE_FLOOR = 1500
 DEFAULT_OUTAGE_PCT = 0.05
 DEFAULT_HYSTERESIS_HOURS = 72
 DEFAULT_SEND_HOURS = (6, 18)
-DEFAULT_MIN_SEND_GAP_HOURS = 6
 
 
 def _now_hst(now: dt.datetime | None = None) -> dt.datetime:
@@ -197,14 +196,29 @@ def send_hours_hst() -> tuple[int, ...]:
 
 
 def should_send_digest(state: dict[str, Any], now: dt.datetime | None = None) -> bool:
-    """True when event is active, current HST hour is a send hour, and gap elapsed."""
+    """True when event is active and a send window is due but not yet fulfilled.
+
+    Windows open at each configured HST hour (default 6 and 18). The first run
+    at or after that time sends; delayed CI (e.g. 07:10 instead of 06:55) still
+    delivers. Before the first window of the day, nothing is sent.
+    """
     if not state.get("active"):
         return False
     now_hst = _now_hst(now)
-    if now_hst.hour not in send_hours_hst():
+    hours = sorted({h for h in send_hours_hst() if 0 <= h <= 23})
+    if not hours:
         return False
+
+    opened: list[dt.datetime] = []
+    for hour in hours:
+        target = now_hst.replace(hour=hour, minute=0, second=0, microsecond=0)
+        if now_hst >= target:
+            opened.append(target)
+    if not opened:
+        return False
+
+    latest_opened = max(opened)
     last_sent = _parse_iso(state.get("last_sent_at"))
     if last_sent is None:
         return True
-    gap = dt.timedelta(hours=DEFAULT_MIN_SEND_GAP_HOURS)
-    return now_hst - last_sent.astimezone(HST) >= gap
+    return last_sent.astimezone(HST) < latest_opened
