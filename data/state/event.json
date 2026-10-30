@@ -1,9 +1,7 @@
 {
-  "active": true,
-  "active_since": "2026-10-25T07:54:47-10:00",
+  "active": false,
+  "active_since": null,
   "last_trigger_at": "2026-10-26T20:54:12-10:00",
   "last_sent_at": "2026-10-29T07:08:25-10:00",
-  "reasons": [
-    "CPHC: active cyclone"
-  ]
+  "reasons": []
 }
