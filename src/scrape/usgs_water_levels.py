@@ -18,7 +18,7 @@ USGS_LOCATION_URL = (
 USGS_DAILY_URL = "https://api.waterdata.usgs.gov/ogcapi/v0/collections/daily/items"
 
 USGS_LOCATIONS = [
-    "16103000",  # Hanalei River 
+    "16103000",  # Hanalei River upstream
     "16104200",  # Hanalei River at Hwy 56 Bridge
     "16097500",  # Kilauea Stream
     "16094150",  # Kaloko reservoir
@@ -32,7 +32,7 @@ MIN_BASELINE_SAMPLES = 100
 FLOW_CODE = "00060"
 LEVEL_CODES = {"00065"}
 # Sites where the level reading is representative enough to classify/report.
-LEVEL_CONDITION_LOCATIONS = {"16104200", "16094150"}
+LEVEL_CONDITION_LOCATIONS = {"16103000", "16104200", "16094150"}
 DAILY_MEAN_STAT = "00003"
 
 PARAMETER_LABELS = {
@@ -50,11 +50,12 @@ CONDITION_CLASSES = {
     "Unknown": "",
 }
 
+# minor = flood stage / potential road closures (site-specific)
 FLOOD_THRESHOLDS_FT = {
-    "16104200": {"minor": 7.3},
+    "16103000": {"minor": 5.0, "major": 15.8},  # Hanalei upstream: ≥5.0 ft potential closures
+    "16104200": {"minor": 7.3},  # Hwy 56 Bridge: ≥7.3 ft potential closures
     "16060000": {"minor": 15.0, "major": 22.9},
     "16097500": {"minor": 7.0, "major": 10.2},
-    "16103000": {"minor": 5.0, "major": 15.8},
 }
 
 FLOOD_CLASSES = {

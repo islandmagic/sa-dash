@@ -28,19 +28,19 @@ def test_should_classify_flow_any_site():
 
 
 def test_should_classify_level_only_allowed_sites():
+    assert _should_classify("16103000", "00065") is True
     assert _should_classify("16104200", "00065") is True
     assert _should_classify("16094150", "00065") is True
-    assert _should_classify("16103000", "00065") is False
     assert _should_classify("16060000", "00065") is False
 
 
 def test_should_omit_row_bogus_level():
-    assert _should_omit_row("16103000", "00065") is True
     assert _should_omit_row("16097500", "00065") is True
     assert _should_omit_row("16060000", "00065") is True
 
 
 def test_should_not_omit_allowed_level_or_flow():
+    assert _should_omit_row("16103000", "00065") is False
     assert _should_omit_row("16104200", "00065") is False
     assert _should_omit_row("16094150", "00065") is False
     assert _should_omit_row("16060000", "00060") is False
