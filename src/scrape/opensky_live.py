@@ -15,17 +15,26 @@ import zstandard as zstd
 from src.scrape.base import now_iso
 
 
+OPENSKY_STATES_URL = "https://opensky-network.org/api/states/all"
+OPENSKY_TOKEN_URL = (
+    "https://auth.opensky-network.org/auth/realms/opensky-network"
+    "/protocol/openid-connect/token"
+)
+OPENSKY_SITE = "https://opensky-network.org"
 ADSBEXCHANGE_BASE = "https://globe.adsbexchange.com"
-ADSBEXCHANGE_WARMUP_URL = "https://globe.adsbexchange.com/"
 ADSBEXCHANGE_RE_API = "https://globe.adsbexchange.com/re-api/"
-DEFAULT_BOX = "21.143471,22.533340,-160.669246,-158.453936" # Kauai
-#DEFAULT_BOX = "19.193752,24.130461,-161.461093,-156.327954"
+ADSBLOL_POINT_URL = "https://api.adsb.lol/v2/lat/{lat}/lon/{lon}/dist/{dist}"
+DEFAULT_BOX = "21.143471,22.533340,-160.669246,-158.453936"  # Kauai
+ADSBLOL_RADIUS_NM = 100
 FAA_RELEASABLE_URL = "https://registry.faa.gov/database/ReleasableAircraft.zip"
 
 DEFAULT_USER_AGENT = (
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
     "AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
 )
+
+MPS_TO_KT = 1.943844
+M_TO_FT = 3.28084
 
 TYPE_AIRCRAFT = {
     "1": "Glider",
@@ -104,12 +113,12 @@ NA_PALI_COORD = (22.172, -159.643)
 
 
 def _debug_enabled() -> bool:
-    return os.getenv("ADSBEXCHANGE_DEBUG", "").lower() in {"1", "true", "yes", "on"}
+    return os.getenv("OPENSKY_DEBUG", "").lower() in {"1", "true", "yes", "on"}
 
 
 def _debug(message: str) -> None:
     if _debug_enabled():
-        print(f"[adsbexchange] {message}")
+        print(f"[opensky] {message}")
 
 
 def _parse_box(value: str) -> tuple[float, float, float, float]:
@@ -215,21 +224,6 @@ def _classify_aircraft(
             return "Airliner"
         return "Jet"
     return "Other"
-
-
-def _read_ascii(buffer: memoryview, start: int, end: int) -> str:
-    chars = []
-    for i in range(start, min(end, len(buffer))):
-        value = buffer[i]
-        if value == 0:
-            break
-        chars.append(chr(value))
-    return "".join(chars)
-
-
-def _decode_zstd(payload: bytes) -> bytes:
-    decompressor = zstd.ZstdDecompressor()
-    return decompressor.decompress(payload)
 
 
 def _cache_dir() -> str:
@@ -479,7 +473,209 @@ def _load_faa_registry() -> dict[str, dict[str, Any]]:
 
     return registry
 
-def _parse_bincraft(buffer: bytes) -> dict[str, Any]:
+
+def _meters_to_feet(value: float | None) -> float | None:
+    if value is None:
+        return None
+    return value * M_TO_FT
+
+
+def _mps_to_knots(value: float | None) -> float | None:
+    if value is None:
+        return None
+    return value * MPS_TO_KT
+
+
+def _finite(value: Any) -> float | None:
+    if value is None or value == "":
+        return None
+    try:
+        number = float(value)
+    except (TypeError, ValueError):
+        return None
+    return number if math.isfinite(number) else None
+
+
+def _get_opensky_token(client: httpx.Client) -> str | None:
+    client_id = os.getenv("OPENSKY_CLIENT_ID", "").strip()
+    client_secret = os.getenv("OPENSKY_CLIENT_SECRET", "").strip()
+    credentials_file = os.getenv("OPENSKY_CREDENTIALS_FILE", "").strip()
+
+    if (not client_id or not client_secret) and credentials_file:
+        try:
+            with open(credentials_file, "r", encoding="utf-8") as handle:
+                payload = json.load(handle)
+            client_id = str(
+                payload.get("clientId") or payload.get("client_id") or ""
+            ).strip()
+            client_secret = str(
+                payload.get("clientSecret") or payload.get("client_secret") or ""
+            ).strip()
+        except Exception as exc:
+            _debug(f"Failed reading OPENSKY_CREDENTIALS_FILE: {exc}")
+
+    if not client_id or not client_secret:
+        return None
+
+    response = client.post(
+        OPENSKY_TOKEN_URL,
+        data={
+            "grant_type": "client_credentials",
+            "client_id": client_id,
+            "client_secret": client_secret,
+        },
+        headers={"Content-Type": "application/x-www-form-urlencoded"},
+        timeout=20.0,
+    )
+    response.raise_for_status()
+    token = response.json().get("access_token")
+    return token if isinstance(token, str) and token else None
+
+
+def _normalize_opensky_state(row: list[Any]) -> dict[str, Any] | None:
+    if not isinstance(row, list) or len(row) < 14:
+        return None
+    hex_id = _normalize_mode_s(str(row[0]) if row[0] is not None else None)
+    lat = _finite(row[6])
+    lon = _finite(row[5])
+    if not hex_id or lat is None or lon is None:
+        return None
+
+    on_ground = row[8] is True
+    baro_m = _finite(row[7])
+    geo_m = _finite(row[13]) if len(row) > 13 else None
+    if on_ground:
+        altitude: float | str | None = "ground"
+    else:
+        altitude = _meters_to_feet(baro_m if baro_m is not None else geo_m)
+
+    callsign = row[1].strip() if isinstance(row[1], str) and row[1].strip() else None
+    return {
+        "hex": hex_id,
+        "flight": callsign,
+        "lat": lat,
+        "lon": lon,
+        "altitude": altitude,
+        "speed": _mps_to_knots(_finite(row[9])),
+        "track": _finite(row[10]),
+        "vertical_rate_fpm": (
+            None if _finite(row[11]) is None else _finite(row[11]) * 60.0 / 0.3048
+        ),
+        "type": None,
+        "registration": None,
+        "db_flags": None,
+    }
+
+
+def _normalize_adsblol_aircraft(row: dict[str, Any]) -> dict[str, Any] | None:
+    hex_id = _normalize_mode_s(str(row.get("hex") or ""))
+    lat = _finite(row.get("lat"))
+    lon = _finite(row.get("lon"))
+    if not hex_id or lat is None or lon is None:
+        return None
+
+    alt_baro = row.get("alt_baro")
+    if alt_baro == "ground":
+        altitude: float | str | None = "ground"
+    else:
+        altitude = _finite(alt_baro)
+        if altitude is None:
+            altitude = _finite(row.get("alt_geom"))
+
+    flight = row.get("flight")
+    callsign = flight.strip() if isinstance(flight, str) and flight.strip() else None
+    ac_type = row.get("t") or row.get("type")
+    if isinstance(ac_type, str):
+        ac_type = ac_type.strip() or None
+    else:
+        ac_type = None
+
+    registration = row.get("r")
+    if isinstance(registration, str):
+        registration = registration.strip() or None
+    else:
+        registration = None
+
+    db_flags = row.get("dbFlags")
+    if db_flags is None:
+        db_flags = row.get("db_flags")
+    if isinstance(db_flags, str) and db_flags.isdigit():
+        db_flags = int(db_flags)
+    if not isinstance(db_flags, int):
+        db_flags = None
+
+    rate = _finite(row.get("baro_rate"))
+    if rate is None:
+        rate = _finite(row.get("geom_rate"))
+
+    return {
+        "hex": hex_id,
+        "flight": callsign,
+        "lat": lat,
+        "lon": lon,
+        "altitude": altitude,
+        "speed": _finite(row.get("gs")),
+        "track": _finite(row.get("track")),
+        "vertical_rate_fpm": rate,
+        "type": ac_type,
+        "registration": registration,
+        "db_flags": db_flags,
+    }
+
+
+def _fetch_opensky(
+    client: httpx.Client, box: tuple[float, float, float, float]
+) -> list[dict[str, Any]]:
+    south, north, west, east = box
+    params = {
+        "lamin": south,
+        "lamax": north,
+        "lomin": west,
+        "lomax": east,
+        "extended": 1,
+    }
+    headers: dict[str, str] = {"User-Agent": DEFAULT_USER_AGENT, "Accept": "application/json"}
+    try:
+        token = _get_opensky_token(client)
+        if token:
+            headers["Authorization"] = f"Bearer {token}"
+            _debug("OpenSky OAuth token acquired.")
+        else:
+            _debug("OpenSky anonymous request.")
+    except Exception as exc:
+        _debug(f"OpenSky OAuth failed; continuing anonymously: {exc}")
+
+    response = client.get(
+        OPENSKY_STATES_URL, params=params, headers=headers, timeout=20.0
+    )
+    response.raise_for_status()
+    remaining = response.headers.get("x-rate-limit-remaining")
+    _debug(f"OpenSky status={response.status_code} remaining={remaining}")
+    payload = response.json()
+    states = payload.get("states") or []
+    aircraft: list[dict[str, Any]] = []
+    for row in states:
+        normalized = _normalize_opensky_state(row)
+        if normalized:
+            aircraft.append(normalized)
+    return aircraft
+
+
+def _read_ascii(buffer: memoryview, start: int, end: int) -> str:
+    chars = []
+    for i in range(start, min(end, len(buffer))):
+        value = buffer[i]
+        if value == 0:
+            break
+        chars.append(chr(value))
+    return "".join(chars)
+
+
+def _decode_zstd(payload: bytes) -> bytes:
+    return zstd.ZstdDecompressor().decompress(payload)
+
+
+def _parse_bincraft(buffer: bytes) -> list[dict[str, Any]]:
     if len(buffer) < 64:
         raise ValueError("BinCraft payload too small.")
 
@@ -488,22 +684,10 @@ def _parse_bincraft(buffer: bytes) -> dict[str, Any]:
     if stride <= 0 or len(buffer) < stride:
         raise ValueError("Invalid BinCraft stride.")
 
-    limits = struct.unpack_from("<4h", buffer, 20)
-    south, west, north, east = limits
-    messages = u32[7] if len(u32) > 7 else None
-    bin_craft_version = u32[10] if len(u32) > 10 else 0
-    message_rate = u32[11] / 10 if len(u32) > 11 else None
-    use_message_rate = bool(u32[12] & 1) if len(u32) > 12 else False
-
-    s32_header = struct.unpack_from("<" + "i" * (stride // 4), buffer, 0)
-    receiver_lat = s32_header[8] / 1e6 if len(s32_header) > 8 else None
-    receiver_lon = s32_header[9] / 1e6 if len(s32_header) > 9 else None
-
     aircraft: list[dict[str, Any]] = []
     for offset in range(stride, len(buffer), stride):
         if offset + stride > len(buffer):
             break
-        u32_rec = struct.unpack_from("<" + "I" * (stride // 4), buffer, offset)
         s32_rec = struct.unpack_from("<" + "i" * (stride // 4), buffer, offset)
         u16_rec = struct.unpack_from("<" + "H" * (stride // 2), buffer, offset)
         s16_rec = struct.unpack_from("<" + "h" * (stride // 2), buffer, offset)
@@ -513,13 +697,6 @@ def _parse_bincraft(buffer: bytes) -> dict[str, Any]:
         hex_id = f"{s32_rec[0] & 0xFFFFFF:06x}"
         if tbit:
             hex_id = f"~{hex_id}"
-
-        if bin_craft_version >= 20240218 and len(s32_rec) > 27:
-            seen = s32_rec[1] / 10
-            seen_pos = s32_rec[27] / 10
-        else:
-            seen_pos = u16_rec[2] / 10
-            seen = u16_rec[3] / 10
 
         lon = s32_rec[2] / 1e6
         lat = s32_rec[3] / 1e6
@@ -534,21 +711,12 @@ def _parse_bincraft(buffer: bytes) -> dict[str, Any]:
         tas = u16_rec[28]
         ias = u16_rec[29]
 
-        squawk_hex = f"{u16_rec[16]:04x}"
-        if squawk_hex[0] > "9":
-            squawk = str(int(squawk_hex[0], 16)) + squawk_hex[1:]
-        else:
-            squawk = squawk_hex
-
         flight = _read_ascii(u8_rec, 78, 86)
         ac_type = _read_ascii(u8_rec, 88, 92)
         registration = _read_ascii(u8_rec, 92, 104)
 
         flags73 = u8_rec[73]
         flags74 = u8_rec[74]
-        flags75 = u8_rec[75]
-        flags76 = u8_rec[76]
-        flags77 = u8_rec[77]
 
         if not flags73 & 0x08:
             flight = None
@@ -559,10 +727,8 @@ def _parse_bincraft(buffer: bytes) -> dict[str, Any]:
         if not flags73 & 0x40:
             lat = None
             lon = None
-            seen_pos = None
         if not flags73 & 0x80:
             gs = None
-
         if not flags74 & 0x01:
             ias = None
         if not flags74 & 0x02:
@@ -574,74 +740,45 @@ def _parse_bincraft(buffer: bytes) -> dict[str, Any]:
         if not flags74 & 0x80:
             true_heading = None
 
-        if not flags75 & 0x01:
-            pass
-        if not flags76 & 0x04:
-            squawk = None
-        if not flags77 & 0x10:
-            pass
-
         airground = u8_rec[68] & 0x0F
         if airground == 1:
-            alt_baro = "ground"
+            altitude: float | str | None = "ground"
+        else:
+            altitude = alt_baro if alt_baro is not None else alt_geom
+
+        rate = baro_rate if baro_rate is not None else geom_rate
+        speed = gs if gs is not None else (tas if tas is not None else ias)
+        heading = track if track is not None else (
+            true_heading if true_heading is not None else mag_heading
+        )
+        hex_key = _normalize_mode_s(hex_id.lstrip("~"))
+        if not hex_key or lat is None or lon is None:
+            continue
 
         aircraft.append(
             {
-                "hex": hex_id,
-                "flight": flight,
-                "alt_baro": alt_baro,
-                "alt_geom": alt_geom,
-                "baro_rate": baro_rate,
-                "geom_rate": geom_rate,
-                "gs": gs,
-                "track": track,
-                "mag_heading": mag_heading,
-                "true_heading": true_heading,
-                "tas": tas,
-                "ias": ias,
+                "hex": hex_key,
+                "flight": flight.strip() if isinstance(flight, str) else flight,
                 "lat": lat,
                 "lon": lon,
-                "seen": seen,
-                "seen_pos": seen_pos,
-                "squawk": squawk,
-                "type": ac_type,
-                "registration": registration,
+                "altitude": altitude,
+                "speed": speed,
+                "track": heading,
+                "vertical_rate_fpm": rate,
+                "type": ac_type.strip() if isinstance(ac_type, str) else ac_type,
+                "registration": registration.strip()
+                if isinstance(registration, str)
+                else registration,
                 "db_flags": u16_rec[43] if len(u16_rec) > 43 else None,
             }
         )
-
-    return {
-        "aircraft": aircraft,
-        "south": south,
-        "west": west,
-        "north": north,
-        "east": east,
-        "receiver_lat": receiver_lat,
-        "receiver_lon": receiver_lon,
-        "messages": messages,
-        "message_rate": message_rate if use_message_rate else None,
-    }
+    return aircraft
 
 
-def scrape() -> dict:
-    box_value = os.getenv("ADSBEXCHANGE_BOX", DEFAULT_BOX)
-    try:
-        box = _parse_box(box_value)
-    except ValueError as exc:
-        return {
-            "id": "adsbexchange_live",
-            "label": "Live Aircraft (ADSBExchange)",
-            "retrieved_at": now_iso(),
-            "source_urls": [ADSBEXCHANGE_RE_API],
-            "html": f"<p>{html.escape(str(exc))}</p>",
-            "error": str(exc),
-            "stale": True,
-        }
-
+def _fetch_adsbexchange(
+    client: httpx.Client, box: tuple[float, float, float, float]
+) -> list[dict[str, Any]]:
     south, north, west, east = box
-    faa_registry = _load_faa_registry()
-    _debug(f"FAA registry entries={len(faa_registry)}.")
-
     headers = {
         "Accept": "*/*",
         "Accept-Language": "en-US,en;q=0.9",
@@ -650,136 +787,239 @@ def scrape() -> dict:
         "User-Agent": DEFAULT_USER_AGENT,
         "X-Requested-With": "XMLHttpRequest",
     }
-
-    response = None
     try:
-        with httpx.Client(timeout=20.0, headers=headers) as client:
-            try:
-                warmup = client.get(ADSBEXCHANGE_WARMUP_URL)
-                _debug(
-                    f"Warmup status={warmup.status_code} cookies={len(client.cookies)}"
-                )
-            except Exception as warmup_exc:
-                _debug(f"Warmup failed: {warmup_exc}")
-
-            url = (
-                f"{ADSBEXCHANGE_RE_API}?binCraft&zstd&box={south},{north},{west},{east}"
-            )
-            response = client.get(url)
-            response.raise_for_status()
-
-        payload = response.content
-        if "application/zstd" in response.headers.get("Content-Type", ""):
-            payload = _decode_zstd(payload)
-        elif payload.startswith(b"{") or payload.startswith(b"["):
-            pass
-        else:
-            payload = _decode_zstd(payload)
-
-        if payload.startswith(b"{") or payload.startswith(b"["):
-            data = {
-                "aircraft": [],
-                "error": "Unexpected JSON payload for BinCraft.",
-            }
-        else:
-            data = _parse_bincraft(payload)
+        client.get(ADSBEXCHANGE_BASE + "/", headers=headers, timeout=20.0)
     except Exception as exc:
-        message = f"ADSBExchange fetch failed: {exc}"
-        if response is not None:
-            message = f"{message} (HTTP {response.status_code})."
-        return {
-            "id": "adsbexchange_live",
-            "label": "Live Aircraft (ADSBExchange)",
-            "retrieved_at": now_iso(),
-            "source_urls": [ADSBEXCHANGE_RE_API],
-            "html": f"<p>{html.escape(message)}</p>",
-            "error": message,
-            "stale": True,
-        }
+        _debug(f"ADSBX warmup failed: {exc}")
 
-    aircraft = data.get("aircraft", [])
-    filtered = []
-    for ac in aircraft:
-        lat = ac.get("lat")
-        lon = ac.get("lon")
-        if lat is None or lon is None:
+    url = f"{ADSBEXCHANGE_RE_API}?binCraft&zstd&box={south},{north},{west},{east}"
+    response = client.get(url, headers=headers, timeout=20.0)
+    response.raise_for_status()
+    payload = response.content
+    if "application/zstd" in response.headers.get("Content-Type", ""):
+        payload = _decode_zstd(payload)
+    elif not (payload.startswith(b"{") or payload.startswith(b"[")):
+        payload = _decode_zstd(payload)
+
+    if payload.startswith(b"{") or payload.startswith(b"["):
+        raise ValueError("Unexpected JSON payload for BinCraft.")
+
+    aircraft = _parse_bincraft(payload)
+    _debug(f"ADSBX returned {len(aircraft)} positioned aircraft.")
+    return aircraft
+
+
+def _fetch_adsblol(
+    client: httpx.Client, box: tuple[float, float, float, float]
+) -> list[dict[str, Any]]:
+    lat, lon = _box_center(box)
+    url = ADSBLOL_POINT_URL.format(
+        lat=f"{lat:.4f}", lon=f"{lon:.4f}", dist=ADSBLOL_RADIUS_NM
+    )
+    response = client.get(
+        url,
+        headers={"User-Agent": DEFAULT_USER_AGENT, "Accept": "application/json"},
+        timeout=20.0,
+    )
+    response.raise_for_status()
+    payload = response.json()
+    rows = payload.get("ac") or []
+    aircraft: list[dict[str, Any]] = []
+    for row in rows:
+        if not isinstance(row, dict):
             continue
-        if not (south <= lat <= north and west <= lon <= east):
-            continue
+        normalized = _normalize_adsblol_aircraft(row)
+        if normalized:
+            aircraft.append(normalized)
+    _debug(f"adsb.lol returned {len(aircraft)} positioned aircraft.")
+    return aircraft
 
-        altitude = ac.get("alt_baro")
-        if altitude is None:
-            altitude = ac.get("alt_geom")
-        if isinstance(altitude, (int, float)) and altitude > 10000:
-            continue
-        rate = ac.get("baro_rate")
-        if rate is None:
-            rate = ac.get("geom_rate")
-        rate_indicator = ""
-        if isinstance(rate, (int, float)):
-            if rate > 0:
-                rate_indicator = "▲"
-            elif rate < 0:
-                rate_indicator = "▼"
 
-        speed = ac.get("gs")
-        if speed is None:
-            speed = ac.get("tas") or ac.get("ias")
+def _error_result(message: str, source_urls: list[str]) -> dict:
+    return {
+        "id": "opensky_live",
+        "label": "Live Aircraft (OpenSky)",
+        "retrieved_at": now_iso(),
+        "source_urls": source_urls,
+        "html": f"<p>{html.escape(message)}</p>",
+        "error": message,
+        "stale": True,
+    }
 
-        heading = ac.get("track")
-        if heading is None:
-            heading = ac.get("true_heading") or ac.get("mag_heading")
 
-        callsign = ac.get("flight") or ac.get("hex") or "Unknown"
-        ac_type = ac.get("type") or "Unknown"
-        hex_key = str(ac.get("hex") or "").lstrip("~").lower()
-        faa_info = faa_registry.get(hex_key, {})
-        mfr = faa_info.get("mfr")
-        model = faa_info.get("model")
-        year_mfr = faa_info.get("year_mfr")
-        mfr_model_code = faa_info.get("mfr_model_code")
-        aircraft_name = ""
-        if mfr_model_code in SPECIAL_MODEL_OVERRIDES:
-            aircraft_name = SPECIAL_MODEL_OVERRIDES[mfr_model_code][0]
-        elif ac_type in SPECIAL_ADSB_TYPE_OVERRIDES:
-            aircraft_name = SPECIAL_ADSB_TYPE_OVERRIDES[ac_type][0]
-        else:
-            if year_mfr:
-                aircraft_name = f"{year_mfr}"
-            if mfr:
-                aircraft_name = f"{aircraft_name} {mfr}".strip()
-            if model:
-                aircraft_name = f"{aircraft_name} {model}".strip()
-        heading_cardinal = _heading_to_cardinal(
-            float(heading) if heading is not None else None
+def _in_display_scope(
+    ac: dict[str, Any], box: tuple[float, float, float, float]
+) -> bool:
+    south, north, west, east = box
+    lat = ac.get("lat")
+    lon = ac.get("lon")
+    if lat is None or lon is None:
+        return False
+    if not (south <= lat <= north and west <= lon <= east):
+        return False
+    altitude = ac.get("altitude")
+    if isinstance(altitude, (int, float)) and altitude > 10000:
+        return False
+    return True
+
+
+def _build_row(
+    ac: dict[str, Any], faa_registry: dict[str, dict[str, Any]]
+) -> dict[str, Any]:
+    lat = ac["lat"]
+    lon = ac["lon"]
+    altitude = ac.get("altitude")
+    rate = ac.get("vertical_rate_fpm")
+    rate_indicator = ""
+    if isinstance(rate, (int, float)):
+        if rate > 0:
+            rate_indicator = "▲"
+        elif rate < 0:
+            rate_indicator = "▼"
+
+    speed = ac.get("speed")
+    heading = ac.get("track")
+    callsign = ac.get("flight") or ac.get("hex") or "Unknown"
+    ac_type = ac.get("type") or "Unknown"
+    hex_key = str(ac.get("hex") or "").lstrip("~").lower()
+    faa_info = faa_registry.get(hex_key, {})
+    mfr = faa_info.get("mfr")
+    model = faa_info.get("model")
+    year_mfr = faa_info.get("year_mfr")
+    mfr_model_code = faa_info.get("mfr_model_code")
+    aircraft_name = ""
+    if mfr_model_code in SPECIAL_MODEL_OVERRIDES:
+        aircraft_name = SPECIAL_MODEL_OVERRIDES[mfr_model_code][0]
+    elif ac_type in SPECIAL_ADSB_TYPE_OVERRIDES:
+        aircraft_name = SPECIAL_ADSB_TYPE_OVERRIDES[ac_type][0]
+    else:
+        if year_mfr:
+            aircraft_name = f"{year_mfr}"
+        if mfr:
+            aircraft_name = f"{aircraft_name} {mfr}".strip()
+        if model:
+            aircraft_name = f"{aircraft_name} {model}".strip()
+    heading_cardinal = _heading_to_cardinal(
+        float(heading) if heading is not None else None
+    )
+
+    registration = faa_info.get("n_number")
+    if isinstance(registration, str):
+        registration = _normalize_n_number(registration)
+    elif isinstance(ac.get("registration"), str):
+        # Keep non-US regs (HL/JA/etc) as reported; only normalize US N-numbers.
+        raw_reg = ac["registration"].strip()
+        registration = (
+            _normalize_n_number(raw_reg)
+            if raw_reg.upper().startswith("N")
+            else raw_reg or None
         )
 
-        filtered.append(
-            {
-                "callsign": callsign.strip() if isinstance(callsign, str) else callsign,
-                "registration": faa_info.get("n_number"),
-                "aircraft_name": aircraft_name or None,
-                "registrant_name": faa_info.get("registrant_name"),
-                "faa_type": faa_info.get("type_aircraft"),
-                "category": _classify_aircraft(
-                    faa_info.get("type_aircraft"),
-                    faa_info.get("type_engine"),
-                    aircraft_name,
-                    faa_info.get("registrant_name"),
-                    mfr_model_code,
-                    ac_type,
-                    ac.get("db_flags"),
-                ),
-                "vicinity": _vicinity_label(lat, lon),
-                "altitude": altitude,
-                "altitude_trend": rate_indicator,
-                "speed": speed,
-                "heading": heading_cardinal,
-                "aircraft_type": ac_type.strip() if isinstance(ac_type, str) else ac_type,
-                "lat": lat,
-                "lon": lon,
-            }
-        )
+    return {
+        "callsign": callsign.strip() if isinstance(callsign, str) else callsign,
+        "registration": registration,
+        "aircraft_name": aircraft_name or None,
+        "registrant_name": faa_info.get("registrant_name"),
+        "faa_type": faa_info.get("type_aircraft"),
+        "category": _classify_aircraft(
+            faa_info.get("type_aircraft"),
+            faa_info.get("type_engine"),
+            aircraft_name,
+            faa_info.get("registrant_name"),
+            mfr_model_code,
+            ac_type if isinstance(ac_type, str) else None,
+            ac.get("db_flags"),
+        ),
+        "vicinity": _vicinity_label(lat, lon),
+        "altitude": altitude,
+        "altitude_trend": rate_indicator,
+        "speed": None if speed is None else round(speed, 1),
+        "heading": heading_cardinal,
+        "aircraft_type": ac_type.strip() if isinstance(ac_type, str) else ac_type,
+        "lat": lat,
+        "lon": lon,
+    }
+
+
+def scrape() -> dict:
+    box_value = os.getenv("OPENSKY_BOX") or os.getenv("ADSBEXCHANGE_BOX", DEFAULT_BOX)
+    try:
+        box = _parse_box(box_value)
+    except ValueError as exc:
+        return _error_result(str(exc), [OPENSKY_STATES_URL])
+
+    faa_registry = _load_faa_registry()
+    _debug(f"FAA registry entries={len(faa_registry)}.")
+
+    source_urls = [OPENSKY_STATES_URL, OPENSKY_SITE]
+    source_label = "OpenSky"
+    aircraft: list[dict[str, Any]] = []
+    fetch_error: str | None = None
+
+    try:
+        with httpx.Client(timeout=20.0, follow_redirects=True) as client:
+            try:
+                aircraft = _fetch_opensky(client, box)
+            except Exception as exc:
+                fetch_error = f"OpenSky fetch failed: {exc}"
+                _debug(fetch_error)
+                aircraft = []
+
+            # Fall back when OpenSky has nothing that would show after Kauai/alt filters
+            # (e.g. only high overflights). Prefer ADSBX for local GA density, then adsb.lol.
+            if not any(_in_display_scope(ac, box) for ac in aircraft):
+                _debug(
+                    "OpenSky has no in-scope aircraft (<=10k ft in box); "
+                    "trying denser regional feeds."
+                )
+                fallbacks = [
+                    (
+                        "ADSBExchange",
+                        lambda: _fetch_adsbexchange(client, box),
+                        [ADSBEXCHANGE_RE_API, ADSBEXCHANGE_BASE, OPENSKY_SITE],
+                    ),
+                    (
+                        "adsb.lol",
+                        lambda: _fetch_adsblol(client, box),
+                        [
+                            ADSBLOL_POINT_URL.format(
+                                lat=f"{_box_center(box)[0]:.4f}",
+                                lon=f"{_box_center(box)[1]:.4f}",
+                                dist=ADSBLOL_RADIUS_NM,
+                            ),
+                            "https://api.adsb.lol/",
+                            OPENSKY_SITE,
+                        ],
+                    ),
+                ]
+                for label, fetcher, urls in fallbacks:
+                    try:
+                        fallback = fetcher()
+                    except Exception as exc:
+                        fallback_error = f"{label} fallback failed: {exc}"
+                        _debug(fallback_error)
+                        if fetch_error:
+                            fetch_error = f"{fetch_error}; {fallback_error}"
+                        else:
+                            fetch_error = fallback_error
+                        continue
+                    if any(_in_display_scope(ac, box) for ac in fallback):
+                        aircraft = fallback
+                        source_urls = urls
+                        source_label = label
+                        fetch_error = None
+                        break
+    except Exception as exc:
+        return _error_result(f"Aircraft fetch failed: {exc}", source_urls)
+
+    if fetch_error and not any(_in_display_scope(ac, box) for ac in aircraft):
+        return _error_result(fetch_error, source_urls)
+
+    filtered = [
+        _build_row(ac, faa_registry)
+        for ac in aircraft
+        if _in_display_scope(ac, box)
+    ]
 
     filtered.sort(key=lambda item: item.get("callsign") or "")
 
@@ -800,7 +1040,7 @@ def scrape() -> dict:
     )
 
     info_html = (
-        "<p class=\"info\">Filtered to aircraft within the Kauai area and below 10,000 ft.</p>"
+        "<p class=\"info\">Filtered to aircraft within the Kauai area and below 10,000 ft</p>"
     )
     body = (
         info_html
@@ -812,10 +1052,10 @@ def scrape() -> dict:
     )
 
     return {
-        "id": "adsbexchange_live",
-        "label": "Air Traffic (<a href=\"https://globe.adsbexchange.com\">ADSBExchange</a>)",
+        "id": "opensky_live",
+        "label": "Air Traffic (<a href=\"https://opensky-network.org\">OpenSky</a>)",
         "retrieved_at": now_iso(),
-        "source_urls": [ADSBEXCHANGE_RE_API, ADSBEXCHANGE_BASE],
+        "source_urls": source_urls,
         "html": body,
         "error": None,
         "stale": False,

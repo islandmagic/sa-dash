@@ -13,7 +13,7 @@ from src.scrape.ocean_water_quality import scrape as scrape_ocean_water_quality
 from src.scrape.verizon_mobile import scrape as scrape_verizon_mobile
 from src.scrape.precipitation import scrape as scrape_precipitation
 from src.scrape.att_mobile import scrape as scrape_att_mobile
-from src.scrape.adsbexchange_live import scrape as scrape_adsbexchange_live
+from src.scrape.opensky_live import scrape as scrape_opensky_live
 from src.scrape.marinetraffic_kauai import scrape as scrape_marinetraffic_kauai
 from src.scrape.kauai_county_press import scrape as scrape_kauai_county_press
 from src.scrape.kauai_solid_waste import scrape as scrape_kauai_solid_waste
@@ -43,7 +43,7 @@ SCRAPERS = {
     "verizon_mobile": scrape_verizon_mobile,
     "att_mobile": scrape_att_mobile,
     "precipitation": scrape_precipitation,
-    "adsbexchange_live": scrape_adsbexchange_live,
+    "opensky_live": scrape_opensky_live,
     "marinetraffic_kauai": scrape_marinetraffic_kauai,
     "kauai_county_press": scrape_kauai_county_press,
     "kauai_solid_waste": scrape_kauai_solid_waste,

@@ -18,7 +18,7 @@ ISLANDS = {
             "kauai_solid_waste",
             "usgs_water_levels",
             "ocean_water_quality",
-            "adsbexchange_live",
+            "opensky_live",
             "marinetraffic_kauai",
             "county_alerts",
             "kauai_county_press",

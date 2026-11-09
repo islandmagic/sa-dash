@@ -39,6 +39,8 @@ jobs:
           USGS_API_KEY: ${{ secrets.USGS_API_KEY }}
           HCDP_API_KEY: ${{ secrets.HCDP_API_KEY }}
           WINLINK_API_KEY: ${{ secrets.WINLINK_API_KEY }}
+          OPENSKY_CLIENT_ID: ${{ secrets.OPENSKY_CLIENT_ID }}
+          OPENSKY_CLIENT_SECRET: ${{ secrets.OPENSKY_CLIENT_SECRET }}
           MAIL_USER: ${{ secrets.MAIL_USER }}
           MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
           MAIL_IMAP_HOST: ${{ secrets.MAIL_IMAP_HOST }}
