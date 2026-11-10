@@ -25,7 +25,7 @@ DEFAULT_SENDERS = (
     "kauaiwater.org",
     "kiuc.coop",
 )
-MAX_ITEMS = 40
+MAX_ITEMS = 10
 BODY_CAP = 2500
 _REPO_ROOT = Path(__file__).resolve().parents[2]
 CACHE_DIR = _REPO_ROOT / "data" / "cache"
