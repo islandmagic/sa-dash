@@ -1,10 +1,9 @@
 {
   "active": true,
   "active_since": "2026-11-24T01:42:33-10:00",
-  "last_trigger_at": "2026-11-25T19:33:04-10:00",
+  "last_trigger_at": "2026-11-26T05:52:22-10:00",
   "last_sent_at": "2026-11-25T19:33:04-10:00",
   "reasons": [
-    "NWS: High Surf Warning",
-    "KIUC: 3922 customers out"
+    "NWS: High Surf Warning"
   ]
 }
